@@ -191,8 +191,11 @@ public final class NormalizationUtilities {
                     owlDataFactory.getOWLSubClassOfAxiom(owlDataFactory.getOWLObjectIntersectionOf(left, newClass),
                     superClass
                 ));
-            } else {  // if both operands of the intersection are basic concepts (already normalized)
-                return null;  // No-op: should never enter this branch
+            } else {  // if both operands of the intersection are basic concepts, return the axiom as it is
+                normalizedAxioms.add(                                                                                 // C ⊓ D ⊑ E
+                    owlDataFactory.getOWLSubClassOfAxiom(owlDataFactory.getOWLObjectIntersectionOf(left, right),
+                    superClass
+                ));
             }
 
             return normalizedAxioms;

@@ -50,7 +50,7 @@ public class ELPPOntologyNormalizer implements OntologyNormalizer, OWLAxiomVisit
 
         // Analyze each axiom and put all non-normalized axioms in a list and all normalized axioms in the normalized ontology 
         Iterator<OWLAxiom> it = this.ontology.axioms().iterator();
-        while(it.hasNext()) {  
+        while(it.hasNext()) {
             OWLAxiom axiom = it.next();
             if (axiom instanceof OWLSubClassOfAxiom) {  // If the CBox has the form "C ⊑ D"
                 if (!NormalizationUtilities.isCBoxInNormalForm((OWLSubClassOfAxiom) axiom)) {
