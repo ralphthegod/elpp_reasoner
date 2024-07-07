@@ -25,7 +25,7 @@ import org.semanticweb.owlapi.reasoner.OWLReasoner;
 import org.semanticweb.owlapi.util.Version;
 
 import com.reasoner.normalization.OntologyNormalizer;
-import com.reasoner.querying.OntologyAccessor;
+import com.reasoner.querying.OntologyAccessManager;
 
 /**
  *  Reasoner class is the main class that implements the OWLReasoner interface.
@@ -37,7 +37,7 @@ public abstract class Reasoner implements OWLReasoner {
 
     protected Map<InferenceType, Boolean> precomputedInferences;
     protected Map<InferenceType, InferenceCalculator> inferenceCalculators;
-    private OntologyAccessor ontologyAccessor;
+    private OntologyAccessManager ontologyAccessManager;
     private OntologyNormalizer ontologyNormalizer;
 
     /**
@@ -52,19 +52,11 @@ public abstract class Reasoner implements OWLReasoner {
 
     /**
      * Constructor for the Reasoner class.
-     * @param ontology The root ontology
-     */
-    public Reasoner(OWLOntology ontology){
-        this.ontologyAccessor = new OntologyAccessor(ontology);
-    }
-
-    /**
-     * Constructor for the Reasoner class.
      * Dependency injection of the OntologyAccessor object.
      * @param ontologyAccessor The OntologyAccessor object
      */
-    public Reasoner(OntologyAccessor ontologyAccessor){
-        this.ontologyAccessor = ontologyAccessor;
+    public Reasoner(OntologyAccessManager ontologyAccessor){
+        this.ontologyAccessManager = ontologyAccessor;
     }
 
     /**
@@ -86,8 +78,8 @@ public abstract class Reasoner implements OWLReasoner {
         if(ontologyNormalizer == null){
             throw new IllegalStateException("Ontology normalizer not set.");
         }
-        OWLOntology normalizedOntology = ontologyNormalizer.normalize(ontologyAccessor.getOntology());
-        ontologyAccessor.setOntology(normalizedOntology);
+        OWLOntology normalizedOntology = ontologyNormalizer.normalize(ontologyAccessManager.getOntology());
+        ontologyAccessManager.setOntology(normalizedOntology);
     }
 
     protected void addInferenceCalculator(InferenceType inferenceType, InferenceCalculator inferenceCalculator){
@@ -161,7 +153,7 @@ public abstract class Reasoner implements OWLReasoner {
 
     @Override
     public OWLOntology getRootOntology() {
-        return ontologyAccessor.getOntology();
+        return ontologyAccessManager.getOntology();
     }
 
     @Override
