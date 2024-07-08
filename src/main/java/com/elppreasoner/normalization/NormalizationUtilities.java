@@ -16,43 +16,86 @@ import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
 
 import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
 
+/**
+ * {@code NormalizationUtilities} is an utility class that implements all the methods that are useful to axioms normalization.
+ * Other than methods to identify some class expression as a concept name, an individual,, a basic concept, etc., or
+ * to check if a given CBox is in normal form, it also contains an inner class, {@code NormalizationRulesManager}, that provides
+ * a set of methods to identify and apply the "normalization rules" (NF2,NF3,...,NF7).
+ * Note. NF1 is excluded because it concerns the "role inclusion", not considered in our work. 
+ * 
+ * A legenda of concepts, from theory to OWL implementation, follows:
+ *     "bottom" (⊥)                 <->      "owl:Nothing",
+ *     "top" (⊤)                    <->      "owl:Thing",
+ *     "concept name"               <->      "OWLClass",
+ *     "individual name | nominal"  <->      "OWLIndividual",
+ *     "C ⊑ D"                      <->      "OWLSubclassOf",
+ *     "C1 ≡ ... ≡ Cn"              <->      "EquivalentClasses",
+ *     "enum of individuals"        <->      "OWLObjectOneOf",  // {a1}⊔{a2}⊔...⊔{an}
+ *     "existential restriction ∃"  <->      "OWLObjectSomeValuesFrom",
+ *     "intersection ⊓"             <->      "OWLObjectIntersectionOf"
+ * 
+ * 
+ * Here are a couple of useful definitions.
+ * 
+ * Def. In our domain, an EL++ constraint box (CBox) is a finite set of general concept inclusions (GCIs): C ⊑ D. In particular: C can be a
+ * basic concept (BC) or a nominal {a}, while D can be either a basic concept (BC), a nominal {a} or a bottom (⊥). [Role inclusions excluded]
+ * 
+ * Def. Given a CBox C, BC_C (read "basic concepts of C") denotes the smallest set of concept descriptions that contains the top concept ⊤, all
+ * concept names used in C, and all concept descriptions of the form {a} or p(f1,..., fk) appearing in C.
+ * In our work, any given concept that belongs to such a set will be called "basic concept". In particular, a basic concept is either:
+ *     - a concept name
+ *     - an individual name
+ *     - 'top' (OWLThing)
+ *     - an enum of individuals (OWLObjectOneOf)
+ * 
+ * Def. In our domain, a CBox C is in normal form ("normalized") if and only if all of its GCIs have one of the four following forms:
+ *     - C1 ⊑ D
+ *     - C1 ⊓ C2 ⊑ D
+ *     - C1 ⊑ ∃r.C2
+ *     - ∃r.C1 ⊑ D
+ * where C1 and C2 are basic concepts (also called "individual names" or "nominals") and D can be either a basic concept or a bottom (⊥).
+ * [Role inclusions excluded]
+ */
 public final class NormalizationUtilities {
-    /* 
-     * Legenda of concepts, from theory to OWL implementation: {
-     *     "bottom" (⊥)                 <->      "owl:Nothing",
-     *     "top" (⊤)                    <->      "owl:Thing",
-     *     "concept name"               <->      "OWLClass",
-     *     "individual name | nominal"  <->      "OWLIndividual",
-     *     "C ⊑ D"                      <->      "OWLSubclassOf",
-     *     "C1 ≡ ... ≡ Cn"              <->      "EquivalentClasses",
-     *     "enum of individuals"        <->      "OWLObjectOneOf",  // {a1}⊔{a2}⊔...⊔{an}
-     *     "existential restriction ∃"  <->      "OWLObjectSomeValuesFrom",
-     *     "intersection ⊓"             <->      "OWLObjectIntersectionOf"
-     * }
-     * 
-     * Def. In our domain, an EL++ constraint box (CBox) is a finite set of general concept inclusions (GCIs): C ⊑ D. In particular: C can be a
-     * basic concept (BC) or a nominal {a}, while D can be either a basic concept (BC), a nominal {a} or a bottom (⊥). [Role inclusions excluded]
-     * 
-     * Def. Given a CBox C, BC_C (read "basic concepts of C") denotes the smallest set of concept descriptions that contains the top concept ⊤, all
-     * concept names used in C, and all concept descriptions of the form {a} or p(f1,..., fk) appearing in C.
-     * 
-     * Def. In our domain, CBox C is in normal form ("normalized") if all GCIs have one of four following forms (read the paper or the if-else tree
-     * in isInNormalForm() for more details). [Role inclusions excluded] 
-    */
+
+    /**
+     * A simple private constructor to prevent the default parameter-less constructor from being used, as this is just a utility class.
+     */
+    private NormalizationUtilities() {
+        throw new UnsupportedOperationException("Cannot instantiate this utility class.");
+    }
     
-    // Concept names denote sets of objects -> "classes" in OWL (e.g. 'Person', 'Female')
+    /**
+     * Checks if the given class expression is a concept name.
+     * Concept names denote sets of objects, which are called "classes" in the OWL implementation (e.g. 'Person', 'Female').
+     * @param classExpression The expression to be checked
+     * @return {@code true} if @param classExpression is a concept name; {@code false} otherwise
+     */
     public static boolean isConceptName(OWLClassExpression classExpression) {
         return classExpression instanceof OWLClass &&  // is it a class?
             !classExpression.isOWLNothing() &&         // is it NOT owl:Nothing ("bottom" ⊥)?
             !classExpression.isOWLThing();             // is it NOT owl:Thing ("top" ⊤)?
     }
 
-    // Individual names denote objects -> "individuals" in OWL (e.g. 'John', 'Mary')
+    /**
+     * Checks if the given class expression is an individual name.
+     * Individual names denote objects, which are called "individuals" in the OWL implementation (e.g. 'John', 'Mary').
+     * @param classExpression The expression to be checked
+     * @return {@code true} if {@code classExpression} is an individual name; {@code false} otherwise
+     */
     public static boolean isIndividualName(OWLClassExpression classExpression) {
         return classExpression instanceof OWLIndividual;  // is it an individual name?
     }
 
-    // Given C ⊑ D, in this method we're considering C. In particular, C can be a basic concept (BC) or a nominal {a}
+    /**
+     * Checks if the subclass C of the given class expression "C ⊑ D" is a basic concept. In our work, a basic concept is either:
+     *     - a concept name
+     *     - an individual name
+     *     - 'top' (OWLThing)
+     *     - an enum of individuals (OWLObjectOneOf)
+     * @param subClassConcept The expression to be checked
+     * @return {@code true} if @param subClassConcept is a basic concept; {@code false} otherwise
+     */
     public static boolean isSubclassABasicConcept(OWLClassExpression subClassConcept) {
         return isConceptName(subClassConcept) ||        // is it a concept name?
             isIndividualName(subClassConcept) ||        // is it an individual name?
@@ -60,15 +103,33 @@ public final class NormalizationUtilities {
             subClassConcept instanceof OWLObjectOneOf;  // is it an enumeration of individuals?
     }
 
-    // Given C ⊑ D, in this method we're considering D. In particular, D can be a basic concept (BC), a nominal {a} or a bottom (⊥)
+    /**
+     * Checks if the superclass D of the given class expression "C ⊑ D" is a basic concept. In our work, a basic concept is either:
+     *     - a concept name
+     *     - an individual name
+     *     - 'top' (OWLThing)
+     *     - an enum of individuals (OWLObjectOneOf)
+     * @param superClassConcept The expression to be checked
+     * @return {@code true} if @param superClassConcept is a basic concept; {@code false} otherwise
+     */
     public static boolean isSuperclassABasicConcept(OWLClassExpression superClassConcept) {
         return isConceptName(superClassConcept) ||        // is it a concept name?
             isIndividualName(superClassConcept) ||        // is it an individual name?
-            superClassConcept.isOWLNothing() ||           // is it owl:Nothing ("bottom" ⊥)?
+            superClassConcept.isOWLNothing() ||           // is it owl:Nothing ("bottom" ⊥)?  * The superclass of a GCI can also be ⊥ 
             superClassConcept.isOWLThing() ||             // is it owl:Thing ("top" ⊤)?
             superClassConcept instanceof OWLObjectOneOf;  // is it an enumeration of individuals?
     }
 
+    /**
+     * Checks if the given CBox is in normal form (NF). A CBox is in normal form if and only if it has one of the following forms:
+     *     - C1 ⊑ D
+     *     - C1 ⊓ C2 ⊑ D
+     *     - C1 ⊑ ∃r.C2
+     *     - ∃r.C1 ⊑ D
+     * where C1 and C2 are basic concepts (also called "individual names" or "nominals")
+     * @param subClassOfAxiom The CBox to check
+     * @return {@code true} if @param subClassOfAxiom is in normal form; {@code false} otherwise
+     */
     public static boolean isCBoxInNormalForm(OWLSubClassOfAxiom subClassOfAxiom) {
         OWLClassExpression subClass = subClassOfAxiom.getSubClass();
         OWLClassExpression superClass = subClassOfAxiom.getSuperClass();
@@ -93,16 +154,26 @@ public final class NormalizationUtilities {
     }
 
 
+    /**
+     * {@code NormalizationRulesManager} is an inner class that provides a set of methods to identify and apply the "normalization rules"
+     * (NF2,NF3,...,NF7). It is easy to prove that any CBox can be converted into an equivalent CBox in Normal Form (NF) using the translation
+     * rules (applying one of the rules) NF1 to NF7, based on the form of the CBox.
+     *     - NF1: role inclusion, not considered in our work
+     *     - NF2: C ⊓ D' ⊑ E   -->   { D' ⊑ A, C ⊓ A ⊑ E }   * Please note that it can also be in the equivalent form D' ⊓ C
+     *     - NF3: ∃r.C' ⊑ D   -->   { C' ⊑ A, ∃r.A ⊑ D }
+     *     - NF4: ⊥ ⊑ D   -->   ∅
+     *     - NF5: C' ⊑ D'  -->   { C' ⊑ A, A ⊑ D' }
+     *     - NF6: B ⊑ ∃r.C'  -->   { B ⊑ ∃r.A, A ⊑ C' }
+     *     - NF7: B ⊑ C ⊓ D   -->   { B ⊑ C, B ⊑ D }
+     * Note 1. "Rule application" means that the concept inclusion on the left-hand side is replaced with the set of concept inclusions on the
+     * right-hand side.
+     * Note 2. In any rule, C' and D' are NOT basic concepts and A denotes a newly created, dummy concept name.
+     */
     public static class NormalizationRulesManager {
-        /*
-         * A CBox can be converted into Normal Form (NF) using the translation rules that follow in two phases:
-         *     1. exhaustively apply rules NF1 to NF4;
-         *     2. exhaustively apply rules NF5 to NF7.
-         * "Rule application" means that the concept inclusion on the left-hand side is replaced with the set of concept inclusions on the
-         * right-hand side.
-        */
 
-        // In this enum comments: C' and D' are NOT basic concepts and A denotes a new concept name
+        /**
+         * The normalization rules' {@code enum}. C' and D' are NOT basic concepts and A denotes a newly created, dummy concept name.
+         */
         public enum NormalizationRule {
             // NF1,  // role inclusion, not considered in our work
             NF2,  // C ⊓ D' ⊑ E   -->   { D' ⊑ A, C ⊓ A ⊑ E }   * Please note that it can also be in the equivalent form D' ⊓ C
@@ -113,6 +184,11 @@ public final class NormalizationUtilities {
             NF7  //  B ⊑ C ⊓ D   -->   { B ⊑ C, B ⊑ D }
         }
 
+        /**
+         * Identifies the Normal Form rule (NF2 to NF7) that fits the given @param axiom
+         * @param axiom The General Concept Inclusions (GCIs) axiom to be identified
+         * @return The {@code NormalizationRule} to be applied to the given @param axiom
+         */
         public static NormalizationRule identifyNF(OWLSubClassOfAxiom axiom) {
             OWLClassExpression subClass = axiom.getSubClass();
             OWLClassExpression superClass = axiom.getSuperClass();
@@ -124,14 +200,14 @@ public final class NormalizationUtilities {
     
                 // NF2,NF5,NF6 excluded
                 if (subClass instanceof OWLObjectSomeValuesFrom &&
-                        !isSubclassABasicConcept(((OWLObjectSomeValuesFrom) subClass).getFiller())) {
+                        !isSubclassABasicConcept(((OWLObjectSomeValuesFrom) subClass).getFiller())) {  // NF3
                     return NormalizationRule.NF3;
                 }
             }
             
             if (isSubclassABasicConcept(subClass)) {  // NF6 or NF7
                 if (superClass instanceof OWLObjectSomeValuesFrom &&
-                        !isSuperclassABasicConcept(((OWLObjectSomeValuesFrom) superClass).getFiller())) {
+                        !isSuperclassABasicConcept(((OWLObjectSomeValuesFrom) superClass).getFiller())) {  // NF6
                     return NormalizationRule.NF6;
                 }
                 if (superClass instanceof OWLObjectIntersectionOf) {  // NF7
@@ -152,7 +228,13 @@ public final class NormalizationUtilities {
             return NormalizationRule.NF5;
         }
 
-        // the new concept name A
+        /**
+         * Generates a new dummy {@code OWLClass}, that corresponds to the new concept name A in the normalization rules.
+         * @param ontology The ontology of the axiom being normalized, only used to get its IRI
+         * @param subclass The subclass of the axiom being normalized
+         * @param superclass The superclass of the axiom being normalized
+         * @return
+         */
         public static OWLClass generateOWLClass(OWLOntology ontology, OWLClassExpression subclass, OWLClassExpression superclass) {
             return (new OWLDataFactoryImpl()).getOWLClass(
                 ontology.getOWLOntologyManager().getOntologyDocumentIRI(ontology) +
@@ -162,7 +244,13 @@ public final class NormalizationUtilities {
                 );
         }
 
-        // C ⊓ D' ⊑ E   -->   { D' ⊑ A, C ⊓ A ⊑ E }   * Please note that it can also be in the equivalent form D' ⊓ C
+        /**
+         * Applies the normalization rule NF2 to the given @param axiom
+         *     C ⊓ D' ⊑ E   -->   { D' ⊑ A, C ⊓ A ⊑ E }   * Please note that it can also be in the equivalent form D' ⊓ C
+         * @param ontology The ontology of the axiom being normalized, only used to create the new concept name A
+         * @param axiom The axiom, expected to be in the form "C ⊓ D' ⊑ E", to which the normalization rule NF2 must be applied
+         * @return The set of normalized axioms, i.e. { D' ⊑ A, C ⊓ A ⊑ E }
+         */
         public static Collection<OWLSubClassOfAxiom> applyNF2(OWLOntology ontology, OWLSubClassOfAxiom axiom) {
             OWLClassExpression subClass = axiom.getSubClass();
             OWLClassExpression superClass = axiom.getSuperClass();
@@ -201,7 +289,13 @@ public final class NormalizationUtilities {
             return normalizedAxioms;
         }
 
-        // ∃r.C' ⊑ D   -->   { C' ⊑ A, ∃r.A ⊑ D }
+        /**
+         * Applies the normalization rule NF3 to the given @param axiom
+         *     ∃r.C' ⊑ D   -->   { C' ⊑ A, ∃r.A ⊑ D }
+         * @param ontology The ontology of the axiom being normalized, only used to create the new concept name A
+         * @param axiom The axiom, expected to be in the form "∃r.C' ⊑ D", to which the normalization rule NF3 must be applied
+         * @return The set of normalized axioms, i.e. { C' ⊑ A, ∃r.A ⊑ D }
+         */
         public static Collection<OWLSubClassOfAxiom> applyNF3(OWLOntology ontology, OWLSubClassOfAxiom axiom) {
             OWLClassExpression subClass = axiom.getSubClass();
             OWLClassExpression superClass = axiom.getSuperClass();
@@ -230,14 +324,24 @@ public final class NormalizationUtilities {
             return normalizedAxioms;
         }
 
-        // ⊥ ⊑ D   -->   ∅
+        /**
+         * Applies the normalization rule NF4 to the given @param axiom
+         *     ⊥ ⊑ D   -->   ∅
+         * @param ontology The ontology of the axiom being normalized (unused, but kept to maintain the same signature)
+         * @param axiom The axiom, expected to be in the form "⊥ ⊑ D", to which the normalization rule NF4 must be applied
+         * @return The set of normalized axioms, i.e. ∅ (an empty set, treated as an empty list and not as a null value)
+         */
         public static Collection<OWLSubClassOfAxiom> applyNF4(OWLOntology ontology, OWLSubClassOfAxiom axiom) {
-            List<OWLSubClassOfAxiom> normalizedAxioms = new ArrayList<>();
-
-            return normalizedAxioms;  // ∅ is treated as an empty list and not as a null value; so, the list exists, but there are 0 elements in it
+            return new ArrayList<>();
         }
 
-        // C' ⊑ D'  -->   { C' ⊑ A, A ⊑ D' }
+        /**
+         * Applies the normalization rule NF5 to the given @param axiom
+         *     C' ⊑ D'  -->   { C' ⊑ A, A ⊑ D' }
+         * @param ontology The ontology of the axiom being normalized, only used to create the new concept name A
+         * @param axiom The axiom, expected to be in the form "C' ⊑ D'", to which the normalization rule NF5 must be applied
+         * @return The set of normalized axioms, i.e. { C' ⊑ A, A ⊑ D' }
+         */
         public static Collection<OWLSubClassOfAxiom> applyNF5(OWLOntology ontology, OWLSubClassOfAxiom axiom) {
             OWLClassExpression subClass = axiom.getSubClass();
             OWLClassExpression superClass = axiom.getSuperClass();
@@ -252,7 +356,13 @@ public final class NormalizationUtilities {
             return normalizedAxioms;
         }
 
-        // B ⊑ ∃r.C'  -->   { B ⊑ ∃r.A, A ⊑ C' }
+        /**
+         * Applies the normalization rule NF6 to the given @param axiom
+         *     B ⊑ ∃r.C'  -->   { B ⊑ ∃r.A, A ⊑ C' }
+         * @param ontology The ontology of the axiom being normalized, only used to create the new concept name A
+         * @param axiom The axiom, expected to be in the form "B ⊑ ∃r.C'", to which the normalization rule NF6 must be applied
+         * @return The set of normalized axioms, i.e. { B ⊑ ∃r.A, A ⊑ C' }
+         */
         public static Collection<OWLSubClassOfAxiom> applyNF6(OWLOntology ontology, OWLSubClassOfAxiom axiom) {
             OWLClassExpression subClass = axiom.getSubClass();
             OWLClassExpression superClass = axiom.getSuperClass();
@@ -281,7 +391,13 @@ public final class NormalizationUtilities {
             return normalizedAxioms;
         }
 
-        // B ⊑ C ⊓ D   -->   { B ⊑ C, B ⊑ D }
+        /**
+         * Applies the normalization rule NF7 to the given @param axiom
+         *     B ⊑ C ⊓ D   -->   { B ⊑ C, B ⊑ D }
+         * @param ontology The ontology of the axiom being normalized (unused, but kept to maintain the same signature)
+         * @param axiom The axiom, expected to be in the form "B ⊑ C ⊓ D", to which the normalization rule NF7 must be applied
+         * @return The set of normalized axioms, i.e. { B ⊑ C, B ⊑ D }
+         */
         public static Collection<OWLSubClassOfAxiom> applyNF7(OWLOntology ontology, OWLSubClassOfAxiom axiom) {
             OWLClassExpression subClass = axiom.getSubClass();
             OWLClassExpression superClass = axiom.getSuperClass();
