@@ -14,7 +14,7 @@ import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
  * This class provides methods to access the ontology and extract axioms based on rules. <p>
  * Indexing can be enabled to speed up the process of extracting axioms. <p>
  */
-public abstract class OntologyAccessManager {
+public class OntologyAccessManager {
 
     private OWLOntology ontology;
     private Map<Class<? extends InferenceRule>, InferenceRule> rules = new HashMap<>();
@@ -34,7 +34,7 @@ public abstract class OntologyAccessManager {
      * @param key
      * @return Map of axioms (subclass, superclass).
      */
-    protected void registerRule(InferenceRule inferenceRule) {
+    public void registerRule(InferenceRule inferenceRule) {
         rules.put(inferenceRule.getClass(), inferenceRule);
     }
 
@@ -79,6 +79,10 @@ public abstract class OntologyAccessManager {
         return rules.get(inferenceRuleType).getAxioms();
     }
 
+    /**
+     * Precompute axioms for all rules. <p>
+     * This method is used to speed up the process of extracting axioms.
+     */
     public void precomputeAxioms(){
         rules.forEach((ruleType, rule) -> {
             rule.clearAxioms();
