@@ -12,7 +12,7 @@ import org.semanticweb.owlapi.model.OWLClassExpression;
  */
 public abstract class InferenceRule<S,T> {
 
-    private Map<S,T> axioms;
+    protected Map<S,T> axioms;
 
     /**
      * Check if the axiom criterion is satisfied.
