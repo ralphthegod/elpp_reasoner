@@ -25,6 +25,7 @@ import org.semanticweb.owlapi.reasoner.OWLReasoner;
 import org.semanticweb.owlapi.util.Version;
 
 import com.reasoner.normalization.OntologyNormalizer;
+import com.reasoner.querying.InferenceRule;
 import com.reasoner.querying.OntologyAccessManager;
 
 /**
@@ -55,8 +56,10 @@ public abstract class Reasoner implements OWLReasoner {
      * Dependency injection of the OntologyAccessor object.
      * @param ontologyAccessor The OntologyAccessor object
      */
-    public Reasoner(OntologyAccessManager ontologyAccessor){
-        this.ontologyAccessManager = ontologyAccessor;
+    public Reasoner(OWLOntology ontology){
+        ontologyAccessManager = new OntologyAccessManager(ontology);
+        precomputedInferences = new java.util.HashMap<>();
+        inferenceCalculators = new java.util.HashMap<>();
     }
 
     /**
@@ -85,6 +88,10 @@ public abstract class Reasoner implements OWLReasoner {
     protected void addInferenceCalculator(InferenceType inferenceType, InferenceCalculator inferenceCalculator){
         inferenceCalculators.put(inferenceType, inferenceCalculator);
         precomputedInferences.put(inferenceType, false);
+    }
+
+    protected void addInferenceRule(InferenceRule inferenceRule){
+        ontologyAccessManager.registerRule(inferenceRule);
     }
 
     @Override

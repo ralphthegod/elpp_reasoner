@@ -1,22 +1,25 @@
 package com.elppreasoner.querying.rules;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.semanticweb.owlapi.model.OWLClassExpression;
 import com.reasoner.querying.InferenceRule;
 
+import static com.elppreasoner.normalization.NormalizationUtilities.isSubclassABasicConcept;
+import static com.elppreasoner.normalization.NormalizationUtilities.isSuperclassABasicConcept;
+
 public class ToldSuperclassesInferenceRule extends InferenceRule<OWLClassExpression, Set<OWLClassExpression>>{
 
     @Override
     public boolean axiomCriterion(OWLClassExpression subclass, OWLClassExpression superclass) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'axiomCriterion'");
+        return isSubclassABasicConcept(subclass) && isSuperclassABasicConcept(superclass);
     }
 
     @Override
     public void addAxiom(OWLClassExpression subclass, OWLClassExpression superclass) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addAxiom'");
+        axioms.computeIfAbsent(subclass, __ -> new HashSet<>())
+            .add(superclass);
     }
     
 }
