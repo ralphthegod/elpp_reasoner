@@ -52,9 +52,9 @@ public abstract class Reasoner implements OWLReasoner {
     }
 
     /**
-     * Constructor for the Reasoner class.
-     * Dependency injection of the OntologyAccessor object.
-     * @param ontologyAccessor The OntologyAccessor object
+     * Constructor for the {@code Reasoner} class.<p>
+     * Dependency injection of the {@code OntologyAccessor} object.
+     * @param ontologyAccessor The {@code OntologyAccessor} object
      */
     public Reasoner(OWLOntology ontology){
         ontologyAccessManager = new OntologyAccessManager(ontology);
@@ -63,7 +63,7 @@ public abstract class Reasoner implements OWLReasoner {
     }
 
     /**
-     * Set the OntologyNormalizer object.
+     * Set the {@code OntologyNormalizer} object.
      * Needed for normalizing the ontology.
      * Without this object, normalization will not happen.
      * @param ontologyNormalizer
@@ -74,8 +74,8 @@ public abstract class Reasoner implements OWLReasoner {
 
     /**
      * Normalize the ontology.
-     * This method normalizes the ontology using the OntologyNormalizer object.
-     * The normalized ontology is set back to the OntologyAccessor object.
+     * This method normalizes the ontology using the {@code OntologyNormalizer} object.
+     * The normalized ontology is set back to the {@code OntologyAccessor} object.
      */
     protected void normalizeOntology(){
         if(ontologyNormalizer == null){
