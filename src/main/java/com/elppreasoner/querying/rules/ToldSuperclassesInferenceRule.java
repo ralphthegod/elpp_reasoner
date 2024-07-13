@@ -3,13 +3,18 @@ package com.elppreasoner.querying.rules;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassExpression;
-import com.reasoner.querying.InferenceRule;
 
 import static com.elppreasoner.normalization.NormalizationUtilities.isSubclassABasicConcept;
 import static com.elppreasoner.normalization.NormalizationUtilities.isSuperclassABasicConcept;
+import com.reasoner.querying.InferenceRule;
 
 public class ToldSuperclassesInferenceRule extends InferenceRule<OWLClassExpression, Set<OWLClassExpression>>{
+
+    public ToldSuperclassesInferenceRule() {
+        super(OWLClass.class);
+    }
 
     @Override
     public boolean axiomCriterion(OWLClassExpression subclass, OWLClassExpression superclass) {

@@ -8,12 +8,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLObjectIntersectionOf;
 
 import com.reasoner.querying.InferenceRule;
 
 public class IntersectionSuperclassesInferenceRule extends InferenceRule<OWLClassExpression, Map<OWLClassExpression, Set<OWLClassExpression>>>{
+
+    public IntersectionSuperclassesInferenceRule() {
+        super(OWLClass.class);
+    }
 
     @Override
     public boolean axiomCriterion(OWLClassExpression subclass, OWLClassExpression superclass) {

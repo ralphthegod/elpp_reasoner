@@ -5,14 +5,19 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.semanticweb.owlapi.model.OWLObjectSomeValuesFrom;
 
-import com.reasoner.querying.InferenceRule;
 import static com.elppreasoner.normalization.NormalizationUtilities.isSubclassABasicConcept;
+import com.reasoner.querying.InferenceRule;
 
 public class SubclassRoleExpansionInferenceRule extends InferenceRule<OWLClassExpression, Set<Entry<OWLObjectPropertyExpression, OWLClassExpression>>>{
+
+    public SubclassRoleExpansionInferenceRule() {
+        super(OWLClass.class);
+    }
 
     @Override
     public boolean axiomCriterion(OWLClassExpression subclass, OWLClassExpression superclass) {
