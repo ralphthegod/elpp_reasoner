@@ -3,6 +3,7 @@ package com.reasoner.querying;
 import java.util.Map;
 
 import org.semanticweb.owlapi.model.OWLClassExpression;
+import org.semanticweb.owlapi.model.OWLEntity;
 
 /**
  * Inference rule. <p>
@@ -13,6 +14,11 @@ import org.semanticweb.owlapi.model.OWLClassExpression;
 public abstract class InferenceRule<S,T> {
 
     protected Map<S,T> axioms;
+    private Class<? extends OWLEntity> entityType;
+
+    public InferenceRule(Class<? extends OWLEntity> entityType){
+        this.entityType = entityType;
+    }
 
     /**
      * Check if the axiom criterion is satisfied.
@@ -42,5 +48,13 @@ public abstract class InferenceRule<S,T> {
      */
     public void clearAxioms(){
         axioms.clear();
+    }
+
+    /**
+     * Get the entity type.
+     * @return
+     */
+    public Class<? extends OWLEntity> getEntityType(){
+        return entityType;
     }
 }
