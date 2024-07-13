@@ -3,7 +3,9 @@ package com.elppreasoner.reasoning;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.reasoner.InferenceType;
 
+import com.elppreasoner.querying.rules.BottomSuperclassRoleExpansionInferenceRule;
 import com.elppreasoner.querying.rules.IntersectionSuperclassesInferenceRule;
+import com.elppreasoner.querying.rules.NominalChainExpansionInferenceRule;
 import com.elppreasoner.querying.rules.SubclassRoleExpansionInferenceRule;
 import com.elppreasoner.querying.rules.SuperclassRoleExpansionInferenceRule;
 import com.elppreasoner.querying.rules.ToldSuperclassesInferenceRule;
@@ -27,7 +29,8 @@ public class ElppReasoner extends Reasoner {
         addInferenceRule(new IntersectionSuperclassesInferenceRule()); // CR2       
         addInferenceRule(new SubclassRoleExpansionInferenceRule()); // CR3
         addInferenceRule(new SuperclassRoleExpansionInferenceRule()); // CR4
-        // CR5 and CR6 do not require inference rules
+        addInferenceRule(new BottomSuperclassRoleExpansionInferenceRule()); // CR5
+        addInferenceRule(new NominalChainExpansionInferenceRule()); // CR6
 
         // Add inference calculators
         addInferenceCalculator(InferenceType.CLASS_HIERARCHY, this::computeClassHierarchy);
