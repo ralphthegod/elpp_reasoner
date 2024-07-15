@@ -4,24 +4,38 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.semanticweb.owlapi.model.OWLEntity;
+import org.semanticweb.owlapi.model.OWLObject;
 
-import com.reasoner.querying.InferenceRule;
+import com.reasoner.reasoning.rules.InferenceRule;
+import com.reasoner.utils.OntologyUtilities;
+
 
 public class ContextProvider{
     
-    private InferenceRule inferenceRule;
-    private final Map<Class<? extends OWLEntity>, InferenceRuleContext> contexts = new HashMap<>();
+    private final InferenceRule inferenceRule;
+    private final Map<OWLObject, InferenceRuleContext> contexts = new HashMap<>();
 
     public ContextProvider(InferenceRule inferenceRule) {
         this.inferenceRule = inferenceRule;
     }
 
-    public void addContext(Class<? extends OWLEntity> entity, InferenceRuleContext context) {
-        if(entity.getClass() == inferenceRule.getEntityType()){
+    /**
+     * Add a context for given entity.
+     * @param entity
+     * @param context
+     */
+    public void addContext(OWLEntity entity, InferenceRuleContext context) {
+        if(OntologyUtilities.getEntityType(entity) == inferenceRule.getEntityType()) {
             contexts.put(entity, context);
         }
     }
 
-
+    /**
+     * Get the inference rule.
+     * @return InferenceRule
+     */
+    public InferenceRule getInferenceRule() {
+        return inferenceRule;
+    }
 
 }
