@@ -3,12 +3,12 @@ package com.elppreasoner.reasoning;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.reasoner.InferenceType;
 
-import com.elppreasoner.querying.rules.BottomSuperclassRoleExpansionInferenceRule;
-import com.elppreasoner.querying.rules.IntersectionSuperclassesInferenceRule;
-import com.elppreasoner.querying.rules.NominalChainExpansionInferenceRule;
-import com.elppreasoner.querying.rules.SubclassRoleExpansionInferenceRule;
-import com.elppreasoner.querying.rules.SuperclassRoleExpansionInferenceRule;
-import com.elppreasoner.querying.rules.ToldSuperclassesInferenceRule;
+import com.elppreasoner.reasoning.rules.BottomSuperclassRoleExpansionInferenceRule;
+import com.elppreasoner.reasoning.rules.IntersectionSuperclassesInferenceRule;
+import com.elppreasoner.reasoning.rules.NominalChainExpansionInferenceRule;
+import com.elppreasoner.reasoning.rules.SubclassRoleExpansionInferenceRule;
+import com.elppreasoner.reasoning.rules.SuperclassRoleExpansionInferenceRule;
+import com.elppreasoner.reasoning.rules.ToldSuperclassesInferenceRule;
 import com.reasoner.reasoning.Reasoner;
 
 /**
@@ -23,7 +23,10 @@ public class ElppReasoner extends Reasoner {
      */
     public ElppReasoner(OWLOntology ontology) {
         super(ontology);
+        initializeInferenceRules();
+    }
 
+    private void initializeInferenceRules(){
         // Add inference rules
         addInferenceRule(new ToldSuperclassesInferenceRule()); // CR1
         addInferenceRule(new IntersectionSuperclassesInferenceRule()); // CR2       
