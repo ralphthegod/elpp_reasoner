@@ -1,23 +1,27 @@
 package com.reasoner.querying;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+
 import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
 
+import com.reasoner.reasoning.rules.InferenceRule;
+
 @SuppressWarnings("rawtypes")
 
 /**
- * Class to access the ontology. <p>
+ * The {@code OntologyAccessManager} class provides safe access to the ontology. <p>
  * This class provides methods to access the ontology and extract axioms based on rules. <p>
  * Indexing can be enabled to speed up the process of extracting axioms. <p>
  */
 public class OntologyAccessManager {
 
     private OWLOntology ontology;
-    private Map<Class<? extends InferenceRule>, InferenceRule> rules = new HashMap<>();
+    private final Map<Class<? extends InferenceRule>, InferenceRule> rules = new HashMap<>();
     private boolean isIndexed = false;
 
     /**
@@ -89,6 +93,14 @@ public class OntologyAccessManager {
             getAxiomsByRule(ruleType);
         });
         isIndexed = true;
+    }
+
+    /**
+     * Get the rules.
+     * @return list of rules
+     */ 
+    public Collection<InferenceRule> getRules() {
+        return rules.values();
     }
     
 }
