@@ -1,9 +1,13 @@
-package com.reasoner.querying;
+package com.reasoner.reasoning.rules;
 
 import java.util.Map;
 
 import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLEntity;
+import org.semanticweb.owlapi.model.OWLObject;
+
+import com.reasoner.saturation.InferenceRuleContext;
+import com.reasoner.utils.OntologyUtilities;
 
 /**
  * Inference rule. <p>
@@ -14,10 +18,12 @@ import org.semanticweb.owlapi.model.OWLEntity;
 public abstract class InferenceRule<S,T> {
 
     protected Map<S,T> axioms;
-    private Class<? extends OWLEntity> entityType;
+    private final OWLEntityType entityType;
+    private final Class<? extends InferenceRuleContext> contextType;
 
-    public InferenceRule(Class<? extends OWLEntity> entityType){
-        this.entityType = entityType;
+    public InferenceRule(Class<? extends OWLObject> entityType, Class<? extends InferenceRuleContext> contextType){
+        this.entityType = OntologyUtilities.getEntityTypeByClass(entityType.asSubclass(OWLEntity.class));
+        this.contextType = contextType;
     }
 
     /**
@@ -54,7 +60,15 @@ public abstract class InferenceRule<S,T> {
      * Get the entity type.
      * @return
      */
-    public Class<? extends OWLEntity> getEntityType(){
+    public OWLEntityType getEntityType(){
         return entityType;
+    }
+
+    /**
+     * Get the context type.
+     * @return
+     */
+    public Class<? extends InferenceRuleContext> getContextType(){
+        return contextType;
     }
 }
