@@ -1,10 +1,12 @@
 package com.reasoner.reasoning.rules;
 
+import java.util.Collection;
 import java.util.Map;
 
 import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLObject;
+import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
 
 import com.reasoner.saturation.InferenceRuleContext;
 import com.reasoner.utils.OntologyUtilities;
@@ -19,9 +21,9 @@ public abstract class InferenceRule<S,T> {
 
     protected Map<S,T> axioms;
     private final OWLEntityType entityType;
-    private final Class<? extends InferenceRuleContext> contextType;
+    private final Class<? extends InferenceRuleContext<S,T>> contextType;
 
-    public InferenceRule(Class<? extends OWLObject> entityType, Class<? extends InferenceRuleContext> contextType){
+    public InferenceRule(Class<? extends OWLObject> entityType, Class<? extends InferenceRuleContext<S,T>> contextType){
         this.entityType = OntologyUtilities.getEntityTypeByClass(entityType.asSubclass(OWLEntity.class));
         this.contextType = contextType;
     }
@@ -33,6 +35,15 @@ public abstract class InferenceRule<S,T> {
      * @return
      */
     public abstract boolean axiomCriterion(OWLClassExpression subclass, OWLClassExpression superclass);
+
+    /**
+     * Extract contexts.
+     * @param contexts
+     * @param subclass
+     * @param superclass
+     * @return
+     */
+    public abstract Collection<InferenceRuleContext> extractContexts(Map<OWLObject, InferenceRuleContext> contexts, OWLClassExpression subclass, OWLClassExpression superclass);
 
     /**
      * Add an axiom.
@@ -68,7 +79,7 @@ public abstract class InferenceRule<S,T> {
      * Get the context type.
      * @return
      */
-    public Class<? extends InferenceRuleContext> getContextType(){
+    public Class<? extends InferenceRuleContext<S,T>> getContextType(){
         return contextType;
     }
 }
