@@ -1,10 +1,13 @@
 package com.reasoner.saturation;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLObject;
+import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
 
 import com.reasoner.reasoning.rules.InferenceRule;
 import com.reasoner.utils.OntologyUtilities;
@@ -37,5 +40,16 @@ public class ContextProvider{
     public InferenceRule getInferenceRule() {
         return inferenceRule;
     }
+
+    /**
+     * Get the contexts.
+     * @return Map of contexts.
+     */
+    public Collection<InferenceRuleContext> getContextsByAxiom(OWLSubClassOfAxiom axiom) {
+        OWLClassExpression subclass = axiom.getSubClass();
+        OWLClassExpression superclass = axiom.getSuperClass();
+        return inferenceRule.extractContexts(contexts, subclass, superclass);
+    }
+
 
 }

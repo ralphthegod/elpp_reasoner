@@ -2,9 +2,12 @@ package com.reasoner.saturation;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.semanticweb.owlapi.model.OWLEntity;
+import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
 
 import com.reasoner.querying.OntologyAccessManager;
 import com.reasoner.reasoning.rules.InferenceRule;
@@ -18,7 +21,7 @@ public class ContextAccessManager{
         
         ontologyAccessManager.getOntology().signature().forEach((entity) -> {
             inferenceRuleContextProviders.forEach((rule, contextProvider) -> {
-                InferenceRuleContext context = null;
+                InferenceRuleContext<?,?> context = null;
                 try{
                     contextProvider
                         .getInferenceRule()
@@ -41,6 +44,11 @@ public class ContextAccessManager{
             ContextProvider contextProvider = new ContextProvider(rule);
             inferenceRuleContextProviders.put(rule.getClass(), contextProvider);
         });
+    }
+
+    public Collection<InferenceRuleContext<?,?>> getContextByAxiom(OWLSubClassOfAxiom axiom) {
+        Set<InferenceRuleContext<?,?>> contexts = new HashSet<>();
+        // TODO: continue here
     }
 
 }
