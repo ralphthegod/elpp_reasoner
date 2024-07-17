@@ -2,6 +2,7 @@ package com.elppreasoner.reasoning.rules;
 
 import static com.elppreasoner.normalization.NormalizationUtilities.isSuperclassABasicConcept;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -10,11 +11,17 @@ import java.util.Set;
 
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassExpression;
+import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.model.OWLObjectIntersectionOf;
 
+import static com.elppreasoner.normalization.NormalizationUtilities.isSubclassABasicConcept;
 import com.elppreasoner.saturation.contexts.IntersectionSuperclassesIRContext;
 import com.reasoner.reasoning.rules.InferenceRule;
+import com.reasoner.saturation.InferenceRuleContext;
 
+/**
+ * {@code InferenceRule} for intersection superclasses (CR2)
+ */
 public class IntersectionSuperclassesInferenceRule extends InferenceRule<OWLClassExpression, Map<OWLClassExpression, Set<OWLClassExpression>>>{
 
     public IntersectionSuperclassesInferenceRule() {
@@ -41,6 +48,18 @@ public class IntersectionSuperclassesInferenceRule extends InferenceRule<OWLClas
         axioms.computeIfAbsent(operand2, __ -> new HashMap()).computeIfAbsent(operand1, __ -> new HashSet<>())
             .add(superclass);    
         
+    }
+
+    @Override
+    public Collection<InferenceRuleContext> extractContexts(Map<OWLObject, InferenceRuleContext> contexts,
+            OWLClassExpression subclass, OWLClassExpression superclass) {
+        if(isSubclassABasicConcept(subclass) && isSuperclassABasicConcept(superclass)){
+            InferenceRuleContext context = contexts.get(subclass);
+            return new HashSet<InferenceRuleContext>() {{
+                add(context);
+            }};
+        }
+        return new HashSet<>();
     }
     
 }
