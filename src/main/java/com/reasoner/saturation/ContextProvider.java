@@ -3,6 +3,7 @@ package com.reasoner.saturation;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLEntity;
@@ -45,7 +46,7 @@ public class ContextProvider{
      * Get the contexts.
      * @return Map of contexts.
      */
-    public Collection<InferenceRuleContext> getContextsByAxiom(OWLSubClassOfAxiom axiom) {
+    public Set<InferenceRuleContext> getContextsByAxiom(OWLSubClassOfAxiom axiom) {
         OWLClassExpression subclass = axiom.getSubClass();
         OWLClassExpression superclass = axiom.getSuperClass();
         return inferenceRule.extractContexts(contexts, subclass, superclass);
