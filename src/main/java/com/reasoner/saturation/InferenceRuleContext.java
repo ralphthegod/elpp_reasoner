@@ -90,8 +90,8 @@ public abstract class InferenceRuleContext<S,T> {
         return processedAxioms;
     }
 
-    public boolean isActiveContext(){
-        return isActiveContext.get();
+    public AtomicBoolean isActiveContext(){
+        return isActiveContext;
     }
 
     public boolean hasBeenInitialized(){
