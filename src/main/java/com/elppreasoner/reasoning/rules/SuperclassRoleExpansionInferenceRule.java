@@ -52,7 +52,7 @@ public class SuperclassRoleExpansionInferenceRule
     }
 
     @Override
-    public Collection<InferenceRuleContext> extractContexts(Map<OWLObject, InferenceRuleContext> contexts,
+    public Set<InferenceRuleContext> extractContexts(Map<OWLObject, InferenceRuleContext> contexts,
             OWLClassExpression subclass, OWLClassExpression superclass) {
         final HashSet<InferenceRuleContext> result = new HashSet<>();
         if(isSubclassABasicConcept(subclass) && isSuperclassABasicConcept(superclass)){

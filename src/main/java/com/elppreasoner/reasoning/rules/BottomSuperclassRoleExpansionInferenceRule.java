@@ -6,6 +6,7 @@ import static com.elppreasoner.normalization.NormalizationUtilities.isSuperclass
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassExpression;
@@ -36,7 +37,7 @@ public class BottomSuperclassRoleExpansionInferenceRule extends InferenceRule<Ob
     }
 
     @Override
-    public Collection<InferenceRuleContext> extractContexts(Map<OWLObject, InferenceRuleContext> contexts,
+    public Set<InferenceRuleContext> extractContexts(Map<OWLObject, InferenceRuleContext> contexts,
             OWLClassExpression subclass, OWLClassExpression superclass) {
         HashSet<InferenceRuleContext> result = new HashSet<>();
         if(isSubclassABasicConcept(subclass) && isSuperclassABasicConcept(superclass) && superclass.isOWLNothing()){

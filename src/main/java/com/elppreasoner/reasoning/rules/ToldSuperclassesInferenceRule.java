@@ -37,7 +37,7 @@ public class ToldSuperclassesInferenceRule extends InferenceRule<OWLClassExpress
     }
 
     @Override
-    public Collection<InferenceRuleContext> extractContexts(Map<OWLObject, InferenceRuleContext> contexts,
+    public Set<InferenceRuleContext> extractContexts(Map<OWLObject, InferenceRuleContext> contexts,
             OWLClassExpression subclass, OWLClassExpression superclass) {
         if(axiomCriterion(subclass, superclass)){
             InferenceRuleContext context = contexts.get(subclass);

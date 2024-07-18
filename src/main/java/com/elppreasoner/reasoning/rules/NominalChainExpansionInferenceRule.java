@@ -3,6 +3,7 @@ package com.elppreasoner.reasoning.rules;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLIndividual;
@@ -36,7 +37,7 @@ public class NominalChainExpansionInferenceRule extends InferenceRule<Object, Ob
     }
 
     @Override
-    public Collection<InferenceRuleContext> extractContexts(Map<OWLObject, InferenceRuleContext> contexts,
+    public Set<InferenceRuleContext> extractContexts(Map<OWLObject, InferenceRuleContext> contexts,
             OWLClassExpression subclass, OWLClassExpression superclass) {
         HashSet<InferenceRuleContext> result = new HashSet<>();
         if(isSubclassABasicConcept(subclass) && isSuperclassABasicConcept(superclass) && superclass.isOWLNothing()){

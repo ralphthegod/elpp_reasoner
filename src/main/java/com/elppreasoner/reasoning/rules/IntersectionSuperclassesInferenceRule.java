@@ -51,7 +51,7 @@ public class IntersectionSuperclassesInferenceRule extends InferenceRule<OWLClas
     }
 
     @Override
-    public Collection<InferenceRuleContext> extractContexts(Map<OWLObject, InferenceRuleContext> contexts,
+    public Set<InferenceRuleContext> extractContexts(Map<OWLObject, InferenceRuleContext> contexts,
             OWLClassExpression subclass, OWLClassExpression superclass) {
         if(isSubclassABasicConcept(subclass) && isSuperclassABasicConcept(superclass)){
             InferenceRuleContext context = contexts.get(subclass);
