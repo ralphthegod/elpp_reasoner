@@ -2,6 +2,7 @@ package com.reasoner.reasoning.rules;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Set;
 
 import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLEntity;
@@ -43,7 +44,7 @@ public abstract class InferenceRule<S,T> {
      * @param superclass
      * @return
      */
-    public abstract Collection<InferenceRuleContext> extractContexts(Map<OWLObject, InferenceRuleContext> contexts, OWLClassExpression subclass, OWLClassExpression superclass);
+    public abstract Set<InferenceRuleContext> extractContexts(Map<OWLObject, InferenceRuleContext> contexts, OWLClassExpression subclass, OWLClassExpression superclass);
 
     /**
      * Add an axiom.
