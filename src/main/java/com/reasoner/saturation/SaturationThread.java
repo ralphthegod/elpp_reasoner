@@ -5,6 +5,9 @@ import java.util.Set;
 
 import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
 
+/**
+ *  {@code SaturationThread} is a thread that processes axioms in the context of an inference rule.<p>
+ */
 public class SaturationThread extends Thread {
     private final ContextAccessManager contextAccessManager;
     private final Set<InferenceRuleContext> processedContexts = new HashSet<>();
@@ -54,10 +57,18 @@ public class SaturationThread extends Thread {
         });
     }
 
+    /**
+     * Get the axiom that is currently being processed.
+     * @return {@code OWLSubClassOfAxiom} computingAxiom.
+     */
     public OWLSubClassOfAxiom getComputingAxiom() {
         return computingAxiom;
     }
 
+    /**
+     * Get the processed contexts.
+     * @return {@code Set<InferenceRuleContext>} processedContexts.
+     */
     public Set<InferenceRuleContext> getProcessedContexts() {
         return processedContexts;
     }

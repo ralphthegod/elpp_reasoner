@@ -14,6 +14,11 @@ import com.reasoner.reasoning.rules.OWLEntityType;
  */
 public final class OntologyUtilities {
 
+    /**
+     * Get the entity type.
+     * @param entity
+     * @return
+     */
     public static OWLEntityType getEntityType(OWLEntity entity){
         if(entity instanceof OWLClass){
             return OWLEntityType.CLASS;
@@ -24,6 +29,11 @@ public final class OntologyUtilities {
         }
     }
 
+    /**
+     * Get the entity type by class.
+     * @param entityType
+     * @return
+     */
     public static OWLEntityType getEntityTypeByClass(Class<? extends OWLEntity> entityType){
         if(OWLClass.class.isAssignableFrom(entityType)){
             return OWLEntityType.CLASS;
