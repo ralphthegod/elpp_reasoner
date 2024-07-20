@@ -20,7 +20,7 @@ public class ContextAccessManager{
     private final ActiveContexts activeContexts = new ActiveContexts();
     private final Set<OWLSubClassOfAxiom> discardedAxioms = new HashSet<>();
 
-    private class ActiveContexts extends ConcurrentLinkedQueue<InferenceRuleContext> {
+    protected static class ActiveContexts extends ConcurrentLinkedQueue<InferenceRuleContext> {
         
         public boolean activateContext(InferenceRuleContext context) {
             if (context.isActiveContext().compareAndSet(false, true)) {
