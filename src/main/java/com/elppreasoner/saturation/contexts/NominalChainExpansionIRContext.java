@@ -1,5 +1,7 @@
 package com.elppreasoner.saturation.contexts;
 
+import java.util.Set;
+
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
 
@@ -25,6 +27,12 @@ public class NominalChainExpansionIRContext extends InferenceRuleContext<Object,
     @Override
     public boolean hasProcessedAxiom(OWLSubClassOfAxiom axiom) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Set<OWLSubClassOfAxiom> compute() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'compute'");
     }
     
 }

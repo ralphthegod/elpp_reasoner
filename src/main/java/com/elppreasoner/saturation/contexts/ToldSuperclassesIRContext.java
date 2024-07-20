@@ -31,5 +31,11 @@ public class ToldSuperclassesIRContext extends InferenceRuleContext<OWLClassExpr
     public boolean hasProcessedAxiom(OWLSubClassOfAxiom axiom) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    @Override
+    public Set<OWLSubClassOfAxiom> compute() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'compute'");
+    }
     
 }

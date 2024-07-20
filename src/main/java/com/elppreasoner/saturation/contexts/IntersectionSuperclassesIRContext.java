@@ -31,4 +31,10 @@ public class IntersectionSuperclassesIRContext extends InferenceRuleContext<OWLC
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
+    public Set<OWLSubClassOfAxiom> compute() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'compute'");
+    }
+
 }
