@@ -36,6 +36,12 @@ public abstract class InferenceRuleContext<S,T> {
     public abstract void addProcessedAxiom(OWLSubClassOfAxiom axiom);
     public abstract boolean hasProcessedAxiom(OWLSubClassOfAxiom axiom);
     protected abstract boolean isTargetEntity(OWLSubClassOfAxiom axiom);
+    
+    /**
+     * Apply the inference rule on context axioms.
+     * @return {@code Set<OWLSubClassOfAxiom>} conclusions.
+     */
+    public abstract Set<OWLSubClassOfAxiom> compute();
 
     public boolean scheduleAxiom(OWLSubClassOfAxiom axiom){
         if(!isTargetEntity(axiom)) return false;
