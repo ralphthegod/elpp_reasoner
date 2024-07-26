@@ -25,8 +25,10 @@ import org.semanticweb.owlapi.reasoner.OWLReasoner;
 import org.semanticweb.owlapi.util.Version;
 
 import com.reasoner.normalization.OntologyNormalizer;
-import com.reasoner.querying.InferenceRule;
 import com.reasoner.querying.OntologyAccessManager;
+import com.reasoner.reasoning.rules.InferenceRule;
+import com.reasoner.saturation.ContextAccessManager;
+import com.reasoner.saturation.OntologySaturator;
 
 /**
  *  Reasoner class is the main class that implements the OWLReasoner interface.
@@ -38,8 +40,9 @@ public abstract class Reasoner implements OWLReasoner {
 
     protected Map<InferenceType, Boolean> precomputedInferences;
     protected Map<InferenceType, InferenceCalculator> inferenceCalculators;
-    private OntologyAccessManager ontologyAccessManager;
+    private final OntologyAccessManager ontologyAccessManager;
     private OntologyNormalizer ontologyNormalizer;
+    private final OntologySaturator ontologySaturator;
 
     /**
      * Functional interface for inference calculation.
@@ -58,6 +61,7 @@ public abstract class Reasoner implements OWLReasoner {
      */
     public Reasoner(OWLOntology ontology){
         ontologyAccessManager = new OntologyAccessManager(ontology);
+        ontologySaturator = new OntologySaturator(ontologyAccessManager, new ContextAccessManager());
         precomputedInferences = new java.util.HashMap<>();
         inferenceCalculators = new java.util.HashMap<>();
     }
@@ -90,6 +94,13 @@ public abstract class Reasoner implements OWLReasoner {
         precomputedInferences.put(inferenceType, false);
     }
 
+    /**
+     * Add an inference rule to the reasoner.
+     * The inference rule is registered with the OntologyAccessor object.
+     * The context type for the inference rule is registered with the {@code OntologySaturator} object.
+     * @param inferenceRule The inference rule
+     * @param contextType The context type for the inference rule
+     */
     protected void addInferenceRule(InferenceRule inferenceRule){
         ontologyAccessManager.registerRule(inferenceRule);
     }
