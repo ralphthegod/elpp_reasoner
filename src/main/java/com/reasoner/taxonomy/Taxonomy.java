@@ -12,36 +12,31 @@ import org.semanticweb.owlapi.reasoner.impl.OWLClassNodeSet;
 public class Taxonomy {
     private Map<OWLClassExpression, Set<OWLClassExpression>> classToEquivalentClasses;
     private Map<OWLClass, OWLClassNode> classToNode;
-    private Map<OWLClassNode, OWLClassNodeSet> nodeToDirectSuperclasses;
-    private Map<OWLClassNode, OWLClassNodeSet> nodeToDirectSubclasses;
-    private Map<OWLClassNode, OWLClassNodeSet> nodeToAllSuperclasses;
-    private Map<OWLClassNode, OWLClassNodeSet> nodeToAllSubclasses;
+    private Map<OWLClassNode, OWLClassNodeSet> nodeToDirectSuperClasses;
+    private Map<OWLClassNode, OWLClassNodeSet> nodeToDirectSubClasses;
+    private Map<OWLClassNode, OWLClassNodeSet> nodeToAllSuperClasses;
+    private Map<OWLClassNode, OWLClassNodeSet> nodeToAllSubClasses;
 
     public Taxonomy() {}
 
     public Taxonomy(
         Map<OWLClassExpression, Set<OWLClassExpression>> classToEquivalentClasses,
         Map<OWLClass, OWLClassNode> classToNode,
-        Map<OWLClassNode, OWLClassNodeSet> nodeToSuperclasses,
-        Map<OWLClassNode, OWLClassNodeSet> nodeToSubclasses,
-        Map<OWLClassNode, OWLClassNodeSet> nodeToAllSuperclasses,
-        Map<OWLClassNode, OWLClassNodeSet> nodeToAllSubclasses
+        Map<OWLClassNode, OWLClassNodeSet> nodeToDirectSuperClasses,
+        Map<OWLClassNode, OWLClassNodeSet> nodeToDirectSubClasses,
+        Map<OWLClassNode, OWLClassNodeSet> nodeToAllSuperClasses,
+        Map<OWLClassNode, OWLClassNodeSet> nodeToAllSubClasses
     ) {
         this.classToEquivalentClasses = classToEquivalentClasses;
         this.classToNode = classToNode;
-        this.nodeToDirectSuperclasses = nodeToSuperclasses;
-        this.nodeToDirectSubclasses = nodeToSubclasses;
-        this.nodeToAllSuperclasses = nodeToAllSuperclasses;
-        this.nodeToAllSubclasses = nodeToAllSubclasses;
+        this.nodeToDirectSuperClasses = nodeToDirectSuperClasses;
+        this.nodeToDirectSubClasses = nodeToDirectSubClasses;
+        this.nodeToAllSuperClasses = nodeToAllSuperClasses;
+        this.nodeToAllSubClasses = nodeToAllSubClasses;
     }
 
     public Map<OWLClassExpression, Set<OWLClassExpression>> getClassToEquivalentClasses() {
         return classToEquivalentClasses;
-    }
-
-    //
-    public Set<OWLClassExpression> getEquivalentClasses(OWLClassExpression owlClass) {
-        return classToEquivalentClasses.get(owlClass);
     }
 
     public void setClassToEquivalentClasses(Map<OWLClassExpression, Set<OWLClassExpression>> classToEquivalentClasses) {
@@ -52,64 +47,39 @@ public class Taxonomy {
         return classToNode;
     }
 
-    //
-    public OWLClassNode getNode(OWLClass owlClass) {
-        return classToNode.get(owlClass);
-    }
-
     public void setClassToNode(Map<OWLClass, OWLClassNode> classToNode) {
         this.classToNode = classToNode;
     }
 
-    public Map<OWLClassNode, OWLClassNodeSet> getNodeToDirectSuperclasses() {
-        return nodeToDirectSuperclasses;
+    public Map<OWLClassNode, OWLClassNodeSet> getNodeToDirectSuperClasses() {
+        return nodeToDirectSuperClasses;
     }
 
-    //
-    public OWLClassNodeSet getDirectSuperclasses(OWLClassNode node) {
-        return nodeToDirectSuperclasses.get(node);
+    public void setNodeToDirectSuperClasses(Map<OWLClassNode, OWLClassNodeSet> nodeToSuperclasses) {
+        this.nodeToDirectSuperClasses = nodeToSuperclasses;
     }
 
-    public void setNodeToDirectSuperclasses(Map<OWLClassNode, OWLClassNodeSet> nodeToSuperclasses) {
-        this.nodeToDirectSuperclasses = nodeToSuperclasses;
+    public Map<OWLClassNode, OWLClassNodeSet> getNodeToDirectSubClasses() {
+        return nodeToDirectSubClasses;
     }
 
-    public Map<OWLClassNode, OWLClassNodeSet> getNodeToDirectSubclasses() {
-        return nodeToDirectSubclasses;
+    public void setNodeToDirectSubClasses(Map<OWLClassNode, OWLClassNodeSet> nodeToSubclasses) {
+        this.nodeToDirectSubClasses = nodeToSubclasses;
     }
 
-    //
-    public OWLClassNodeSet getDirectSubclasses(OWLClassNode node) {
-        return nodeToDirectSubclasses.get(node);
+    public Map<OWLClassNode, OWLClassNodeSet> getNodeToAllSuperClasses() {
+        return nodeToAllSuperClasses;
     }
 
-    public void setNodeToDirectSubclasses(Map<OWLClassNode, OWLClassNodeSet> nodeToSubclasses) {
-        this.nodeToDirectSubclasses = nodeToSubclasses;
+    public void setNodeToAllSuperClasses(Map<OWLClassNode, OWLClassNodeSet> nodeToAllSuperclasses) {
+        this.nodeToAllSuperClasses = nodeToAllSuperclasses;
     }
 
-    public Map<OWLClassNode, OWLClassNodeSet> getNodeToAllSuperclasses() {
-        return nodeToAllSuperclasses;
+    public Map<OWLClassNode, OWLClassNodeSet> getNodeToAllSubClasses() {
+        return nodeToAllSubClasses;
     }
 
-    //
-    public OWLClassNodeSet getAllSuperclasses(OWLClassNode node) {
-        return nodeToAllSuperclasses.get(node);
-    }
-
-    public void setNodeToAllSuperclasses(Map<OWLClassNode, OWLClassNodeSet> nodeToAllSuperclasses) {
-        this.nodeToAllSuperclasses = nodeToAllSuperclasses;
-    }
-
-    public Map<OWLClassNode, OWLClassNodeSet> getNodeToAllSubclasses() {
-        return nodeToAllSubclasses;
-    }
-
-    //
-    public OWLClassNodeSet getAllSubclasses(OWLClassNode node) {
-        return nodeToAllSubclasses.get(node);
-    }
-
-    public void setNodeToAllSubclasses(Map<OWLClassNode, OWLClassNodeSet> nodeToAllSubclasses) {
-        this.nodeToAllSubclasses = nodeToAllSubclasses;
+    public void setNodeToAllSubClasses(Map<OWLClassNode, OWLClassNodeSet> nodeToAllSubclasses) {
+        this.nodeToAllSubClasses = nodeToAllSubclasses;
     }
 }
