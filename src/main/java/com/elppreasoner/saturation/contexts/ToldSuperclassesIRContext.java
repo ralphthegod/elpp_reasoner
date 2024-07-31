@@ -3,6 +3,7 @@ package com.elppreasoner.saturation.contexts;
 
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import static com.elppreasoner.normalization.NormalizationUtilities.isSubclassABasicConcept;
@@ -14,7 +15,6 @@ import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
 
-import com.github.jsonldjava.shaded.com.google.common.base.Objects;
 import com.reasoner.reasoning.rules.InferenceRule;
 import com.reasoner.saturation.InferenceRuleContext;
 
@@ -35,10 +35,10 @@ public class ToldSuperclassesIRContext extends InferenceRuleContext<OWLClassExpr
 
     @Override
     protected boolean isTargetEntity(OWLSubClassOfAxiom axiom) {
-        OWLClassExpression subClass = axiom.getSubClass();
-        OWLClassExpression superClass = axiom.getSuperClass();
-        final boolean check = (!isSubclassABasicConcept(subClass) || !isSuperclassABasicConcept(superClass)) 
-            || (!Objects.equal(subClass, getEntity()));
+        OWLClassExpression subclass = axiom.getSubClass();
+        OWLClassExpression superclass = axiom.getSuperClass();
+        final boolean check = (!isSubclassABasicConcept(subclass) || !isSuperclassABasicConcept(superclass)) 
+            || (!Objects.equals(subclass, getEntity()));
         return !check;
     }
 
