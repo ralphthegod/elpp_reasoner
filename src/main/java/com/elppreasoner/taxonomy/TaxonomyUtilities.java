@@ -173,6 +173,115 @@ public final class TaxonomyUtilities {
     }
 
     /**
+     * {@code TransitiveSubsumptionsThread} is a thread that reduces transitive subsumptions between the given taxonomy superconcepts (e.g. if A ⊑ B
+     * and B ⊑ C, "ignore" A ⊑ C) and also computes the equivalent concepts for the taxonomy. Used to parallelize this operation.
+     * 
+     * Please refer to {@link TaxonomyUtilities}{@code .reduceTransitiveSubsumptions()} for more information about what this thread's run() method does.
+     */
+    public static class TransitiveSubsumptionsThread extends Thread {
+        /**
+         * The starting index of superconcepts that this thread has to work on.
+         */
+        private final int min;
+        
+        /**
+         * The ending index of superconcepts that this thread has to work on.
+         */
+        private final int max;
+
+        /**
+         * The array of {@code superConcepts} keys. This should be the same for all {@link TransitiveSubsumptionsThread} threads, to make sure that
+         * all threads work on separate portions of superconcepts. It has not been computed within the thread to avoid a different order given by
+         * {@code Map.keySet()} to each thread. 
+         * This should always be {@code (OWLClassExpression[]) taxonomySuperConcepts.keySet().toArray()}.
+         */
+        private final OWLClassExpression[] concepts; // TODO: keep this attribute or it is safe to compute it within the thread? [TEST]
+
+        /**
+         * The superconcepts whose transitive subsumptions have to be reduced.
+         */
+        private final Map<OWLClassExpression, Set<OWLClassExpression>> superConcepts;
+
+        /**
+         * A {@link TaxonomyReductionPOJO} used to keep track of the reductions processed by this thread.
+         */
+        private TaxonomyReductionPOJO processedReductions = null;
+
+        /**
+         * A simple private constructor to prevent the default parameter-less constructor from being used.
+         */
+        @SuppressWarnings("unused")
+        private TransitiveSubsumptionsThread() {
+            throw new UnsupportedOperationException("Cannot instantiate this class with the default constructor, since it does not provide setter methods.");
+        }
+
+        /**
+         * The main constructor of {@link TransitiveSubsumptionsThread}.
+         * @param minIndex The starting index of superconcepts that this thread has to work on.
+         * @param maxIndex The ending index of superconcepts that this thread has to work on.
+         * @param conceptKeys The array of {@code superConcepts} keys, that should be common to all threads of this type.
+         * @param taxonomySuperConcepts The superconcepts whose transitive subsumptions have to be reduced.
+         */
+        public TransitiveSubsumptionsThread(int minIndex, int maxIndex, OWLClassExpression[] conceptKeys, Map<OWLClassExpression, Set<OWLClassExpression>> taxonomySuperConcepts) {
+            this.min = minIndex;
+            this.max = maxIndex;
+            this.concepts = conceptKeys;
+            this.superConcepts = taxonomySuperConcepts;
+        }
+
+        /**
+         * Gets the reductions processed by this thread. If this is called before {@code run()}, a {@code null} value will be returned.
+         * @return {@code processedReductions}
+         */
+        public TaxonomyReductionPOJO getProcessedReductions() {
+            return this.processedReductions;
+        }
+
+        @Override
+        public void run() {
+            Map<OWLClassExpression, Set<OWLClassExpression>> taxonomyEquivalentConcepts = new HashMap<>();
+            Map<OWLClassExpression, Set<OWLClassExpression>> taxonomyDirectSuperConcepts = new HashMap<>();
+
+            OWLClass nothing = OWLManager.getOWLDataFactory().getOWLNothing();
+            taxonomyDirectSuperConcepts.put(nothing, new HashSet<>());
+
+            for (int i = this.min; i < this.max; i++) {
+                OWLClassExpression A = concepts[i];
+                Set<OWLClassExpression> A_superConcepts = superConcepts.get(A);
+                for (OWLClassExpression C: A_superConcepts) {
+                    Set<OWLClassExpression> C_superConcepts = superConcepts.get(C);
+                    if (C_superConcepts.contains(A)) {
+                        taxonomyEquivalentConcepts.putIfAbsent(A, new HashSet<>());
+                        taxonomyEquivalentConcepts.get(A).add(C);
+                    } else {
+                        boolean isDirect_AtoC = true;
+                        taxonomyDirectSuperConcepts.putIfAbsent(A, new HashSet<>());
+                        Iterator<OWLClassExpression> it = taxonomyDirectSuperConcepts.get(A).iterator();
+                        while (it.hasNext()) {
+                            OWLClassExpression B = it.next();
+                            superConcepts.putIfAbsent(B, new HashSet<>()); // TODO: is this thread safe? [TEST]
+                            if (superConcepts.get(B).contains(C)) {
+                                isDirect_AtoC = false;
+                                break;
+                            }
+                            if (C_superConcepts.contains(B)) {
+                                it.remove();
+                            }
+                            if (isDirect_AtoC) {
+                                taxonomyDirectSuperConcepts.putIfAbsent(A, new HashSet<>());
+                                taxonomyDirectSuperConcepts.get(A).add(C);
+                            }
+                        }
+                    }
+                }
+            }
+
+            this.processedReductions = new TaxonomyReductionPOJO(taxonomyEquivalentConcepts, taxonomyDirectSuperConcepts);
+        }
+    }
+
+
+    /**
      * Reduces all transitive subsumptions between the given taxonomy superconcepts (e.g. if A ⊑ B and B ⊑ C, "ignore" A ⊑ C) and also computes the
      * equivalent concepts for the taxonomy. A naive solution for computing the direct superconcepts of A iterates over all superconcepts C of A, and
      * for each of them checks if another superconcept B of A exists with A ⊑ B ⊑ C. If no such B exists, then C is a direct superconcept of A. This
@@ -183,53 +292,53 @@ public final class TaxonomyUtilities {
      * iteration only over the set of direct superconcepts of A that have been found so far. Given A, the algorithm computes two sets: A.equivalentConcepts
      * and A.directSuperConcepts. The first set contains all concepts that are equivalent to A, including A itself. The second set contains exactly one
      * element from each equivalence class of direct superconcepts of A.
+     * 
      * Note that it is safe to execute this algorithm in parallel for multiple concepts A.
      * 
      * Having computed A.equivalentConcepts and A.directSuperConcepts for each A, the construction of the taxonomy is straightforward. We introduce one
      * taxonomy node for each distinct class of equivalent concepts, and "connect" the nodes according to the direct superconcepts relation. Finally, we
      * put the top and the bottom node in the proper positions, even if ⊤ or ⊥ do not occur in the ontology. 
      * @param taxonomySuperConcepts The superconcepts whose transitive subsumptions have to be reduced.
+     * @param concurrentMode Tells whether the taxonomy has to be built in parallel ({@code True}) or not ({@code False}). If this is {@code True},
+     * then the {@code taxonomySuperConcepts} map's keys are retrieved and transformed into an array, which will be split into a number of parts that
+     * are equal to the amount of processors available to the JVM, and each part will be assigned to one separate thread.
      * @return A {@link TaxonomyReductionPOJO} object that contains two variables, retrievable with the corresponding getter methods:
      *     • {@code taxonomyEquivalentConcepts}, the equivalent concepts of the taxonomy
      *     • {@code taxonomyDirectSuperConcepts}, the direct superconcepts of the taxonomy
      */
-    public static TaxonomyReductionPOJO reduceTransitiveSubsumptions(Map<OWLClassExpression, Set<OWLClassExpression>> taxonomySuperConcepts) {
+    public static TaxonomyReductionPOJO reduceTransitiveSubsumptions(Map<OWLClassExpression, Set<OWLClassExpression>> taxonomySuperConcepts, boolean concurrentMode) {
+        final int cpuCount = concurrentMode ? Runtime.getRuntime().availableProcessors() : 1;
+
+        Set<TransitiveSubsumptionsThread> threads = new HashSet<>();
+        int increment = taxonomySuperConcepts.size() / cpuCount;
+        OWLClassExpression[] conceptKeys = (OWLClassExpression[]) taxonomySuperConcepts.keySet().toArray();
+        for (int i = 0; i < cpuCount-1; i++) {
+            threads.add(new TransitiveSubsumptionsThread(i*increment, (i+1)*increment, conceptKeys, taxonomySuperConcepts));
+        }
+        threads.add(new TransitiveSubsumptionsThread((cpuCount-1)*increment, taxonomySuperConcepts.size(), conceptKeys, taxonomySuperConcepts));
+
+        threads.forEach(Thread::start);
+        threads.forEach(thread -> {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
         Map<OWLClassExpression, Set<OWLClassExpression>> taxonomyEquivalentConcepts = new HashMap<>();
         Map<OWLClassExpression, Set<OWLClassExpression>> taxonomyDirectSuperConcepts = new HashMap<>();
-
-        OWLClass nothing = OWLManager.getOWLDataFactory().getOWLNothing();
-        taxonomyDirectSuperConcepts.put(nothing, new HashSet<>());
-
-        for (Entry<OWLClassExpression, Set<OWLClassExpression>> entry: taxonomySuperConcepts.entrySet()) {
-            OWLClassExpression A = entry.getKey();
-            Set<OWLClassExpression> A_superConcepts = entry.getValue();
-            for (OWLClassExpression C: A_superConcepts) {
-                Set<OWLClassExpression> C_superConcepts = taxonomySuperConcepts.get(C);
-                if (C_superConcepts.contains(A)) {
-                    taxonomyEquivalentConcepts.putIfAbsent(A, new HashSet<>());
-                    taxonomyEquivalentConcepts.get(A).add(C);
-                } else {
-                    boolean isDirect_AtoC = true;
-                    taxonomyDirectSuperConcepts.putIfAbsent(A, new HashSet<>());
-                    Iterator<OWLClassExpression> it = taxonomyDirectSuperConcepts.get(A).iterator();
-                    while (it.hasNext()) {
-                        OWLClassExpression B = it.next();
-                        taxonomySuperConcepts.putIfAbsent(B, new HashSet<>());
-                        if (taxonomySuperConcepts.get(B).contains(C)) {
-                            isDirect_AtoC = false;
-                            break;
-                        }
-                        if (C_superConcepts.contains(B)) {
-                            it.remove();
-                        }
-                    }
-                    if (isDirect_AtoC) {
-                        taxonomyDirectSuperConcepts.putIfAbsent(A, new HashSet<>());
-                        taxonomyDirectSuperConcepts.get(A).add(C);
-                    }
-                }
+        threads.forEach(thread -> {
+            TaxonomyReductionPOJO taxonomyReductionPOJO = thread.getProcessedReductions();
+            Map<OWLClassExpression, Set<OWLClassExpression>> processedEquivalentConcepts = taxonomyReductionPOJO.getTaxonomyEquivalentConcepts();
+            if(!processedEquivalentConcepts.isEmpty()){
+                taxonomyEquivalentConcepts.putAll(processedEquivalentConcepts);
             }
-        }
+            Map<OWLClassExpression, Set<OWLClassExpression>> processedDirectSuperConcepts = taxonomyReductionPOJO.getTaxonomyDirectSuperConcepts();
+            if(!processedDirectSuperConcepts.isEmpty()){
+                taxonomyDirectSuperConcepts.putAll(processedDirectSuperConcepts);
+            }
+        });
 
         return new TaxonomyReductionPOJO(taxonomyEquivalentConcepts, taxonomyDirectSuperConcepts);
     }

@@ -32,6 +32,19 @@ import com.reasoner.taxonomy.TaxonomyBuilder;
  */
 public class ELPPTaxonomyBuilder implements TaxonomyBuilder {
 
+    private boolean concurrentMode;
+
+    /**
+     * The public constructor of the taxonomy builder. The set of axioms is not required: the taxonomy builder is a helper class that, once
+     * instantiated, can be used to build the taxonomy for any set of axioms by calling the method Taxonomy build(Set<OWLSubClassOfAxiom> axioms)}.
+     * Similar to any Manager class.
+     * @param isConcurrent Tells whether the taxonomy has to be built in parallel (True) or not (False).
+     */
+    public ELPPTaxonomyBuilder(boolean isConcurrent) {
+        this.concurrentMode = isConcurrent;
+    }
+
+
     /**
      * A method from the {@link TaxonomyBuilder} interface.
      * Given a set of @param axioms, returns a taxonomy of all the concepts involved, by computing:
@@ -49,7 +62,7 @@ public class ELPPTaxonomyBuilder implements TaxonomyBuilder {
     public Taxonomy build(Set<OWLSubClassOfAxiom> axioms) {
         Map<OWLClassExpression, Set<OWLClassExpression>> classToAllSuperclasses = TaxonomyUtilities.computeTaxonomySuperConcepts(axioms);
 
-        TaxonomyReductionPOJO reductionPOJO = TaxonomyUtilities.reduceTransitiveSubsumptions(classToAllSuperclasses);
+        TaxonomyReductionPOJO reductionPOJO = TaxonomyUtilities.reduceTransitiveSubsumptions(classToAllSuperclasses, this.concurrentMode);
         Map<OWLClassExpression, Set<OWLClassExpression>> classToDirectSuperclasses = reductionPOJO.getTaxonomyDirectSuperConcepts();
         Map<OWLClassExpression, Set<OWLClassExpression>> classToEquivalentSuperclasses = reductionPOJO.getTaxonomyEquivalentConcepts();
 

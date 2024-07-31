@@ -120,7 +120,7 @@ public class Taxonomy {
     }
 
     /**
-     * Gets the mapping between a taxonomy node and all of its direct superclasses nodes.
+     * Gets the mapping between a taxonomy node and all of its direct superclass nodes.
      * @return {@code nodeToDirectSuperClasses}
      */
     public Map<OWLClassNode, OWLClassNodeSet> getNodeToDirectSuperClasses() {
@@ -128,7 +128,7 @@ public class Taxonomy {
     }
 
     /**
-     * Sets the mapping between a taxonomy node and all of its direct superclasses nodes.
+     * Sets the mapping between a taxonomy node and all of its direct superclass nodes.
      * @param nodeToSuperclasses
      */
     public void setNodeToDirectSuperClasses(Map<OWLClassNode, OWLClassNodeSet> nodeToSuperclasses) {
@@ -136,7 +136,7 @@ public class Taxonomy {
     }
 
     /**
-     * Gets the mapping between a taxonomy node and all of its direct subclasses nodes.
+     * Gets the mapping between a taxonomy node and all of its direct subclass nodes.
      * @return {@code nodeToDirectSubClasses}
      */
     public Map<OWLClassNode, OWLClassNodeSet> getNodeToDirectSubClasses() {
@@ -144,7 +144,7 @@ public class Taxonomy {
     }
 
     /**
-     * Sets the mapping between a taxonomy node and all of its direct subclasses nodes.
+     * Sets the mapping between a taxonomy node and all of its direct subclass nodes.
      * @param nodeToSubclasses
      */
     public void setNodeToDirectSubClasses(Map<OWLClassNode, OWLClassNodeSet> nodeToSubclasses) {
@@ -152,7 +152,7 @@ public class Taxonomy {
     }
 
     /**
-     * Gets the mapping between a taxonomy node and all of its generic superclasses nodes.
+     * Gets the mapping between a taxonomy node and all of its generic superclass nodes.
      * @return {@code nodeToAllSuperClasses}
      */
     public Map<OWLClassNode, OWLClassNodeSet> getNodeToAllSuperClasses() {
@@ -160,7 +160,7 @@ public class Taxonomy {
     }
 
     /**
-     * Sets the mapping between a taxonomy node and all of its generic superclasses nodes.
+     * Sets the mapping between a taxonomy node and all of its generic superclass nodes.
      * @param nodeToAllSuperclasses
      */
     public void setNodeToAllSuperClasses(Map<OWLClassNode, OWLClassNodeSet> nodeToAllSuperclasses) {
@@ -168,7 +168,7 @@ public class Taxonomy {
     }
 
     /**
-     * Gets the mapping between a taxonomy node and all of its generic subclasses nodes.
+     * Gets the mapping between a taxonomy node and all of its generic subclass nodes.
      * @return {@code nodeToAllSubClasses}
      */
     public Map<OWLClassNode, OWLClassNodeSet> getNodeToAllSubClasses() {
@@ -176,7 +176,7 @@ public class Taxonomy {
     }
 
     /**
-     * Sets the mapping between a taxonomy node and all of its generic subclasses nodes.
+     * Sets the mapping between a taxonomy node and all of its generic subclass nodes.
      * @param nodeToAllSubclasses
      */
     public void setNodeToAllSubClasses(Map<OWLClassNode, OWLClassNodeSet> nodeToAllSubclasses) {
