@@ -18,7 +18,7 @@ import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
 
 /**
  * {@code NormalizationUtilities} is an utility class that implements all the methods that are useful to axioms normalization.
- * Other than methods to identify some class expression as a concept name, an individual,, a basic concept, etc., or
+ * Other than methods to identify some class expression as a concept name, an individual, a basic concept, etc., or
  * to check if a given CBox is in normal form, it also contains an inner class, {@code NormalizationRulesManager}, that provides
  * a set of methods to identify and apply the "normalization rules" (NF2,NF3,...,NF7).
  * Note. NF1 is excluded because it concerns the "role inclusion", not considered in our work. 
