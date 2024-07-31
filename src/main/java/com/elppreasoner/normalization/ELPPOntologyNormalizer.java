@@ -20,22 +20,27 @@ import com.reasoner.normalization.OntologyNormalizer;
 
 
 /**
- * {@code ELPPOntologyNormalizer} is a helper class that makes easier to "normalize" an ontology (knowledge base). This is also called
- * 'normalization phase'. In the following document, this object is also called "normalizer".
- * In our work, given an ontology KB, the equivalent normalized ontology KB' only contains concepts (CBoxes, i.e. sets of GCIs) that are in
- * normal form (NF). A concept C is in normal form ("normalized") if and only if all of its GCIs have either one of the four following forms:
- *     - C1 ⊑ D
- *     - C1 ⊓ C2 ⊑ D
- *     - C1 ⊑ ∃r.C2
- *     - ∃r.C1 ⊑ D
- * where C1 and C2 are basic concepts (also called "individual names" or "nominals") and D can be either a basic concept or a bottom (⊥).
- * [Role inclusions excluded]
+ * <p>{@code ELPPOntologyNormalizer} is a helper class that makes easier to "normalize" an ontology (knowledge base). This is also called
+ * 'normalization phase'. In the following document, this object is also called "normalizer".</p>
  * 
- * This class implements two interfaces:
- *     • {@code OntologyNormalizer}, that you can find in the {@code com.reasoner.normalization} package
- *     • {@code OWLAxiomVisitor}, an interface that uses the Visitor Pattern. When the {@code OWLAxiom.accept(OWLAxiomVisitor)} method is called,
+ * <p>In our work, given an ontology KB, the equivalent normalized ontology KB' only contains concepts (CBoxes, i.e. sets of GCIs) that are in
+ * normal form (NF). A concept C is in normal form ("normalized") if and only if all of its GCIs have either one of the four following forms:
+ * <ul>
+ *     <li>C1 ⊑ D</li>
+ *     <li>C1 ⊓ C2 ⊑ D</li>
+ *     <li>C1 ⊑ ∃r.C2</li>
+ *     <li>∃r.C1 ⊑ D</li>
+ * </ul>
+ * where C1 and C2 are basic concepts (also called "individual names" or "nominals") and D can be either a basic concept or a bottom (⊥).
+ * [Role inclusions excluded]</p>
+ * 
+ * <p>This class implements two interfaces:
+ * <ul>
+ *     <li>{@code OntologyNormalizer}, that you can find in the {@code com.reasoner.normalization} package</li>
+ *     <li>{@code OWLAxiomVisitor}, an interface that uses the Visitor Pattern. When the {@code OWLAxiom.accept(OWLAxiomVisitor)} method is called,
  *       the Visitor Pattern calls the visitor's {@code visit()} method, based on the type of the accepted axiom (in our case, only two types of
- *       axioms are considered, due to the subsumption: {@code OWLSubClassOfAxiom} and {@code OWLEquivalentClassesAxiom}.
+ *       axioms are considered, due to the subsumption: {@code OWLSubClassOfAxiom} and {@code OWLEquivalentClassesAxiom}.</li>
+ * </ul>
  */
 public class ELPPOntologyNormalizer implements OntologyNormalizer, OWLAxiomVisitor {
 
@@ -54,11 +59,12 @@ public class ELPPOntologyNormalizer implements OntologyNormalizer, OWLAxiomVisit
     }
 
     /**
-     * A method from the {@code OntologyNormalizer} interface.
-     * Given an @param ontology, returns the equivalent ontology in normal form. Each one of its CBoxes is checked and normalized if it's not in
-     * normal form. This also means that any of the GCIs in a given CBox is checked and possibly queued up for normalization.
-     * @param ontology The ontology to normalize
-     * @return The equivalent @param ontology normalized
+     * <p>A method from the {@code OntologyNormalizer} interface.</p>
+     * 
+     * <p>Given an {@code ontology}, returns the equivalent ontology in normal form. Each one of its CBoxes is checked and normalized if it's not in
+     * normal form. This also means that any of the GCIs in a given CBox is checked and possibly queued up for normalization.</p>
+     * {@code ontology} The ontology to normalize
+     * @return The equivalent {@code ontology} normalized
      */
     @SuppressWarnings("deprecation")
     @Override
@@ -119,10 +125,11 @@ public class ELPPOntologyNormalizer implements OntologyNormalizer, OWLAxiomVisit
     }
 
     /**
-     * A method from the {@code OWLAxiomVisitor} interface, that uses the Visitor Pattern.
-     * This method is called as a result of the call {@code axiom.accept(OWLAxiomVisitor)} on this @param axiom - a OWLSubClassOfAxiom. This should
-     * be called only if the axiom is not in normal form. The given @param axiom is visited: based on its form, one of the normalization rules (NF1
-     * to NF7) is applied. If any of its GCIs still is not in normal form, it is queued up for normalization.
+     * <p>A method from the {@code OWLAxiomVisitor} interface, that uses the Visitor Pattern.</p>
+     * 
+     * <p>This method is called as a result of the call {@code axiom.accept(OWLAxiomVisitor)} on this {@code axiom} - a OWLSubClassOfAxiom. This should
+     * be called only if the axiom is not in normal form. The given {@code axiom} is visited: based on its form, one of the normalization rules (NF1
+     * to NF7) is applied. If any of its GCIs still is not in normal form, it is queued up for normalization.</p>
      * @param axiom The axiom to normalize
      */
     @Override
@@ -162,11 +169,12 @@ public class ELPPOntologyNormalizer implements OntologyNormalizer, OWLAxiomVisit
     }
 
     /**
-     * A method from the {@code OWLAxiomVisitor} interface, that uses the Visitor Pattern.
-     * This method is called as a result of the call {@code axiom.accept(OWLAxiomVisitor)} on this @param axiom - a OWLEquivalentClassesAxiom. This
-     * should be called only if the axiom is not in normal form. The given @param axiom is visited: since it has the form "C1 ≡ ... ≡ Cn", it is
+     * <p>A method from the {@code OWLAxiomVisitor} interface, that uses the Visitor Pattern.</p>
+     * 
+     * <p>This method is called as a result of the call {@code axiom.accept(OWLAxiomVisitor)} on this {@code axiom} - a OWLEquivalentClassesAxiom. This
+     * should be called only if the axiom is not in normal form. The given {@code axiom} is visited: since it has the form "C1 ≡ ... ≡ Cn", it is
      * simply transformed into the equivalent {@code OWLSubClassOfAxiom} axiom. If any of its GCIs is not in normal form, it is queued up for
-     * normalization.
+     * normalization.</p>
      * @param axiom The axiom to normalize
      */
     @Override

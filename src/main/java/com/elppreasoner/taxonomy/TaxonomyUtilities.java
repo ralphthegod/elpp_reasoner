@@ -20,14 +20,18 @@ import org.semanticweb.owlapi.reasoner.impl.OWLClassNodeSet;
 import com.reasoner.taxonomy.Taxonomy;
 
 /**
- * {@link TaxonomyUtilities} is an utility class that implements all the methods that are useful to taxonomy construction.
- * It mainly provides three methods:
- *     • {@code computeTaxonomySuperConcepts()} computes all (super)concepts in the given @param axioms while discarding
- *       subsumptions involving non-atomic concepts
- *     • {@code reduceTransitiveSubsumptions()} reduces all transitive subsumptions between concepts (e.g. if A ⊑ B and B ⊑ C, "ignore" A ⊑ C)
- *       and also computes the equivalent concepts
- *     • {@code buildTaxonomy()} builds the taxonomy
- * A taxonomy builder should start with a set of axioms and use the three previous methods in the given order.
+ * <p>{@link TaxonomyUtilities} is an utility class that implements all the methods that are useful to taxonomy construction.</p>
+ * 
+ * <p>It mainly provides three methods:
+ * <ul>
+ *     <li>{@code computeTaxonomySuperConcepts()} computes all (super)concepts in the given {@code axioms} while discarding
+ *       subsumptions involving non-atomic concepts</li>
+ *     <li>{@code reduceTransitiveSubsumptions()} reduces all transitive subsumptions between concepts (e.g. if A ⊑ B and B ⊑ C, "ignore" A ⊑ C)
+ *       and also computes the equivalent concepts</li>
+ *     <li>{@code buildTaxonomy()} builds the taxonomy</li>
+ * </ul>
+ * </p>
+ * <p>A taxonomy builder should start with a set of axioms and use the three previous methods in the given order.</p>
  */
 public final class TaxonomyUtilities {
     /**
@@ -38,11 +42,14 @@ public final class TaxonomyUtilities {
     }
 
     /**
-     * Computes all the superconcepts of classes involved in the given {@code axioms}. This is done by iterating over the {@code axioms} and, for
+     * <p>Computes all the superconcepts of classes involved in the given {@code axioms}. This is done by iterating over the {@code axioms} and, for
      * each one of them (e.g. A ⊑ B):
-     *     1. Get its subclass A and compute bottom / top superconcepts for it
-     *     2. Get its superclass B and compute bottom / top superconcepts for it
-     *     3. If A ⊑ B involves atomic concepts, add A and B as superconcepts (this discards subsumptions involving non-atomic concepts)
+     * <ol>
+     *     <li>Get its subclass A and compute bottom / top superconcepts for it</li>
+     *     <li>Get its superclass B and compute bottom / top superconcepts for it</li>
+     *     <li>If A ⊑ B involves atomic concepts, add A and B as superconcepts (this discards subsumptions involving non-atomic concepts)</li>
+     * </ol>
+     * </p>
      * @param axioms The axioms whose superconcepts need to be computed 
      * @return The superconcepts from the given {@code axioms}
      */
@@ -115,13 +122,15 @@ public final class TaxonomyUtilities {
 
 
     /**
-     * A {@link TaxonomyReductionPOJO} is a POJO class intended to make easier the return of multiple values by {@code reduceTransitiveSubsumptions()}.
-     * It provides a simple constructor to initialize the two values that the previously mentioned method returns:
-     *     • {@code taxonomyEquivalentConcepts}: the equivalent concepts computed by the method
-     *     • {@code taxonomyDirectSuperConcepts}: the direct superconcepts computed by the method
-     * Then, these values can be retrieved with the corresponding getter methods.
+     * <p>A {@link TaxonomyReductionPOJO} is a POJO class intended to make easier the return of multiple values by {@code reduceTransitiveSubsumptions()}.</p>
+     * <p>It provides a simple constructor to initialize the two values that the previously mentioned method returns:
+     * <ul>
+     *     <li>{@code taxonomyEquivalentConcepts}: the equivalent concepts computed by the method</li>
+     *     <li>{@code taxonomyDirectSuperConcepts}: the direct superconcepts computed by the method</li>
+     * </ul>
+     * Then, these values can be retrieved with the corresponding getter methods.</p>
      * 
-     * Warning: this class should never be used, except for retrieving the output of {@code reduceTransitiveSubsumptions()}.
+     * <p><em>Warning:</em> this class should never be used, except for retrieving the output of {@code reduceTransitiveSubsumptions()}.</p>
      */
     public static class TaxonomyReductionPOJO {
         /**
@@ -173,10 +182,10 @@ public final class TaxonomyUtilities {
     }
 
     /**
-     * {@code TransitiveSubsumptionsThread} is a thread that reduces transitive subsumptions between the given taxonomy superconcepts (e.g. if A ⊑ B
-     * and B ⊑ C, "ignore" A ⊑ C) and also computes the equivalent concepts for the taxonomy. Used to parallelize this operation.
+     * <p>{@code TransitiveSubsumptionsThread} is a thread that reduces transitive subsumptions between the given taxonomy superconcepts (e.g. if A ⊑ B
+     * and B ⊑ C, "ignore" A ⊑ C) and also computes the equivalent concepts for the taxonomy. Used to parallelize this operation.</p>
      * 
-     * Please refer to {@link TaxonomyUtilities}{@code .reduceTransitiveSubsumptions()} for more information about what this thread's run() method does.
+     * <p>Please refer to {@link TaxonomyUtilities}{@code .reduceTransitiveSubsumptions()} for more information about what this thread's run() method does.</p>
      */
     public static class TransitiveSubsumptionsThread extends Thread {
         /**
@@ -190,10 +199,10 @@ public final class TaxonomyUtilities {
         private final int max;
 
         /**
-         * The array of {@code superConcepts} keys. This should be the same for all {@link TransitiveSubsumptionsThread} threads, to make sure that
+         * <p>The array of {@code superConcepts} keys. This should be the same for all {@link TransitiveSubsumptionsThread} threads, to make sure that
          * all threads work on separate portions of superconcepts. It has not been computed within the thread to avoid a different order given by
-         * {@code Map.keySet()} to each thread. 
-         * This should always be {@code (OWLClassExpression[]) taxonomySuperConcepts.keySet().toArray()}.
+         * {@code Map.keySet()} to each thread. </p>
+         * <p>This should always be {@code (OWLClassExpression[]) taxonomySuperConcepts.keySet().toArray()}.</p>
          */
         private final OWLClassExpression[] concepts; // TODO: keep this attribute or it is safe to compute it within the thread? [TEST]
 
@@ -282,22 +291,24 @@ public final class TaxonomyUtilities {
 
 
     /**
-     * Reduces all transitive subsumptions between the given taxonomy superconcepts (e.g. if A ⊑ B and B ⊑ C, "ignore" A ⊑ C) and also computes the
+     * <p>Reduces all transitive subsumptions between the given taxonomy superconcepts (e.g. if A ⊑ B and B ⊑ C, "ignore" A ⊑ C) and also computes the
      * equivalent concepts for the taxonomy. A naive solution for computing the direct superconcepts of A iterates over all superconcepts C of A, and
      * for each of them checks if another superconcept B of A exists with A ⊑ B ⊑ C. If no such B exists, then C is a direct superconcept of A. This
      * algorithm is inefficient because it performs two nested iterations over the superconcepts of A (it also does not work correctly in the presence
-     * of equivalent concepts).
-     * This method computes the direct superconcepts of A by taking advantage of the fact that the number of all superconcepts for a given concept can
+     * of equivalent concepts).</p>
+     * 
+     * <p>This method computes the direct superconcepts of A by taking advantage of the fact that the number of all superconcepts for a given concept can
      * be sizeable, while the number of direct superconcepts is usually much smaller, often just one. For this reason, this algorithm performs the inner
      * iteration only over the set of direct superconcepts of A that have been found so far. Given A, the algorithm computes two sets: A.equivalentConcepts
      * and A.directSuperConcepts. The first set contains all concepts that are equivalent to A, including A itself. The second set contains exactly one
-     * element from each equivalence class of direct superconcepts of A.
+     * element from each equivalence class of direct superconcepts of A.</p>
      * 
-     * Note that it is safe to execute this algorithm in parallel for multiple concepts A.
+     * <p><em>Note that it is safe to execute this algorithm in parallel for multiple concepts A.</em></p>
      * 
-     * Having computed A.equivalentConcepts and A.directSuperConcepts for each A, the construction of the taxonomy is straightforward. We introduce one
+     * <p>Having computed A.equivalentConcepts and A.directSuperConcepts for each A, the construction of the taxonomy is straightforward. We introduce one
      * taxonomy node for each distinct class of equivalent concepts, and "connect" the nodes according to the direct superconcepts relation. Finally, we
-     * put the top and the bottom node in the proper positions, even if ⊤ or ⊥ do not occur in the ontology. 
+     * put the top and the bottom node in the proper positions, even if ⊤ or ⊥ do not occur in the ontology. </p>
+     * 
      * @param taxonomySuperConcepts The superconcepts whose transitive subsumptions have to be reduced.
      * @param concurrentMode Tells whether the taxonomy has to be built in parallel ({@code True}) or not ({@code False}). If this is {@code True},
      * then the {@code taxonomySuperConcepts} map's keys are retrieved and transformed into an array, which will be split into a number of parts that
@@ -311,7 +322,7 @@ public final class TaxonomyUtilities {
 
         Set<TransitiveSubsumptionsThread> threads = new HashSet<>();
         int increment = taxonomySuperConcepts.size() / cpuCount;
-        OWLClassExpression[] conceptKeys = (OWLClassExpression[]) taxonomySuperConcepts.keySet().toArray();
+        OWLClassExpression[] conceptKeys = taxonomySuperConcepts.keySet().toArray(new OWLClassExpression[0]);
         for (int i = 0; i < cpuCount-1; i++) {
             threads.add(new TransitiveSubsumptionsThread(i*increment, (i+1)*increment, conceptKeys, taxonomySuperConcepts));
         }
@@ -344,8 +355,8 @@ public final class TaxonomyUtilities {
     }
 
     /**
-     * Builds the {@link Taxonomy} based on precomputed taxonomy generic superconcepts, direct superconcepts and equivalent concepts. This is necessary to
-     * adapt each one of its parameters to the {@link Taxonomy} implementation, i.e. creating concept nodes and relationships between nodes.
+     * <p>Builds the {@link Taxonomy} based on precomputed taxonomy generic superconcepts, direct superconcepts and equivalent concepts. This is necessary to
+     * adapt each one of its parameters to the {@link Taxonomy} implementation, i.e. creating concept nodes and relationships between nodes.</p>
      * @param taxonomySuperConcepts The precomputed taxonomy generic superconcepts 
      * @param taxonomyEquivalentConcepts The precomputed taxonomy equivalent concepts
      * @param taxonomyDirectSuperConcepts The precomputed taxonomy direct superconcepts

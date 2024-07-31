@@ -9,17 +9,21 @@ import org.semanticweb.owlapi.reasoner.impl.OWLClassNode;
 import org.semanticweb.owlapi.reasoner.impl.OWLClassNodeSet;
 
 /**
- * A {@link Taxonomy} is a class that represents a taxonomy of classes. It contains information about:
- *     - Equivalency of concepts
- *     - Subsumption between concepts
- *     - Direct subsumption between concepts
+ * <p>A {@link Taxonomy} is a class that represents a taxonomy of classes. It contains information about:
+ * <ul>
+ *     <li>Equivalency of concepts</li>
+ *     <li>Subsumption between concepts</li>
+ *     <li>Direct subsumption between concepts</li>
+ * </ul>
  * It is NOT a graph structure and provides no method to build a taxonomy; instead, it provides six attributes that represent all the valid
- * information about the taxonomy, which has to be built with a compatible {@link TaxonomyBuilder} class.
+ * information about the taxonomy, which has to be built with a compatible {@link TaxonomyBuilder} class.</p>
  * 
- * This is the expected workflow involving a {@link Taxonomy}:
- *     1. Write a manager class that implements {@link TaxonomyBuilder}
- *     2. In its {@code build()} method, write your desired logic
- *     3. After the computation in 2., fill the {@link Taxonomy} fields
+ * <p>This is the expected workflow involving a {@link Taxonomy}:
+ * <ol>
+ *     <li>Write a manager class that implements {@link TaxonomyBuilder}</li>
+ *     <li>In its {@code build()} method, write your desired logic</li>
+ *     <li>After the computation in 2., fill the {@link Taxonomy} fields</li>
+ * </ol></p>
  */
 public class Taxonomy {
     /**
