@@ -66,5 +66,9 @@ public class SuperclassRoleExpansionInferenceRule
         }
         return result;
     }
+
+    public Map<OWLClassExpression, Map<OWLObjectPropertyExpression, Set<OWLClassExpression>>> getFillerToRole() {
+        return fillerToRole;
+    }
     
 }

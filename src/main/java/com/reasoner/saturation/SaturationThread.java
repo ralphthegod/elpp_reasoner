@@ -46,8 +46,8 @@ public class SaturationThread extends Thread {
         }
     }
 
-    private void processAxiom(InferenceRuleContext context){
-        Set<OWLSubClassOfAxiom> conlcusions = context.compute();
+    private void processAxiom(InferenceRuleContext context) {
+        Set<OWLSubClassOfAxiom> conlcusions = context.compute(computingAxiom);
         processedContexts.add(context);
         conlcusions.forEach((axiom) -> {
             contextAccessManager.getContextsByAxiom(axiom).forEach((ctx) -> {
