@@ -59,9 +59,10 @@ public abstract class Reasoner implements OWLReasoner {
      * Dependency injection of the OntologyAccessor object.
      * @param ontologyAccessor The OntologyAccessor object
      */
-    public Reasoner(OWLOntology ontology){
+    public Reasoner(OWLOntology ontology, boolean saturationConcurrentMode){
         ontologyAccessManager = new OntologyAccessManager(ontology);
-        ontologySaturator = new OntologySaturator(ontologyAccessManager, new ContextAccessManager());
+        ontologySaturator = new OntologySaturator(ontologyAccessManager, new ContextAccessManager(), saturationConcurrentMode);
+
         precomputedInferences = new java.util.HashMap<>();
         inferenceCalculators = new java.util.HashMap<>();
     }
@@ -128,41 +129,55 @@ public abstract class Reasoner implements OWLReasoner {
         }
     }
 
+    /**
+     * Gets the ontology saturator.
+     * @return The ontology saturator of this reasoner
+     */
+    public OntologySaturator getOntologySaturator() {
+        return ontologySaturator;
+    }
+
     @Override
     public String getReasonerName() {
         return "ELPP Reasoner";
     }
 
+    // TODO: implement method
     @Override
     public Version getReasonerVersion() {
         
         throw new UnsupportedOperationException("Unimplemented method 'getReasonerVersion'");
     }
 
+    // TODO: implement method
     @Override
     public BufferingMode getBufferingMode() {
         
         throw new UnsupportedOperationException("Unimplemented method 'getBufferingMode'");
     }
 
+    // TODO: implement method
     @Override
     public void flush() {
         
         throw new UnsupportedOperationException("Unimplemented method 'flush'");
     }
 
+    // TODO: implement method
     @Override
     public List<OWLOntologyChange> getPendingChanges() {
         
         throw new UnsupportedOperationException("Unimplemented method 'getPendingChanges'");
     }
 
+    // TODO: implement method
     @Override
     public Set<OWLAxiom> getPendingAxiomAdditions() {
         
         throw new UnsupportedOperationException("Unimplemented method 'getPendingAxiomAdditions'");
     }
 
+    // TODO: implement method
     @Override
     public Set<OWLAxiom> getPendingAxiomRemovals() {
         
@@ -174,114 +189,133 @@ public abstract class Reasoner implements OWLReasoner {
         return ontologyAccessManager.getOntology();
     }
 
+    // TODO: implement method
     @Override
     public void interrupt() {
         
         throw new UnsupportedOperationException("Unimplemented method 'interrupt'");
     }
 
+    // TODO: implement method
     @Override
     public boolean isPrecomputed(InferenceType inferenceType) {
         
         throw new UnsupportedOperationException("Unimplemented method 'isPrecomputed'");
     }
 
+    // TODO: implement method
     @Override
     public Set<InferenceType> getPrecomputableInferenceTypes() {
         
         throw new UnsupportedOperationException("Unimplemented method 'getPrecomputableInferenceTypes'");
     }
 
+    // TODO: implement method
     @Override
     public boolean isConsistent() {
         
         throw new UnsupportedOperationException("Unimplemented method 'isConsistent'");
     }
 
+    // TODO: implement method
     @Override
     public boolean isSatisfiable(OWLClassExpression classExpression) {
         
         throw new UnsupportedOperationException("Unimplemented method 'isSatisfiable'");
     }
 
+    // TODO: implement method
     @Override
     public Node<OWLClass> getUnsatisfiableClasses() {
         
         throw new UnsupportedOperationException("Unimplemented method 'getUnsatisfiableClasses'");
     }
 
+    // TODO: implement method
     @Override
     public boolean isEntailed(OWLAxiom axiom) {
         
         throw new UnsupportedOperationException("Unimplemented method 'isEntailed'");
     }
 
+    // TODO: implement method
     @Override
     public boolean isEntailed(Set<? extends OWLAxiom> axioms) {
         
         throw new UnsupportedOperationException("Unimplemented method 'isEntailed'");
     }
 
+    // TODO: implement method
     @Override
     public boolean isEntailmentCheckingSupported(AxiomType<?> axiomType) {
         
         throw new UnsupportedOperationException("Unimplemented method 'isEntailmentCheckingSupported'");
     }
 
+    // TODO: implement method
     @Override
     public Node<OWLClass> getTopClassNode() {
         
         throw new UnsupportedOperationException("Unimplemented method 'getTopClassNode'");
     }
 
+    // TODO: implement method
     @Override
     public Node<OWLClass> getBottomClassNode() {
         
         throw new UnsupportedOperationException("Unimplemented method 'getBottomClassNode'");
     }
 
+    // TODO: implement method
     @Override
     public NodeSet<OWLClass> getSubClasses(OWLClassExpression ce, boolean direct) {
         
         throw new UnsupportedOperationException("Unimplemented method 'getSubClasses'");
     }
 
+    // TODO: implement method
     @Override
     public NodeSet<OWLClass> getSuperClasses(OWLClassExpression ce, boolean direct) {
         
         throw new UnsupportedOperationException("Unimplemented method 'getSuperClasses'");
     }
 
+    // TODO: implement method
     @Override
     public Node<OWLClass> getEquivalentClasses(OWLClassExpression ce) {
         
         throw new UnsupportedOperationException("Unimplemented method 'getEquivalentClasses'");
     }
 
+    // TODO: implement method
     @Override
     public NodeSet<OWLClass> getDisjointClasses(OWLClassExpression ce) {
         
         throw new UnsupportedOperationException("Unimplemented method 'getDisjointClasses'");
     }
 
+    // TODO: implement method
     @Override
     public Node<OWLObjectPropertyExpression> getTopObjectPropertyNode() {
         
         throw new UnsupportedOperationException("Unimplemented method 'getTopObjectPropertyNode'");
     }
 
+    // TODO: implement method
     @Override
     public Node<OWLObjectPropertyExpression> getBottomObjectPropertyNode() {
         
         throw new UnsupportedOperationException("Unimplemented method 'getBottomObjectPropertyNode'");
     }
 
+    // TODO: implement method
     @Override
     public NodeSet<OWLObjectPropertyExpression> getSubObjectProperties(OWLObjectPropertyExpression pe, boolean direct) {
         
         throw new UnsupportedOperationException("Unimplemented method 'getSubObjectProperties'");
     }
 
+    // TODO: implement method
     @Override
     public NodeSet<OWLObjectPropertyExpression> getSuperObjectProperties(OWLObjectPropertyExpression pe,
             boolean direct) {
@@ -289,132 +323,154 @@ public abstract class Reasoner implements OWLReasoner {
         throw new UnsupportedOperationException("Unimplemented method 'getSuperObjectProperties'");
     }
 
+    // TODO: implement method
     @Override
     public Node<OWLObjectPropertyExpression> getEquivalentObjectProperties(OWLObjectPropertyExpression pe) {
         
         throw new UnsupportedOperationException("Unimplemented method 'getEquivalentObjectProperties'");
     }
 
+    // TODO: implement method
     @Override
     public NodeSet<OWLObjectPropertyExpression> getDisjointObjectProperties(OWLObjectPropertyExpression pe) {
         
         throw new UnsupportedOperationException("Unimplemented method 'getDisjointObjectProperties'");
     }
 
+    // TODO: implement method
     @Override
     public Node<OWLObjectPropertyExpression> getInverseObjectProperties(OWLObjectPropertyExpression pe) {
         
         throw new UnsupportedOperationException("Unimplemented method 'getInverseObjectProperties'");
     }
 
+    // TODO: implement method
     @Override
     public NodeSet<OWLClass> getObjectPropertyDomains(OWLObjectPropertyExpression pe, boolean direct) {
         
         throw new UnsupportedOperationException("Unimplemented method 'getObjectPropertyDomains'");
     }
 
+    // TODO: implement method
     @Override
     public NodeSet<OWLClass> getObjectPropertyRanges(OWLObjectPropertyExpression pe, boolean direct) {
         
         throw new UnsupportedOperationException("Unimplemented method 'getObjectPropertyRanges'");
     }
 
+    // TODO: implement method
     @Override
     public Node<OWLDataProperty> getTopDataPropertyNode() {
         
         throw new UnsupportedOperationException("Unimplemented method 'getTopDataPropertyNode'");
     }
 
+    // TODO: implement method
     @Override
     public Node<OWLDataProperty> getBottomDataPropertyNode() {
         
         throw new UnsupportedOperationException("Unimplemented method 'getBottomDataPropertyNode'");
     }
 
+    // TODO: implement method
     @Override
     public NodeSet<OWLDataProperty> getSubDataProperties(OWLDataProperty pe, boolean direct) {
         
         throw new UnsupportedOperationException("Unimplemented method 'getSubDataProperties'");
     }
 
+    // TODO: implement method
     @Override
     public NodeSet<OWLDataProperty> getSuperDataProperties(OWLDataProperty pe, boolean direct) {
         
         throw new UnsupportedOperationException("Unimplemented method 'getSuperDataProperties'");
     }
 
+    // TODO: implement method
     @Override
     public Node<OWLDataProperty> getEquivalentDataProperties(OWLDataProperty pe) {
         
         throw new UnsupportedOperationException("Unimplemented method 'getEquivalentDataProperties'");
     }
 
+    // TODO: implement method
     @Override
     public NodeSet<OWLDataProperty> getDisjointDataProperties(OWLDataPropertyExpression pe) {
         
         throw new UnsupportedOperationException("Unimplemented method 'getDisjointDataProperties'");
     }
 
+    // TODO: implement method
     @Override
     public NodeSet<OWLClass> getDataPropertyDomains(OWLDataProperty pe, boolean direct) {
         
         throw new UnsupportedOperationException("Unimplemented method 'getDataPropertyDomains'");
     }
 
+    // TODO: implement method
     @Override
     public NodeSet<OWLClass> getTypes(OWLNamedIndividual ind, boolean direct) {
         
         throw new UnsupportedOperationException("Unimplemented method 'getTypes'");
     }
 
+    // TODO: implement method
     @Override
     public NodeSet<OWLNamedIndividual> getInstances(OWLClassExpression ce, boolean direct) {
         
         throw new UnsupportedOperationException("Unimplemented method 'getInstances'");
     }
 
+    // TODO: implement method
     @Override
     public NodeSet<OWLNamedIndividual> getObjectPropertyValues(OWLNamedIndividual ind, OWLObjectPropertyExpression pe) {
         
         throw new UnsupportedOperationException("Unimplemented method 'getObjectPropertyValues'");
     }
 
+    // TODO: implement method
     @Override
     public Set<OWLLiteral> getDataPropertyValues(OWLNamedIndividual ind, OWLDataProperty pe) {
         
         throw new UnsupportedOperationException("Unimplemented method 'getDataPropertyValues'");
     }
 
+    // TODO: implement method
     @Override
     public Node<OWLNamedIndividual> getSameIndividuals(OWLNamedIndividual ind) {
         
         throw new UnsupportedOperationException("Unimplemented method 'getSameIndividuals'");
     }
 
+    // TODO: implement method
     @Override
     public NodeSet<OWLNamedIndividual> getDifferentIndividuals(OWLNamedIndividual ind) {
         
         throw new UnsupportedOperationException("Unimplemented method 'getDifferentIndividuals'");
     }
 
+    // TODO: implement method
     @Override
     public long getTimeOut() {
         
         throw new UnsupportedOperationException("Unimplemented method 'getTimeOut'");
     }
 
+    // TODO: implement method
     @Override
     public FreshEntityPolicy getFreshEntityPolicy() {
         
         throw new UnsupportedOperationException("Unimplemented method 'getFreshEntityPolicy'");
     }
 
+    // TODO: implement method
     @Override
     public IndividualNodeSetPolicy getIndividualNodeSetPolicy() {
         
         throw new UnsupportedOperationException("Unimplemented method 'getIndividualNodeSetPolicy'");
     }
 
+    // TODO: implement method
     @Override
     public void dispose() {
         
