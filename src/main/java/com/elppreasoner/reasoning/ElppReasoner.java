@@ -59,6 +59,12 @@ public class ElppReasoner extends Reasoner {
     private long taxonomyBuildingTime;
 
     /**
+     * Exception message to throw when a taxonomy has not been computed yet.
+     */
+    private static final String TAXONOMY_NOT_COMPUTED_YET = "No taxonomy has been computed yet. Please, call precomputeInferences(InferenceType.CLASS_HIERARCHY) on this reasoner.";
+
+
+    /**
      * Uses the given ontology accessor to create a new ELPP reasoner.
      * Dependency injection is used to provide the ontology accessor.
      * @param ontologyAccessor
@@ -125,6 +131,16 @@ public class ElppReasoner extends Reasoner {
     }
 
 
+    /**
+     * Custom exception to be thrown when a taxonomy has not been computed yet.
+     */
+    public class NullTaxonomyException extends RuntimeException { 
+        public NullTaxonomyException(String msg) {
+            super(msg);
+        }
+    }
+
+
     @Override
     public String getReasonerName() {
         return "ELPP Reasoner";
@@ -165,16 +181,19 @@ public class ElppReasoner extends Reasoner {
         throw new UnsupportedOperationException("Unimplemented method 'interrupt'");
     }
 
+    // TODO: implement method
     @Override
     public boolean isConsistent() {
         throw new UnsupportedOperationException("Unimplemented method 'isConsistent'");
     }
 
+    // TODO: implement method
     @Override
     public boolean isSatisfiable(OWLClassExpression classExpression) {        
         throw new UnsupportedOperationException("Unimplemented method 'isSatisfiable'");
     }
 
+    // TODO: implement method
     @Override
     public Node<OWLClass> getUnsatisfiableClasses() {
         throw new UnsupportedOperationException("Unimplemented method 'getUnsatisfiableClasses'");
@@ -201,39 +220,44 @@ public class ElppReasoner extends Reasoner {
         throw new UnsupportedOperationException("Unimplemented method 'isEntailmentCheckingSupported'");
     }
 
-    // TODO: implement method
     @Override
     public Node<OWLClass> getTopClassNode() {
-        
-        throw new UnsupportedOperationException("Unimplemented method 'getTopClassNode'");
+        if (taxonomy == null) {
+            throw new NullTaxonomyException(TAXONOMY_NOT_COMPUTED_YET);
+        }
+        return taxonomy.getTopClassNode();
     }
 
-    // TODO: implement method
     @Override
     public Node<OWLClass> getBottomClassNode() {
-        
-        throw new UnsupportedOperationException("Unimplemented method 'getBottomClassNode'");
+        if (taxonomy == null) {
+            throw new NullTaxonomyException(TAXONOMY_NOT_COMPUTED_YET);
+        }
+        return taxonomy.getBottomClassNode();
     }
 
-    // TODO: implement method
     @Override
     public NodeSet<OWLClass> getSubClasses(OWLClassExpression ce, boolean direct) {
-        
-        throw new UnsupportedOperationException("Unimplemented method 'getSubClasses'");
+        if (taxonomy == null) {
+            throw new NullTaxonomyException(TAXONOMY_NOT_COMPUTED_YET);
+        }
+        return taxonomy.getSubClasses(ce, direct);
     }
 
-    // TODO: implement method
     @Override
     public NodeSet<OWLClass> getSuperClasses(OWLClassExpression ce, boolean direct) {
-        
-        throw new UnsupportedOperationException("Unimplemented method 'getSuperClasses'");
+        if (taxonomy == null) {
+            throw new NullTaxonomyException(TAXONOMY_NOT_COMPUTED_YET);
+        }
+        return taxonomy.getSuperClasses(ce, direct);
     }
 
-    // TODO: implement method
     @Override
     public Node<OWLClass> getEquivalentClasses(OWLClassExpression ce) {
-        
-        throw new UnsupportedOperationException("Unimplemented method 'getEquivalentClasses'");
+        if (taxonomy == null) {
+            throw new NullTaxonomyException(TAXONOMY_NOT_COMPUTED_YET);
+        }
+        return taxonomy.getEquivalentClasses(ce);
     }
 
     @Override

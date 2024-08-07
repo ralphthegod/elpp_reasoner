@@ -69,6 +69,11 @@ import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
 public final class NormalizationUtilities {
 
     /**
+     * Token used to identify generated classes (dummy).
+     */
+    public static final String GENERATED_CLASS = "#GENERATED";
+
+    /**
      * A simple private constructor to prevent the default parameter-less constructor from being used, as this is just a utility class.
      */
     private NormalizationUtilities() {
@@ -265,7 +270,7 @@ public final class NormalizationUtilities {
         public static OWLClass generateOWLClass(OWLOntology ontology, OWLClassExpression subclass, OWLClassExpression superclass) {
             return (new OWLDataFactoryImpl()).getOWLClass(
                 ontology.getOWLOntologyManager().getOntologyDocumentIRI(ontology) +
-                "#GENERATED" +
+                GENERATED_CLASS +
                 subclass.toString().hashCode() +
                 superclass.toString().hashCode()
                 );

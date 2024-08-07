@@ -128,7 +128,8 @@ public abstract class Reasoner implements OWLReasoner {
 
     @Override
     public boolean isPrecomputed(InferenceType inferenceType) {
-        return precomputedInferences.get(inferenceType);
+        Boolean precomputed = precomputedInferences.get(inferenceType);
+        return precomputed != null && precomputed;
     }
 
     @Override
