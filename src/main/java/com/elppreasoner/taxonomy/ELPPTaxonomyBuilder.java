@@ -39,6 +39,17 @@ public class ELPPTaxonomyBuilder implements TaxonomyBuilder {
     private boolean concurrentMode;
 
     /**
+     * <p> The public constructor of the taxonomy builder. The set of axioms is not required: the taxonomy builder is a helper class that, once
+     * instantiated, can be used to build the taxonomy for any set of axioms by calling the method Taxonomy build(Set<OWLSubClassOfAxiom> axioms)}.
+     * Similar to any Manager class.</p>
+     * <p> <em>Warning.</em> This constructor makes the taxonomy builder not concurrent. If you want to explicit the {@code concurrentMode}, please use the other constructor
+     * {@code ELPPTaxonomyBuilder(boolean isConcurrent)} instead. </p>
+     */
+    public ELPPTaxonomyBuilder() {
+        this.concurrentMode = false;
+    }
+
+    /**
      * The public constructor of the taxonomy builder. The set of axioms is not required: the taxonomy builder is a helper class that, once
      * instantiated, can be used to build the taxonomy for any set of axioms by calling the method Taxonomy build(Set<OWLSubClassOfAxiom> axioms)}.
      * Similar to any Manager class.

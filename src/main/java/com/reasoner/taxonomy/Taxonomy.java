@@ -3,6 +3,7 @@ package com.reasoner.taxonomy;
 import java.util.Map;
 import java.util.Set;
 
+import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.reasoner.impl.OWLClassNode;
@@ -59,6 +60,12 @@ public class Taxonomy {
      * other A-nodes (each one of them represents an OWL class) such that A ⊑ ... ⊑ B. This is called a "generic subsumption" between A and B.
      */
     private Map<OWLClassNode, OWLClassNodeSet> nodeToAllSubClasses;
+
+    /**
+     * Exception message to throw when a taxonomy has not been computed yet.
+     */
+    private static final String NOT_AN_OWLCLASS_INSTANCE = "The provided OWLClassExpression must be an instance of OWLClass.";
+
 
     /**
      * A simple, empty constructor for {@link Taxonomy}. This is useful when you have not computed the taxonomy information yet, but want to
@@ -185,5 +192,86 @@ public class Taxonomy {
      */
     public void setNodeToAllSubClasses(Map<OWLClassNode, OWLClassNodeSet> nodeToAllSubclasses) {
         this.nodeToAllSubClasses = nodeToAllSubclasses;
+    }
+
+
+    /**
+     * Gets the {@code Node} corresponding to the top node (containing {@code owl:Thing}) in the class hierarchy.
+     * @return A {@code Node} containing {@code owl:Thing} that is the top node in the class hierarchy. This {@code Node} is essentially equal to
+     * the {@code Node} returned by calling {@code getEquivalentClasses(org.semanticweb.owlapi.model.OWLClassExpression)} with a parameter of
+     * {@code owl:Thing}.
+     */
+    public OWLClassNode getTopClassNode() {
+        return classToNode.get(OWLManager.getOWLDataFactory().getOWLThing());
+    }
+
+    /**
+     * Gets the {@code Node} corresponding to the bottom node (containing {@code owl:Thing}) in the class hierarchy.
+     * @return A {@code Node} containing {@code owl:Nothing} that is the bottom node in the hierarchy. This {@code Node} is essentially equal to
+     * the {@code Node} returned by calling {@code getEquivalentClasses(org.semanticweb.owlapi.model.OWLClassExpression)} with a parameter of
+     * {@code owl:Nothing}.
+     */
+    public OWLClassNode getBottomClassNode() {
+        return classToNode.get(OWLManager.getOWLDataFactory().getOWLNothing());
+    }
+
+    /**
+     * Gets the set of named classes that are the strict (potentially direct) subclasses of the specified class expression with respect to the
+     * reasoner axioms. Note that the classes are returned as a {@link org.semanticweb.owlapi.reasoner.NodeSet}.
+     * @param ce The class expression whose strict (direct) subclasses are to be retrieved
+     * @param direct Specifies if the direct subclasses should be retrived ({@code true}) or if the all subclasses (descendant) classes should
+     * be retrieved ({@code false})
+     * @return If {@code direct} is {@code true}, a {@code NodeSet} such that for each class {@code C} in the {@code NodeSet} the set of reasoner
+     * axioms entails {@code DirectSubClassOf(C, ce)}. If {@code direct} is {@code false}, a {@code NodeSet} such that for each class {@code C} in
+     * the {@code NodeSet} the set of reasoner axioms entails {@code StrictSubClassOf(C, ce)}. If {@code ce} is equivalent to {@code owl:Nothing}
+     * then the empty {@code NodeSet} will be returned
+     */
+    public OWLClassNodeSet getSubClasses(OWLClassExpression ce, boolean direct) {
+        if (!(ce instanceof OWLClass)) {
+            throw new IllegalArgumentException(NOT_AN_OWLCLASS_INSTANCE);
+        }
+        OWLClassNode node = classToNode.get(ce);
+        return direct ? nodeToDirectSubClasses.get(node) : nodeToAllSubClasses.get(node);
+    }
+
+    /**
+     * Gets the set of named classes that are the strict (potentially direct) superclasses of the specified class expression with respect to the
+     * reasoner axioms. Note that the classes are returned as a {@link org.semanticweb.owlapi.reasoner.NodeSet}.
+     * @param ce The class expression whose strict (direct) superclasses are to be retrieved
+     * @param direct Specifies if the direct superclasses should be retrived ({@code true}) or if the all superclasses (descendant) classes should
+     * be retrieved ({@code false})
+     * @return If {@code direct} is {@code true}, a {@code NodeSet} such that for each class {@code C} in the {@code NodeSet} the set of reasoner
+     * axioms entails {@code DirectSubClassOf(ce, C)}. If {@code direct} is {@code false}, a {@code NodeSet} such that for each class {@code C} in
+     * the {@code NodeSet} the set of reasoner axioms entails {@code StrictSubClassOf(C, ce)}. If {@code ce} is equivalent to {@code owl:Nothing}
+     * then the empty {@code NodeSet} will be returned.
+     */
+    public OWLClassNodeSet getSuperClasses(OWLClassExpression ce, boolean direct) {
+        if (!(ce instanceof OWLClass)) {
+            throw new IllegalArgumentException(NOT_AN_OWLCLASS_INSTANCE);
+        }
+        OWLClassNode node = classToNode.get(ce);
+        return direct ? nodeToDirectSuperClasses.get(node) : nodeToAllSuperClasses.get(node);
+    }
+
+    /**
+     * Gets the set of named classes that are equivalent to the specified class expression with respect to the set of reasoner axioms. The classes
+     * are returned as a {@link org.semanticweb.owlapi.reasoner.Node}.
+     * @param ce The class expression whose equivalent classes are to be retrieved.
+     * @return A node containing the named classes such that for each named class {@code C} in the node the root ontology imports closure entails
+     * {@code EquivalentClasses(ce, C)}. If {@code ce} is not a class name (i.e. it is an anonymous class expression) and there are no such classes
+     * {@code C} then the node will be empty. If {@code ce} is a named class then {@code ce} will be contained in the node. If {@code ce} is
+     * unsatisfiable with respect to the set of reasoner axioms then the node representing and containing {@code owl:Nothing}, i.e. the bottom node,
+     * will be returned. If {@code ce} is equivalent to {@code owl:Thing} with respect to the set of reasoner axioms then the node representing and
+     * containing {@code owl:Thing}, i.e. the top node, will be returned.
+     */
+    public OWLClassNode getEquivalentClasses(OWLClassExpression ce) {
+        if (!(ce instanceof OWLClass)) {
+            throw new IllegalArgumentException(NOT_AN_OWLCLASS_INSTANCE);
+        }
+        OWLClassNode owlClassNode = new OWLClassNode();
+        for (OWLClassExpression c : classToEquivalentClasses.get(ce)) {
+            owlClassNode.add((OWLClass) c);
+        }
+        return owlClassNode;
     }
 }
