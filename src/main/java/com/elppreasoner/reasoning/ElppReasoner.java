@@ -1,6 +1,10 @@
 package com.elppreasoner.reasoning;
 
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.semanticweb.owlapi.model.AxiomType;
@@ -9,6 +13,7 @@ import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLDataPropertyExpression;
+import org.semanticweb.owlapi.model.OWLEquivalentClassesAxiom;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
@@ -21,8 +26,12 @@ import org.semanticweb.owlapi.reasoner.IndividualNodeSetPolicy;
 import org.semanticweb.owlapi.reasoner.InferenceType;
 import org.semanticweb.owlapi.reasoner.Node;
 import org.semanticweb.owlapi.reasoner.NodeSet;
+import org.semanticweb.owlapi.reasoner.UnsupportedEntailmentTypeException;
+import org.semanticweb.owlapi.reasoner.impl.OWLClassNode;
 import org.semanticweb.owlapi.util.Version;
 
+import com.elppreasoner.normalization.ELPPOntologyNormalizer;
+import com.elppreasoner.normalization.NormalizationUtilities;
 import com.elppreasoner.reasoning.rules.BottomSuperclassRoleExpansionInferenceRule;
 import com.elppreasoner.reasoning.rules.IntersectionSuperclassesInferenceRule;
 import com.elppreasoner.reasoning.rules.NominalChainExpansionInferenceRule;
@@ -87,7 +96,7 @@ public class ElppReasoner extends Reasoner {
      * Gets the time elapsed to saturate the given ontology, in seconds.
      * @return The saturation time
      */
-    public long saturationTime() {
+    public long getSaturationTime() {
         return saturationTime;
     }
 
@@ -95,7 +104,7 @@ public class ElppReasoner extends Reasoner {
      * Gets the time elapsed to build the taxonomy for the given saturated ontology, in seconds.
      * @return The taxonomy building time
      */
-    public long taxonomyBuildingTime() {
+    public long getTaxonomyBuildingTime() {
         return taxonomyBuildingTime;
     }
 
@@ -122,12 +131,12 @@ public class ElppReasoner extends Reasoner {
         // Saturation
         time = System.nanoTime();
         Set<OWLSubClassOfAxiom> conclusions = getOntologySaturator().saturate();
-        saturationTime = (System.nanoTime() - time) / 1_000_000_000;
+        this.saturationTime = (System.nanoTime() - time) / 1_000_000_000;
 
         // Taxonomy
         time = System.nanoTime();
         this.taxonomy = taxonomyBuilder.build(conclusions);
-        taxonomyBuildingTime = (System.nanoTime() - time) / 1_000_000_000;
+        this.taxonomyBuildingTime = (System.nanoTime() - time) / 1_000_000_000;
     }
 
 
@@ -181,43 +190,93 @@ public class ElppReasoner extends Reasoner {
         throw new UnsupportedOperationException("Unimplemented method 'interrupt'");
     }
 
-    // TODO: implement method
+    // TODO: implement method?
     @Override
     public boolean isConsistent() {
         throw new UnsupportedOperationException("Unimplemented method 'isConsistent'");
     }
 
-    // TODO: implement method
+    // TODO: implement method?
     @Override
     public boolean isSatisfiable(OWLClassExpression classExpression) {        
         throw new UnsupportedOperationException("Unimplemented method 'isSatisfiable'");
     }
 
-    // TODO: implement method
+    // TODO: implement method?
     @Override
     public Node<OWLClass> getUnsatisfiableClasses() {
         throw new UnsupportedOperationException("Unimplemented method 'getUnsatisfiableClasses'");
     }
 
-    // TODO: implement method
+    /**
+     * Normalizes a given axiom and checks if it is entailed.
+     * @param axiom The axiom to normalize and whose entailment is checked
+     * @return {@code true} if the given axiom post-normalization is entailed; {@code false} otherwise
+     */
+    private boolean normalizeAndCheckEntailment(OWLAxiom axiom) {
+        Map<OWLClass, OWLClassNode> classToNode = taxonomy.getClassToNode();
+
+        ELPPOntologyNormalizer normalizer = new ELPPOntologyNormalizer();
+        Set<OWLAxiom> axiomsToNormalize = new HashSet<>();
+        axiomsToNormalize.add(axiom);
+        Set<OWLAxiom> normalizedAxiom = normalizer.normalize(axiomsToNormalize);
+        
+        for (OWLAxiom a : normalizedAxiom) {
+            OWLSubClassOfAxiom sAxiom = (OWLSubClassOfAxiom) a;
+            if (!classToNode.containsKey(sAxiom.getSubClass()) || !classToNode.containsKey(sAxiom.getSuperClass())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     @Override
     public boolean isEntailed(OWLAxiom axiom) {
+        if (!isEntailmentCheckingSupported(axiom.getAxiomType())) {
+            throw new UnsupportedEntailmentTypeException(axiom);
+        }
+
+        if (taxonomy == null) {
+            throw new NullTaxonomyException(TAXONOMY_NOT_COMPUTED_YET);
+        }
         
-        throw new UnsupportedOperationException("Unimplemented method 'isEntailed'");
+        AxiomType<?> axiomType = axiom.getAxiomType();
+
+        Map<OWLClass, OWLClassNode> classToNode = taxonomy.getClassToNode();
+
+        if (Objects.equals(axiomType, AxiomType.SUBCLASS_OF)) {
+            OWLSubClassOfAxiom subClassOfAxiom = (OWLSubClassOfAxiom) axiom;
+            if (NormalizationUtilities.isCBoxInNormalForm(subClassOfAxiom)) {
+                return classToNode.containsKey(subClassOfAxiom.getSubClass()) && classToNode.containsKey(subClassOfAxiom.getSuperClass());
+            }
+
+            return normalizeAndCheckEntailment(axiom);
+        }
+
+        if (Objects.equals(axiomType, AxiomType.EQUIVALENT_CLASSES)) {
+            OWLEquivalentClassesAxiom equivalentClassesAxioms = (OWLEquivalentClassesAxiom) axiom;
+            Iterator<OWLSubClassOfAxiom> it = equivalentClassesAxioms.asOWLSubClassOfAxioms().iterator();
+            
+            // This is safe: an EQUIVALENT_CLASSES axiom (A ≡ B) always has two axioms (in the following code, the retrievement from the iterator is performed twice)
+            return normalizeAndCheckEntailment((OWLAxiom) it.next()) && normalizeAndCheckEntailment((OWLAxiom) it.next());
+        }
+
+        return false;
     }
 
-    // TODO: implement method
     @Override
     public boolean isEntailed(Set<? extends OWLAxiom> axioms) {
-        
-        throw new UnsupportedOperationException("Unimplemented method 'isEntailed'");
+        for(OWLAxiom axiom : axioms){
+            if(!isEntailed(axiom)){
+                return false;
+            }
+        }
+        return true;
     }
 
-    // TODO: implement method
     @Override
     public boolean isEntailmentCheckingSupported(AxiomType<?> axiomType) {
-        
-        throw new UnsupportedOperationException("Unimplemented method 'isEntailmentCheckingSupported'");
+        return Objects.equals(axiomType, AxiomType.SUBCLASS_OF) || Objects.equals(axiomType, AxiomType.EQUIVALENT_CLASSES);
     }
 
     @Override

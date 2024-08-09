@@ -2,9 +2,11 @@ package com.elppreasoner.normalization;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Set;
 
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.OWLAxiom;
@@ -123,6 +125,74 @@ public class ELPPOntologyNormalizer implements OntologyNormalizer, OWLAxiomVisit
 
         return this.normalizedOntology;
     }
+
+
+    /**
+     * <p>A method from the {@code OntologyNormalizer} interface.</p>
+     * 
+     * <p>Given a set of {@code axioms}, returns the equivalent set of axioms in normal form. Each one of its CBoxes is checked and normalized if it's not in
+     * normal form. This also means that any of the GCIs in a given CBox is checked and possibly queued up for normalization.</p>
+     * {@code axioms} The axioms to normalize
+     * @return The equivalent {@code axioms} normalized
+     */
+    @Override
+    public Set<OWLAxiom> normalize(Set<OWLAxiom> axioms) {
+        this.ontology = null;
+        this.normalizedOntology = null;
+        this.axiomsToNormalize = null;
+
+        // Create an empty ontology and an empty list of eventual axioms to normalize
+        this.axiomsToNormalize = new ArrayList<>(axioms.size());
+
+        try {
+            this.normalizedOntology = OWLManager.createOWLOntologyManager().createOntology();
+        } catch (OWLOntologyCreationException e) {
+            throw new RuntimeException(e);
+        }
+
+        // Analyze each axiom and put all non-normalized axioms in a list and all normalized axioms in the normalized ontology 
+        Iterator<OWLAxiom> it = axioms.iterator();
+        while(it.hasNext()) {
+            OWLAxiom axiom = it.next();
+            if (axiom instanceof OWLSubClassOfAxiom) {  // If the CBox has the form "C ⊑ D"
+                if (!NormalizationUtilities.isCBoxInNormalForm((OWLSubClassOfAxiom) axiom)) {
+                    this.axiomsToNormalize.add(axiom);
+                } else {
+                    this.normalizedOntology.add(axiom);
+                }
+            } else if (axiom instanceof OWLEquivalentClassesAxiom) {  // If the CBox has the form "C1 ≡ ... ≡ Cn"
+                for (OWLSubClassOfAxiom subClassOfAxiom : ((OWLEquivalentClassesAxiom) axiom).asOWLSubClassOfAxioms()) {
+                    if (!NormalizationUtilities.isCBoxInNormalForm(subClassOfAxiom)) {
+                        this.axiomsToNormalize.add(axiom);
+                    } else {
+                        this.normalizedOntology.add(axiom);
+                    }
+                }
+            }
+        }
+
+        /*
+         * Normalize all non-normalized axioms. A do-while is necessary, because axioms can be made of more atomic non-normalized axioms, thus the
+         * list is updated and further iteration is needed.
+         */
+        do {
+            ListIterator<OWLAxiom> iterator = this.axiomsToNormalize.listIterator();
+            while (iterator.hasNext()) {
+                OWLAxiom axiomToCheck = iterator.next();
+                iterator.remove();
+                axiomToCheck.accept(this);  // calls the visitor(this)'s visit() method, based on its type (OWLSubClassOfAxiom / OWLEquivalentClassesAxiom)
+            }
+        } while (!this.axiomsToNormalize.isEmpty());
+
+        this.ontology = null;
+        this.axiomsToNormalize = null;
+
+        final Set<OWLAxiom> normalizedAxioms = new HashSet<>();
+        normalizedOntology.axioms().forEach(normalizedAxioms::add);
+
+        return normalizedAxioms;
+    }
+
 
     /**
      * <p>A method from the {@code OWLAxiomVisitor} interface, that uses the Visitor Pattern.</p>
