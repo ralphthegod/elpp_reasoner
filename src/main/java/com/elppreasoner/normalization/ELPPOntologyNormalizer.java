@@ -49,6 +49,7 @@ public class ELPPOntologyNormalizer implements OntologyNormalizer, OWLAxiomVisit
     private OWLOntology ontology;
     private OWLOntology normalizedOntology;
     private List<OWLAxiom> axiomsToNormalize;
+    private List<OWLAxiom> temporaryToAddAxioms;
 
     /**
      * The public constructor of the normalizer. No ontology required: the normalizer is a helper class that, once instantiated, can be used
@@ -111,6 +112,7 @@ public class ELPPOntologyNormalizer implements OntologyNormalizer, OWLAxiomVisit
          * Normalize all non-normalized axioms. A do-while is necessary, because axioms can be made of more atomic non-normalized axioms, thus the
          * list is updated and further iteration is needed.
          */
+        this.temporaryToAddAxioms = new ArrayList<>();
         do {
             ListIterator<OWLAxiom> iterator = this.axiomsToNormalize.listIterator();
             while (iterator.hasNext()) {
@@ -118,10 +120,13 @@ public class ELPPOntologyNormalizer implements OntologyNormalizer, OWLAxiomVisit
                 iterator.remove();
                 axiomToCheck.accept(this);  // calls the visitor(this)'s visit() method, based on its type (OWLSubClassOfAxiom / OWLEquivalentClassesAxiom)
             }
+            this.axiomsToNormalize.addAll(this.temporaryToAddAxioms);
+            this.temporaryToAddAxioms.clear();
         } while (!this.axiomsToNormalize.isEmpty());
 
         this.ontology = null;
         this.axiomsToNormalize = null;
+        this.temporaryToAddAxioms = null;
 
         return this.normalizedOntology;
     }
@@ -175,6 +180,7 @@ public class ELPPOntologyNormalizer implements OntologyNormalizer, OWLAxiomVisit
          * Normalize all non-normalized axioms. A do-while is necessary, because axioms can be made of more atomic non-normalized axioms, thus the
          * list is updated and further iteration is needed.
          */
+        this.temporaryToAddAxioms = new ArrayList<>();
         do {
             ListIterator<OWLAxiom> iterator = this.axiomsToNormalize.listIterator();
             while (iterator.hasNext()) {
@@ -182,10 +188,13 @@ public class ELPPOntologyNormalizer implements OntologyNormalizer, OWLAxiomVisit
                 iterator.remove();
                 axiomToCheck.accept(this);  // calls the visitor(this)'s visit() method, based on its type (OWLSubClassOfAxiom / OWLEquivalentClassesAxiom)
             }
+            this.axiomsToNormalize.addAll(this.temporaryToAddAxioms);
+            this.temporaryToAddAxioms.clear();
         } while (!this.axiomsToNormalize.isEmpty());
 
         this.ontology = null;
         this.axiomsToNormalize = null;
+        this.temporaryToAddAxioms = null;
 
         final Set<OWLAxiom> normalizedAxioms = new HashSet<>();
         normalizedOntology.axioms().forEach(normalizedAxioms::add);
@@ -233,7 +242,7 @@ public class ELPPOntologyNormalizer implements OntologyNormalizer, OWLAxiomVisit
             if (NormalizationUtilities.isCBoxInNormalForm(a)) {
                 this.normalizedOntology.addAxiom(a);
             } else {
-                this.axiomsToNormalize.add(a);
+                this.temporaryToAddAxioms.add(a);
             }
         }
     }
@@ -255,7 +264,7 @@ public class ELPPOntologyNormalizer implements OntologyNormalizer, OWLAxiomVisit
             if (NormalizationUtilities.isCBoxInNormalForm(a)) {
                 this.normalizedOntology.addAxiom(a);
             } else {
-                this.axiomsToNormalize.add(a);
+                this.temporaryToAddAxioms.add(a);
             }
         }
     }

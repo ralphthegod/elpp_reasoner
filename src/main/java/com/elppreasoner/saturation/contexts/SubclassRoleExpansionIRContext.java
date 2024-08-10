@@ -21,10 +21,10 @@ import com.reasoner.saturation.InferenceRuleContext;
 public class SubclassRoleExpansionIRContext extends InferenceRuleContext<OWLClassExpression, Set<Entry<OWLObjectPropertyExpression, OWLClassExpression>>>{
     
     public SubclassRoleExpansionIRContext(
-        InferenceRule<OWLClassExpression, Set<Entry<OWLObjectPropertyExpression, OWLClassExpression>>> inferenceRule, 
+        InferenceRule inferenceRule, 
         OWLEntity entity
     ) {
-        super(inferenceRule, entity);
+        super((InferenceRule<OWLClassExpression, Set<Entry<OWLObjectPropertyExpression, OWLClassExpression>>>) inferenceRule, entity);
     }
 
     @Override

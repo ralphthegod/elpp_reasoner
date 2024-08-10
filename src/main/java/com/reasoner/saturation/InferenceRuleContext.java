@@ -30,7 +30,7 @@ public abstract class InferenceRuleContext<S,T> {
 
     public InferenceRuleContext(InferenceRule<S,T> inferenceRule, OWLEntity entity) {
         this.inferenceRule = inferenceRule;
-        this.entity = entity.asOWLClass();
+        //this.entity = entity.asOWLClass();
     }
 
     public abstract boolean addProcessedAxiom(OWLSubClassOfAxiom axiom);

@@ -3,6 +3,7 @@ package com.reasoner.utils;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLIndividual;
+import org.semanticweb.owlapi.model.OWLObject;
 
 import com.reasoner.reasoning.rules.OWLEntityType;
 
@@ -34,7 +35,7 @@ public final class OntologyUtilities {
      * @param entityType
      * @return
      */
-    public static OWLEntityType getEntityTypeByClass(Class<? extends OWLEntity> entityType){
+    public static OWLEntityType getEntityTypeByClass(Class<? extends OWLObject> entityType){
         if(OWLClass.class.isAssignableFrom(entityType)){
             return OWLEntityType.CLASS;
         } else if(OWLIndividual.class.isAssignableFrom(entityType)){

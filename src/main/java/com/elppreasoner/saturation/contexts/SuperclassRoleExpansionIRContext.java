@@ -25,8 +25,8 @@ public class SuperclassRoleExpansionIRContext extends InferenceRuleContext<OWLOb
     
     private final Map<OWLObjectPropertyExpression, Set<OWLClassExpression>> subclassesByPropertyProcessedAxioms = new HashMap<>();
 
-    public SuperclassRoleExpansionIRContext(InferenceRule<OWLObjectPropertyExpression, Map<OWLClassExpression, Set<OWLClassExpression>>> inferenceRule, OWLEntity entity) {
-        super(inferenceRule, entity);
+    public SuperclassRoleExpansionIRContext(InferenceRule inferenceRule, OWLEntity entity) {
+        super((InferenceRule<OWLObjectPropertyExpression, Map<OWLClassExpression, Set<OWLClassExpression>>>) inferenceRule, entity);
     }
 
     @Override

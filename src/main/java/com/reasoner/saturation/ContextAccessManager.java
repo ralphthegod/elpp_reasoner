@@ -55,16 +55,22 @@ public class ContextAccessManager{
             inferenceRuleContextProviders.forEach((rule, contextProvider) -> {
                 InferenceRuleContext<?,?> context = null;
                 try{
-                    contextProvider
+                    
+                    context = (InferenceRuleContext) contextProvider
                         .getInferenceRule()
                         .getContextType()
                         .getDeclaredConstructor(InferenceRule.class, OWLEntity.class)
-                        .newInstance(rule, entity);
+                        .newInstance(contextProvider.getInferenceRule(), entity);
+
+                    if(context == null){
+                        throw new IllegalStateException("Error in creating context.");
+                    }
+
+                    contextProvider.addContext(entity, context);
                 }
                 catch(Exception e){
                     e.printStackTrace();
                 }
-                contextProvider.addContext(entity, context);
             });
         });
 
@@ -77,12 +83,16 @@ public class ContextAccessManager{
 
     private void initializeAxiom(OWLSubClassOfAxiom axiom){
         Collection<InferenceRuleContext> contexts = getContextsByAxiom(axiom);
-
-        if(contexts.isEmpty()){
+        if(contexts == null || contexts.isEmpty()){
             discardedAxioms.add(axiom);
+            return;
         }
         else{
             for(InferenceRuleContext context : contexts){
+                if(context == null){
+                    discardedAxioms.add(axiom);
+                    return;
+                }
                 if(!context.hasBeenInitialized()){
                     Set<OWLSubClassOfAxiom> baseAxioms = context.initializeContext();
                     for(OWLSubClassOfAxiom axiomToAdd : baseAxioms){

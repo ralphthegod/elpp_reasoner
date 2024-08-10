@@ -30,8 +30,8 @@ public class NominalChainExpansionIRContext extends InferenceRuleContext<Object,
     private final Map<OWLClassExpression, Set<OWLClassExpression>> superclassesBySubclass = new HashMap<>(); // maps A1 to A2 from A1 ⊑ A2 form
     private final RelationGraph relationGraph = new RelationGraph(); // contains A1 -R-> A2 from A1 ⊑ ∃r.A2 form
     
-    public NominalChainExpansionIRContext(InferenceRule<Object, Object> inferenceRule, OWLEntity entity) {
-        super(inferenceRule, entity);
+    public NominalChainExpansionIRContext(InferenceRule inferenceRule, OWLEntity entity) {
+        super((InferenceRule<Object, Object>) inferenceRule, entity);
     }
 
     @Override

@@ -25,7 +25,7 @@ public abstract class InferenceRule<S,T> {
     private final Class<? extends InferenceRuleContext<S,T>> contextType;
 
     public InferenceRule(Class<? extends OWLObject> entityType, Class<? extends InferenceRuleContext<S,T>> contextType){
-        this.entityType = OntologyUtilities.getEntityTypeByClass(entityType.asSubclass(OWLEntity.class));
+        this.entityType = OntologyUtilities.getEntityTypeByClass(entityType.asSubclass(OWLObject.class));
         this.contextType = contextType;
     }
 

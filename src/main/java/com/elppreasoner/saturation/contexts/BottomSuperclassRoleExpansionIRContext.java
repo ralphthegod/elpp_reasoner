@@ -21,8 +21,8 @@ public class BottomSuperclassRoleExpansionIRContext extends InferenceRuleContext
     
     private OWLSubClassOfAxiom subclassOfBottom;
 
-    public BottomSuperclassRoleExpansionIRContext(InferenceRule<Object,Object> inferenceRule, OWLEntity entity) {
-        super(inferenceRule, entity);
+    public BottomSuperclassRoleExpansionIRContext(InferenceRule inferenceRule, OWLEntity entity) {
+        super((InferenceRule<Object,Object>) inferenceRule, entity);
     }
 
     @Override

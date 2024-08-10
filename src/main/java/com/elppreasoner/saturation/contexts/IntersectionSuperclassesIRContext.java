@@ -19,8 +19,8 @@ import com.reasoner.saturation.InferenceRuleContext;
 
 public class IntersectionSuperclassesIRContext extends InferenceRuleContext<OWLClassExpression, Map<OWLClassExpression, Set<OWLClassExpression>>> {
 
-    public IntersectionSuperclassesIRContext(InferenceRule<OWLClassExpression, Map<OWLClassExpression, Set<OWLClassExpression>>> inferenceRule, OWLEntity entity) {
-        super(inferenceRule, entity);
+    public IntersectionSuperclassesIRContext(InferenceRule inferenceRule, OWLEntity entity) {
+        super((InferenceRule<OWLClassExpression, Map<OWLClassExpression, Set<OWLClassExpression>>>)inferenceRule, entity);
     }
 
     @Override
