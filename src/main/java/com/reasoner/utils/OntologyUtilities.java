@@ -1,9 +1,13 @@
 package com.reasoner.utils;
 
+import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLClassExpression;
+import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLIndividual;
 import org.semanticweb.owlapi.model.OWLObject;
+import org.semanticweb.owlapi.model.OWLObjectOneOf;
 
 import com.reasoner.reasoning.rules.OWLEntityType;
 
@@ -27,6 +31,18 @@ public final class OntologyUtilities {
             return OWLEntityType.INDIVIDUAL;
         } else {
             return OWLEntityType.ENTITY;
+        }
+    }
+
+    public static OWLClassExpression getEntityClassExpression(OWLEntity entity){
+        if(entity instanceof OWLClass){
+            return (OWLClass) entity;
+        } else if(entity instanceof OWLIndividual){
+            OWLDataFactory owlDataFactory = OWLManager.getOWLDataFactory();
+            OWLObjectOneOf owlObjectOneOf = owlDataFactory.getOWLObjectOneOf((OWLIndividual) entity);
+            return owlObjectOneOf;
+        } else {
+            return null;
         }
     }
 
