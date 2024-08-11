@@ -60,6 +60,8 @@ public class OntologySaturator {
             threads.add(new SaturationThread(contextManager));
         }
 
+        System.out.println("Saturating ontology with " + cpuCount + " threads...");
+
         // Blocking
         threads.forEach(Thread::start);
         threads.forEach(thread -> {

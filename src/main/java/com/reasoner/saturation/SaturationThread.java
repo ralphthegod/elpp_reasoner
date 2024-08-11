@@ -21,15 +21,20 @@ public class SaturationThread extends Thread {
     public void run() {
         for (;;) {
             InferenceRuleContext context = contextAccessManager.getActiveContexts().poll();
+
             if (context == null) {
                 break;
             }
+
             for(;;){
+
                 OWLSubClassOfAxiom axiom = context.pollScheduledAxiom();
 
                 if (axiom == null) {
                     break;
                 }
+
+                System.out.println("Thread " + this.getId() + " processing axiom: " + axiom);
 
                 computingAxiom = axiom;
 
