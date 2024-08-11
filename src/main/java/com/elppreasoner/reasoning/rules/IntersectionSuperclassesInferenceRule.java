@@ -11,6 +11,7 @@ import java.util.Set;
 
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassExpression;
+import org.semanticweb.owlapi.model.OWLIndividual;
 import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.model.OWLObjectIntersectionOf;
 
@@ -25,7 +26,9 @@ import com.reasoner.saturation.InferenceRuleContext;
 public class IntersectionSuperclassesInferenceRule extends InferenceRule<OWLClassExpression, Map<OWLClassExpression, Set<OWLClassExpression>>>{
 
     public IntersectionSuperclassesInferenceRule() {
-        super(OWLClass.class, IntersectionSuperclassesIRContext.class);
+        super(IntersectionSuperclassesIRContext.class);
+        addEntityType(OWLClass.class);
+        addEntityType(OWLIndividual.class);
     }
 
     @Override
@@ -55,9 +58,11 @@ public class IntersectionSuperclassesInferenceRule extends InferenceRule<OWLClas
             OWLClassExpression subclass, OWLClassExpression superclass) {
         if(isSubclassABasicConcept(subclass) && isSuperclassABasicConcept(superclass)){
             InferenceRuleContext context = contexts.get(subclass);
-            return new HashSet<InferenceRuleContext>() {{
-                add(context);
-            }};
+            if(context != null){
+                return new HashSet<InferenceRuleContext>() {{
+                    add(context);
+                }};
+            }
         }
         return new HashSet<>();
     }

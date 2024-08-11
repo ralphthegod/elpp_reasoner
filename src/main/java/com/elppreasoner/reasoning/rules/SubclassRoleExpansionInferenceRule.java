@@ -8,6 +8,7 @@ import java.util.Set;
 
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassExpression;
+import org.semanticweb.owlapi.model.OWLIndividual;
 import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.semanticweb.owlapi.model.OWLObjectSomeValuesFrom;
@@ -49,7 +50,9 @@ public class SubclassRoleExpansionInferenceRule extends InferenceRule<OWLClassEx
     }
 
     public SubclassRoleExpansionInferenceRule() {
-        super(OWLClass.class, SubclassRoleExpansionIRContext.class);
+        super(SubclassRoleExpansionIRContext.class);
+        addEntityType(OWLClass.class);
+        addEntityType(OWLIndividual.class);
     }
 
     @Override
@@ -71,9 +74,11 @@ public class SubclassRoleExpansionInferenceRule extends InferenceRule<OWLClassEx
             OWLClassExpression subclass, OWLClassExpression superclass) {
         if(isSubclassABasicConcept(subclass) && isSuperclassABasicConcept(superclass)){
             InferenceRuleContext context = contexts.get(subclass);
-            return new HashSet<InferenceRuleContext>() {{
-                add(context);
-            }};
+            if(context != null){
+                return new HashSet<InferenceRuleContext>() {{
+                    add(context);
+                }};
+            }
         }
         return new HashSet<>();
     }

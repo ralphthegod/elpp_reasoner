@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLIndividual;
 import org.semanticweb.owlapi.model.OWLObject;
@@ -23,7 +24,8 @@ import com.reasoner.saturation.InferenceRuleContext;
 public class NominalChainExpansionInferenceRule extends InferenceRule<Object, Object>{
 
     public NominalChainExpansionInferenceRule() {
-        super(OWLIndividual.class, NominalChainExpansionIRContext.class);
+        super(NominalChainExpansionIRContext.class);
+        addEntityType(OWLIndividual.class);
     }
 
     @Override

@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassExpression;
+import org.semanticweb.owlapi.model.OWLIndividual;
 import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
 
@@ -22,7 +23,9 @@ import com.reasoner.saturation.InferenceRuleContext;
 public class ToldSuperclassesInferenceRule extends InferenceRule<OWLClassExpression, Set<OWLClassExpression>>{
 
     public ToldSuperclassesInferenceRule() {
-        super(OWLClass.class, ToldSuperclassesIRContext.class);
+        super(ToldSuperclassesIRContext.class);
+        addEntityType(OWLClass.class);
+        addEntityType(OWLIndividual.class);
     }
 
     @Override
@@ -41,9 +44,11 @@ public class ToldSuperclassesInferenceRule extends InferenceRule<OWLClassExpress
             OWLClassExpression subclass, OWLClassExpression superclass) {
         if(axiomCriterion(subclass, superclass)){
             InferenceRuleContext context = contexts.get(subclass);
-            return new HashSet<InferenceRuleContext>() {{
-                add(context);
-            }};
+            if(context != null){
+                return new HashSet<InferenceRuleContext>() {{
+                    add(context);
+                }};
+            }
         }
         return new HashSet<>();
     }
