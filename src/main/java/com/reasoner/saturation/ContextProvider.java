@@ -29,9 +29,27 @@ public class ContextProvider{
      * @param context
      */
     public void addContext(OWLEntity entity, InferenceRuleContext context) {
-        if(OntologyUtilities.getEntityType(entity) == inferenceRule.getEntityType()) {
+        if(inferenceRule.getEntityTypes().contains(OntologyUtilities.getEntityType(entity))) {
             contexts.put(entity, context);
+            return;
         }
+        throw new IllegalArgumentException("Entity type is not supported by the inference rule.");
+    }
+
+    public InferenceRuleContext createContextByEntity(OWLEntity entity) {
+        if(inferenceRule.getEntityTypes().contains(OntologyUtilities.getEntityType(entity))) {
+            InferenceRuleContext context = null;
+            try{
+                context = (InferenceRuleContext) inferenceRule
+                    .getContextType()
+                    .getDeclaredConstructor(InferenceRule.class, OWLEntity.class)
+                    .newInstance(inferenceRule, entity);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return context;
+        }
+        return null;
     }
 
     /**
@@ -49,8 +67,8 @@ public class ContextProvider{
     public Set<InferenceRuleContext> getContextsByAxiom(OWLSubClassOfAxiom axiom) {
         OWLClassExpression subclass = axiom.getSubClass();
         OWLClassExpression superclass = axiom.getSuperClass();
-        return inferenceRule.extractContexts(contexts, subclass, superclass);
+        Set<InferenceRuleContext> extractedContexts = inferenceRule.extractContexts(this.contexts, subclass, superclass);
+        return extractedContexts;
     }
-
 
 }
