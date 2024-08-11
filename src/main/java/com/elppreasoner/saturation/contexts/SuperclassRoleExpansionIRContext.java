@@ -70,6 +70,21 @@ public class SuperclassRoleExpansionIRContext extends InferenceRuleContext<OWLOb
     }
 
     @Override
+    public Set<OWLSubClassOfAxiom> getProcessedAxioms() {
+        Set<OWLSubClassOfAxiom> processedAxioms = new HashSet<>(this.processedAxioms);
+
+        OWLDataFactory factory = OWLManager.getOWLDataFactory();
+        for (OWLObjectPropertyExpression property: subclassesByPropertyProcessedAxioms.keySet()) {
+            for (OWLClassExpression subclass: subclassesByPropertyProcessedAxioms.get(property)) {
+                OWLObjectSomeValuesFrom someValuesFrom = factory.getOWLObjectSomeValuesFrom(property, getEntity());
+                processedAxioms.add(factory.getOWLSubClassOfAxiom(subclass, someValuesFrom));
+            }
+        }
+
+        return processedAxioms;
+    }
+
+    @Override
     public boolean hasProcessedAxiom(OWLSubClassOfAxiom axiom) {
         OWLClassExpression superclass = axiom.getSuperClass();
         

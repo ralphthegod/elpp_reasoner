@@ -86,6 +86,15 @@ public class BottomSuperclassRoleExpansionIRContext extends InferenceRuleContext
     }
 
     @Override
+    public Set<OWLSubClassOfAxiom> getProcessedAxioms() {
+        final Set<OWLSubClassOfAxiom> conclusions = new HashSet<>();
+        if(subclassOfBottom != null){
+            conclusions.add(subclassOfBottom);
+        }
+        return conclusions;
+    }
+
+    @Override
     public Set<OWLSubClassOfAxiom> compute(OWLSubClassOfAxiom axiom) {
         OWLDataFactory owlDataFactory = OWLManager.getOWLDataFactory();
         OWLClass bottom = owlDataFactory.getOWLNothing();
