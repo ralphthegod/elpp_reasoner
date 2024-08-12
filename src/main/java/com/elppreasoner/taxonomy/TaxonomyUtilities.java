@@ -54,6 +54,7 @@ public final class TaxonomyUtilities {
      * @return The superconcepts from the given {@code axioms}
      */
     public static Map<OWLClassExpression, Set<OWLClassExpression>> computeTaxonomySuperConcepts(Set<OWLSubClassOfAxiom> axioms) {
+        
         Map<OWLClassExpression, Set<OWLClassExpression>> taxonomySuperConcepts = new HashMap<>();
         
         OWLClass thing = OWLManager.getOWLDataFactory().getOWLThing();
@@ -66,7 +67,9 @@ public final class TaxonomyUtilities {
         OWLClassExpression superClass;
 
         for (OWLSubClassOfAxiom axiom: axioms) {
+            
             subClass = axiom.getSubClass();
+
             if (subClass instanceof OWLClass && !subClass.isOWLNothing()) {
                 taxonomySuperConcepts.get(nothing).add(subClass);
             }
@@ -97,6 +100,8 @@ public final class TaxonomyUtilities {
                     taxonomySuperConcepts.get(filler).add(thing);
                 }
             }
+
+            
 
             if ((subClass.isClassExpressionLiteral() || subClass instanceof OWLObjectOneOf) && (superClass.isClassExpressionLiteral() || superClass instanceof OWLObjectOneOf)) {
                 if (!subClass.isOWLNothing()) {
@@ -259,28 +264,33 @@ public final class TaxonomyUtilities {
                 Set<OWLClassExpression> A_superConcepts = superConcepts.get(A);
                 for (OWLClassExpression C: A_superConcepts) {
                     Set<OWLClassExpression> C_superConcepts = superConcepts.get(C);
-                    if (C_superConcepts.contains(A)) {
-                        taxonomyEquivalentConcepts.putIfAbsent(A, new HashSet<>());
-                        taxonomyEquivalentConcepts.get(A).add(C);
-                    } else {
-                        boolean isDirect_AtoC = true;
-                        taxonomyDirectSuperConcepts.putIfAbsent(A, new HashSet<>());
-                        Iterator<OWLClassExpression> it = taxonomyDirectSuperConcepts.get(A).iterator();
-                        while (it.hasNext()) {
-                            OWLClassExpression B = it.next();
-                            superConcepts.putIfAbsent(B, new HashSet<>()); // TODO: is this thread safe? [TEST]
-                            if (superConcepts.get(B).contains(C)) {
-                                isDirect_AtoC = false;
-                                break;
-                            }
-                            if (C_superConcepts.contains(B)) {
-                                it.remove();
-                            }
-                            if (isDirect_AtoC) {
-                                taxonomyDirectSuperConcepts.putIfAbsent(A, new HashSet<>());
-                                taxonomyDirectSuperConcepts.get(A).add(C);
+                    
+                    try{
+                        if (C_superConcepts.contains(A)) {
+                            taxonomyEquivalentConcepts.putIfAbsent(A, new HashSet<>());
+                            taxonomyEquivalentConcepts.get(A).add(C);
+                        } else {
+                            boolean isDirect_AtoC = true;
+                            taxonomyDirectSuperConcepts.putIfAbsent(A, new HashSet<>());
+                            Iterator<OWLClassExpression> it = taxonomyDirectSuperConcepts.get(A).iterator();
+                            while (it.hasNext()) {
+                                OWLClassExpression B = it.next();
+                                superConcepts.putIfAbsent(B, new HashSet<>()); // TODO: is this thread safe? [TEST]
+                                if (superConcepts.get(B).contains(C)) {
+                                    isDirect_AtoC = false;
+                                    break;
+                                }
+                                if (C_superConcepts.contains(B)) {
+                                    it.remove();
+                                }
+                                if (isDirect_AtoC) {
+                                    taxonomyDirectSuperConcepts.putIfAbsent(A, new HashSet<>());
+                                    taxonomyDirectSuperConcepts.get(A).add(C);
+                                }
                             }
                         }
+                    } catch(Exception e){
+                        e.printStackTrace();
                     }
                 }
             }

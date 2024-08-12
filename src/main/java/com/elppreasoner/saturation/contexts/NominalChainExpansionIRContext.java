@@ -26,12 +26,14 @@ import com.reasoner.saturation.InferenceRuleContext;
 public class NominalChainExpansionIRContext extends InferenceRuleContext<Object, Object>{
     
     private final Set<OWLIndividual> individuals = new HashSet<>(); // contains all entities from {a} form
+    private final OWLIndividual individualEntity;
     private final Set<OWLClassExpression> subclasses = new HashSet<>(); // contains A from A ⊑ {a} form
     private final Map<OWLClassExpression, Set<OWLClassExpression>> superclassesBySubclass = new HashMap<>(); // maps A1 to A2 from A1 ⊑ A2 form
     private final RelationGraph relationGraph = new RelationGraph(); // contains A1 -R-> A2 from A1 ⊑ ∃r.A2 form
     
-    public NominalChainExpansionIRContext(InferenceRule<Object, Object> inferenceRule, OWLEntity entity) {
-        super(inferenceRule, entity);
+    public NominalChainExpansionIRContext(InferenceRule inferenceRule, OWLEntity entity) {
+        super((InferenceRule<Object, Object>) inferenceRule, entity);
+        individualEntity = (OWLIndividual) entity;
     }
 
     @Override
@@ -89,7 +91,7 @@ public class NominalChainExpansionIRContext extends InferenceRuleContext<Object,
                 oneOf.individuals().forEach(
                     individual -> {
                         individuals.add(individual);
-                        final OWLIndividual i = (OWLIndividual) getEntity();
+                        final OWLIndividual i = individualEntity;
                         if(isSubclassABasicConcept(subclass) && Objects.equals(individual, i)){
                             subclasses.add(subclass);
                         }
@@ -134,7 +136,7 @@ public class NominalChainExpansionIRContext extends InferenceRuleContext<Object,
                     boolean found = relationGraph.reach(outerSubclass, innerSubclass);
                     if(!found){
                         for(OWLIndividual individual : individuals){
-                            OWLIndividual i = (OWLIndividual) getEntity();
+                            OWLIndividual i = individualEntity;
                             if(Objects.equals(individual, i)) break;
                             final OWLObjectOneOf oneOf = owlDataFactory.getOWLObjectOneOf(individual);
                             found = relationGraph.reach(oneOf, innerSubclass);

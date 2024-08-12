@@ -25,8 +25,8 @@ public class SuperclassRoleExpansionIRContext extends InferenceRuleContext<OWLOb
     
     private final Map<OWLObjectPropertyExpression, Set<OWLClassExpression>> subclassesByPropertyProcessedAxioms = new HashMap<>();
 
-    public SuperclassRoleExpansionIRContext(InferenceRule<OWLObjectPropertyExpression, Map<OWLClassExpression, Set<OWLClassExpression>>> inferenceRule, OWLEntity entity) {
-        super(inferenceRule, entity);
+    public SuperclassRoleExpansionIRContext(InferenceRule inferenceRule, OWLEntity entity) {
+        super((InferenceRule<OWLObjectPropertyExpression, Map<OWLClassExpression, Set<OWLClassExpression>>>) inferenceRule, entity);
     }
 
     @Override
@@ -67,6 +67,21 @@ public class SuperclassRoleExpansionIRContext extends InferenceRuleContext<OWLOb
         }
 
         return true;
+    }
+
+    @Override
+    public Set<OWLSubClassOfAxiom> getProcessedAxioms() {
+        Set<OWLSubClassOfAxiom> processedAxioms = new HashSet<>(this.processedAxioms);
+
+        OWLDataFactory factory = OWLManager.getOWLDataFactory();
+        for (OWLObjectPropertyExpression property: subclassesByPropertyProcessedAxioms.keySet()) {
+            for (OWLClassExpression subclass: subclassesByPropertyProcessedAxioms.get(property)) {
+                OWLObjectSomeValuesFrom someValuesFrom = factory.getOWLObjectSomeValuesFrom(property, getEntity());
+                processedAxioms.add(factory.getOWLSubClassOfAxiom(subclass, someValuesFrom));
+            }
+        }
+
+        return processedAxioms;
     }
 
     @Override

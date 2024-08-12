@@ -4,12 +4,14 @@ import static com.elppreasoner.normalization.NormalizationUtilities.isSubclassAB
 import static com.elppreasoner.normalization.NormalizationUtilities.isSuperclassABasicConcept;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassExpression;
+import org.semanticweb.owlapi.model.OWLIndividual;
 import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.model.OWLObjectSomeValuesFrom;
 
@@ -23,7 +25,9 @@ import com.reasoner.saturation.InferenceRuleContext;
 public class BottomSuperclassRoleExpansionInferenceRule extends InferenceRule<Object,Object> {
 
     public BottomSuperclassRoleExpansionInferenceRule() {
-        super(OWLClass.class, BottomSuperclassRoleExpansionIRContext.class);
+        super(BottomSuperclassRoleExpansionIRContext.class);
+        addEntityType(OWLClass.class);
+        addEntityType(OWLIndividual.class);
     }
 
     @Override

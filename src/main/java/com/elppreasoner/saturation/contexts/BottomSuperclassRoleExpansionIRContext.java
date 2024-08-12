@@ -21,7 +21,7 @@ public class BottomSuperclassRoleExpansionIRContext extends InferenceRuleContext
     
     private OWLSubClassOfAxiom subclassOfBottom;
 
-    public BottomSuperclassRoleExpansionIRContext(InferenceRule<Object,Object> inferenceRule, OWLEntity entity) {
+    public BottomSuperclassRoleExpansionIRContext(InferenceRule inferenceRule, OWLEntity entity) {
         super(inferenceRule, entity);
     }
 
@@ -83,6 +83,15 @@ public class BottomSuperclassRoleExpansionIRContext extends InferenceRuleContext
         else{
             return subclassOfBottom != null && Objects.equals(subclassOfBottom, axiom);
         }
+    }
+
+    @Override
+    public Set<OWLSubClassOfAxiom> getProcessedAxioms() {
+        final Set<OWLSubClassOfAxiom> conclusions = new HashSet<>();
+        if(subclassOfBottom != null){
+            conclusions.add(subclassOfBottom);
+        }
+        return conclusions;
     }
 
     @Override

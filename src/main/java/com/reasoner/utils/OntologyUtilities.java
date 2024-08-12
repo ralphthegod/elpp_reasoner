@@ -1,8 +1,13 @@
 package com.reasoner.utils;
 
+import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLClassExpression;
+import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLIndividual;
+import org.semanticweb.owlapi.model.OWLObject;
+import org.semanticweb.owlapi.model.OWLObjectOneOf;
 
 import com.reasoner.reasoning.rules.OWLEntityType;
 
@@ -29,12 +34,24 @@ public final class OntologyUtilities {
         }
     }
 
+    public static OWLClassExpression getEntityClassExpression(OWLEntity entity){
+        if(entity instanceof OWLClass){
+            return (OWLClass) entity;
+        } else if(entity instanceof OWLIndividual){
+            OWLDataFactory owlDataFactory = OWLManager.getOWLDataFactory();
+            OWLObjectOneOf owlObjectOneOf = owlDataFactory.getOWLObjectOneOf((OWLIndividual) entity);
+            return owlObjectOneOf;
+        } else {
+            return null;
+        }
+    }
+
     /**
      * Get the entity type by class.
      * @param entityType
      * @return
      */
-    public static OWLEntityType getEntityTypeByClass(Class<? extends OWLEntity> entityType){
+    public static OWLEntityType getEntityTypeByClass(Class<? extends OWLObject> entityType){
         if(OWLClass.class.isAssignableFrom(entityType)){
             return OWLEntityType.CLASS;
         } else if(OWLIndividual.class.isAssignableFrom(entityType)){

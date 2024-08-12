@@ -31,7 +31,7 @@ public class ContextAccessManager{
 
         public boolean deactivateContext(InferenceRuleContext context) {
             context.isActiveContext().set(false);
-            if (!context.hasScheduledAxioms()) {
+            if (context.hasScheduledAxioms()) {
                 activateContext(context);
                 return false;
             }
@@ -45,7 +45,7 @@ public class ContextAccessManager{
     }
 
     public void initialize(OntologyAccessManager ontologyAccessManager) {
-        // Clear all contexts and axioms
+        
         clearActiveContexts();
         clearDiscardedAxioms();
 
@@ -55,16 +55,15 @@ public class ContextAccessManager{
             inferenceRuleContextProviders.forEach((rule, contextProvider) -> {
                 InferenceRuleContext<?,?> context = null;
                 try{
-                    contextProvider
-                        .getInferenceRule()
-                        .getContextType()
-                        .getDeclaredConstructor(InferenceRule.class, OWLEntity.class)
-                        .newInstance(rule, entity);
+                    context = contextProvider.createContextByEntity(entity);
+                    if(context != null){
+                        System.out.println("Context: " + context + " created for entity: " + entity);
+                        contextProvider.addContext(entity, context);
+                    }
                 }
                 catch(Exception e){
                     e.printStackTrace();
                 }
-                contextProvider.addContext(entity, context);
             });
         });
 
@@ -77,18 +76,26 @@ public class ContextAccessManager{
 
     private void initializeAxiom(OWLSubClassOfAxiom axiom){
         Collection<InferenceRuleContext> contexts = getContextsByAxiom(axiom);
-
-        if(contexts.isEmpty()){
+        if(contexts == null || contexts.isEmpty()){
             discardedAxioms.add(axiom);
+            return;
         }
         else{
             for(InferenceRuleContext context : contexts){
+                if(context == null){
+                    discardedAxioms.add(axiom);
+                    return;
+                }
                 if(!context.hasBeenInitialized()){
                     Set<OWLSubClassOfAxiom> baseAxioms = context.initializeContext();
                     for(OWLSubClassOfAxiom axiomToAdd : baseAxioms){
-                        Collection<InferenceRuleContext> baseContexts = getContextsByAxiom(axiomToAdd);
-                        for(InferenceRuleContext baseContext : baseContexts){
-                            baseContext.scheduleAxiom(axiomToAdd);
+                        try {
+                            Collection<InferenceRuleContext> baseContexts = getContextsByAxiom(axiomToAdd);
+                            for(InferenceRuleContext baseContext : baseContexts){
+                                baseContext.scheduleAxiom(axiomToAdd);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
                     }
                 }
@@ -110,8 +117,12 @@ public class ContextAccessManager{
     public Collection<InferenceRuleContext> getContextsByAxiom(OWLSubClassOfAxiom axiom) {
         Set<InferenceRuleContext> contexts = new HashSet<>();
         inferenceRuleContextProviders.forEach((rule, contextProvider) -> {
-            contexts.addAll(contextProvider.getContextsByAxiom(axiom));
+            Set<InferenceRuleContext> contextsByAxiom = contextProvider.getContextsByAxiom(axiom);
+            contexts.addAll(contextsByAxiom);
         });
+        if(contexts.isEmpty()){
+            return new HashSet<>();
+        }
         return contexts;
     }
 

@@ -11,15 +11,17 @@ import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLEntity;
-import org.semanticweb.owlapi.model.OWLIndividual;
 import org.semanticweb.owlapi.model.OWLObjectOneOf;
 import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
 
 import com.reasoner.reasoning.rules.InferenceRule;
+import com.reasoner.reasoning.rules.OWLEntityType;
+import com.reasoner.utils.OntologyUtilities;
 
 public abstract class InferenceRuleContext<S,T> {
 
     private final OWLClassExpression entity;
+    private final OWLEntityType effectiveEntityType;
     private final InferenceRule<S,T> inferenceRule;
     
     private final AtomicBoolean isActiveContext = new AtomicBoolean(false);
@@ -28,9 +30,10 @@ public abstract class InferenceRuleContext<S,T> {
     private final Queue<OWLSubClassOfAxiom> scheduledAxioms = new ConcurrentLinkedQueue<>();
     protected final Set<OWLSubClassOfAxiom> processedAxioms = new HashSet<>();
 
-    public InferenceRuleContext(InferenceRule<S,T> inferenceRule, OWLEntity entity) {
+    public InferenceRuleContext(InferenceRule<S,T> inferenceRule, OWLEntity entity){
         this.inferenceRule = inferenceRule;
-        this.entity = entity.asOWLClass();
+        this.entity = OntologyUtilities.getEntityClassExpression(entity);
+        this.effectiveEntityType = OntologyUtilities.getEntityType(entity);
     }
 
     public abstract boolean addProcessedAxiom(OWLSubClassOfAxiom axiom);
@@ -64,7 +67,14 @@ public abstract class InferenceRuleContext<S,T> {
         OWLSubClassOfAxiom subClassOfThing;
         Set<OWLSubClassOfAxiom> initialAxioms = new HashSet<>();
 
-        switch(inferenceRule.getEntityType()){
+        /*
+         * Serve il tipo effettivo qui...
+         * Questo perché quando viene creato il contesto, questo, in base alla regola di inferenza
+         * può accettare i tipi specificati in EntityTypes della InferenceRule.
+         * Tuttavia è necessario anche salvare il tipo effettivo dell'entità per l'operazione che segue.
+         */
+        
+        switch(effectiveEntityType){
             case CLASS:
                 selfSubClassOf = owlDataFactory.getOWLSubClassOfAxiom(entity, entity);
                 subClassOfThing = owlDataFactory.getOWLSubClassOfAxiom(entity, owlDataFactory.getOWLThing());
@@ -72,7 +82,7 @@ public abstract class InferenceRuleContext<S,T> {
                 initialAxioms.add(subClassOfThing);
                 break;
             case INDIVIDUAL:
-                OWLObjectOneOf individualObjectOneOf = owlDataFactory.getOWLObjectOneOf((OWLIndividual) entity);
+                OWLObjectOneOf individualObjectOneOf = (OWLObjectOneOf) entity;
                 selfSubClassOf = owlDataFactory.getOWLSubClassOfAxiom(individualObjectOneOf, individualObjectOneOf);
                 subClassOfThing = owlDataFactory.getOWLSubClassOfAxiom(individualObjectOneOf, owlDataFactory.getOWLThing());
                 initialAxioms.add(selfSubClassOf);

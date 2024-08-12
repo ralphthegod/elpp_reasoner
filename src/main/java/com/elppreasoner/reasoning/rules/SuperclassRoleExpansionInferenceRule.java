@@ -8,6 +8,7 @@ import java.util.Set;
 
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassExpression;
+import org.semanticweb.owlapi.model.OWLIndividual;
 import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.semanticweb.owlapi.model.OWLObjectSomeValuesFrom;
@@ -27,7 +28,9 @@ public class SuperclassRoleExpansionInferenceRule
     private final Map<OWLClassExpression, Map<OWLObjectPropertyExpression, Set<OWLClassExpression>>> fillerToRole = new HashMap<>();
 
     public SuperclassRoleExpansionInferenceRule() {
-        super(OWLClass.class, SuperclassRoleExpansionIRContext.class);
+        super(SuperclassRoleExpansionIRContext.class);
+        addEntityType(OWLClass.class);
+        addEntityType(OWLIndividual.class);
     }
 
     @Override
@@ -57,12 +60,16 @@ public class SuperclassRoleExpansionInferenceRule
         final HashSet<InferenceRuleContext> result = new HashSet<>();
         if(isSubclassABasicConcept(subclass) && isSuperclassABasicConcept(superclass)){
             InferenceRuleContext context = contexts.get(subclass);
-            result.add(context);
+            if(context != null){
+                result.add(context);
+            }
         }
         if(isSubclassABasicConcept(subclass) && superclass instanceof OWLObjectSomeValuesFrom){
             OWLClassExpression filler = ((OWLObjectSomeValuesFrom) superclass).getFiller();
             InferenceRuleContext context = contexts.get(filler);
-            result.add(context);
+            if(context != null){
+                result.add(context);
+            }
         }
         return result;
     }

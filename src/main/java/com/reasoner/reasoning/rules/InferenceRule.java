@@ -1,6 +1,8 @@
 package com.reasoner.reasoning.rules;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -21,12 +23,16 @@ import com.reasoner.utils.OntologyUtilities;
 public abstract class InferenceRule<S,T> {
 
     protected Map<S,T> axioms;
-    private final OWLEntityType entityType;
+    private final Set<OWLEntityType> entityTypes = new HashSet<>();
     private final Class<? extends InferenceRuleContext<S,T>> contextType;
 
-    public InferenceRule(Class<? extends OWLObject> entityType, Class<? extends InferenceRuleContext<S,T>> contextType){
-        this.entityType = OntologyUtilities.getEntityTypeByClass(entityType.asSubclass(OWLEntity.class));
+    public InferenceRule(Class<? extends InferenceRuleContext<S,T>> contextType){
         this.contextType = contextType;
+        axioms = new HashMap<>();
+    }
+
+    protected void addEntityType(Class<? extends OWLObject> entityType){
+        entityTypes.add(OntologyUtilities.getEntityTypeByClass(entityType));
     }
 
     /**
@@ -72,8 +78,8 @@ public abstract class InferenceRule<S,T> {
      * Get the entity type.
      * @return
      */
-    public OWLEntityType getEntityType(){
-        return entityType;
+    public Collection<OWLEntityType> getEntityTypes(){
+        return entityTypes;
     }
 
     /**

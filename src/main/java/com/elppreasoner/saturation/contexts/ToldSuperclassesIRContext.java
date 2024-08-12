@@ -21,8 +21,8 @@ import com.reasoner.saturation.InferenceRuleContext;
 
 public class ToldSuperclassesIRContext extends InferenceRuleContext<OWLClassExpression, Set<OWLClassExpression>> {
     
-    public ToldSuperclassesIRContext(InferenceRule<OWLClassExpression, Set<OWLClassExpression>> inferenceRule, OWLEntity entity) {
-        super(inferenceRule, entity);
+    public ToldSuperclassesIRContext(InferenceRule inferenceRule, OWLEntity entity) {
+        super((InferenceRule<OWLClassExpression, Set<OWLClassExpression>>) inferenceRule, entity);
     }
 
     @Override
