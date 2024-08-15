@@ -1,0 +1,115 @@
+Prefix: : <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin/>
+Prefix: owl: <http://www.w3.org/2002/07/owl#>
+Prefix: rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+Prefix: rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+Prefix: xml: <http://www.w3.org/XML/1998/namespace>
+Prefix: xsd: <http://www.w3.org/2001/XMLSchema#>
+
+
+
+Ontology: <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin>
+<http://www.semanticweb.org/danil/ontologies/2024/8/food-origin/0.1>
+
+ObjectProperty: <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#contains>
+
+    
+ObjectProperty: <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#hasPart>
+
+    
+Class: <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#Apple>
+
+    EquivalentTo: 
+        <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#Fruit>
+         and (<http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#contains> some <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#VitaminC>)
+    
+    
+Class: <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#Bread>
+
+    EquivalentTo: 
+        <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#Grain>
+         and (<http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#hasPart> some <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#Gluten>)
+    
+    
+Class: <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#Calcium>
+
+    
+Class: <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#Carrot>
+
+    EquivalentTo: 
+        <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#Vegetable>
+         and (<http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#hasPart> some <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#Root>)
+    
+    
+Class: <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#Chicken>
+
+    EquivalentTo: 
+        <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#Meat>
+         and (<http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#hasPart> some <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#Protein>)
+    
+    
+Class: <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#Dairy>
+
+    SubClassOf: 
+        <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#Food>,
+        <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#hasPart> some <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#Calcium>
+    
+    
+Class: <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#Fiber>
+
+    
+Class: <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#Food>
+
+    
+Class: <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#Fruit>
+
+    SubClassOf: 
+        <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#Food>,
+        <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#contains> some <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#VitaminC>
+    
+    
+Class: <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#Gluten>
+
+    
+Class: <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#Grain>
+
+    SubClassOf: 
+        <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#Food>,
+        <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#hasPart> some <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#Gluten>
+    
+    
+Class: <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#HealthyFood>
+
+    
+Class: <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#Iron>
+
+    
+Class: <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#Meat>
+
+    SubClassOf: 
+        <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#Food>,
+        <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#hasPart> some <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#Protein>
+    
+    
+Class: <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#Milk>
+
+    EquivalentTo: 
+        <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#Dairy>
+         and (<http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#hasPart> some <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#Calcium>)
+    
+    
+Class: <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#Protein>
+
+    
+Class: <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#Root>
+
+    
+Class: <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#Vegetable>
+
+    SubClassOf: 
+        <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#Food>,
+        <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#hasPart> some <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#Root>
+    
+    
+Class: <http://www.semanticweb.org/danil/ontologies/2024/8/food-origin#VitaminC>
+
+    
