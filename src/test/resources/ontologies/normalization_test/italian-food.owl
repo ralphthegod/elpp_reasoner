@@ -9,7 +9,6 @@ Prefix(rdfs:=<http://www.w3.org/2000/01/rdf-schema#>)
 Ontology(<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food>
 <http://www.semanticweb.org/danil/ontologies/2024/8/italian-food/0.1>
 
-Declaration(Class(<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Basil>))
 Declaration(Class(<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Bread>))
 Declaration(Class(<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Food>))
 Declaration(Class(<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#MargheritaBasedFood>))
@@ -17,7 +16,6 @@ Declaration(Class(<http://www.semanticweb.org/danil/ontologies/2024/8/italian-fo
 Declaration(Class(<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#MarinaraBasedFood>))
 Declaration(Class(<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#MarinaraTopping>))
 Declaration(Class(<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Mozzarella>))
-Declaration(Class(<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Oil>))
 Declaration(Class(<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Oregano>))
 Declaration(Class(<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Panuozzo>))
 Declaration(Class(<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Pizza>))
@@ -33,10 +31,6 @@ Declaration(ObjectProperty(<http://www.semanticweb.org/danil/ontologies/2024/8/i
 #   Classes
 ############################
 
-# Class: <http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Basil> (<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Basil>)
-
-SubClassOf(<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Basil> <http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Food>)
-
 # Class: <http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Bread> (<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Bread>)
 
 SubClassOf(<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Bread> <http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Food>)
@@ -51,7 +45,7 @@ SubClassOf(<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Marg
 
 # Class: <http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#MargheritaTopping> (<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#MargheritaTopping>)
 
-EquivalentClasses(<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#MargheritaTopping> ObjectIntersectionOf(ObjectSomeValuesFrom(<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient> <http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Basil>) ObjectSomeValuesFrom(<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient> <http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Oil>) ObjectSomeValuesFrom(<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient> <http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Mozzarella>) ObjectSomeValuesFrom(<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient> <http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Tomato>)))
+EquivalentClasses(<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#MargheritaTopping> ObjectIntersectionOf(ObjectSomeValuesFrom(<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient> <http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Mozzarella>) ObjectSomeValuesFrom(<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient> <http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Tomato>)))
 SubClassOf(<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#MargheritaTopping> <http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Topping>)
 
 # Class: <http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#MarinaraBasedFood> (<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#MarinaraBasedFood>)
@@ -60,16 +54,12 @@ SubClassOf(<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Mari
 
 # Class: <http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#MarinaraTopping> (<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#MarinaraTopping>)
 
-EquivalentClasses(<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#MarinaraTopping> ObjectIntersectionOf(ObjectSomeValuesFrom(<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient> <http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Basil>) ObjectSomeValuesFrom(<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient> <http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Oil>) ObjectSomeValuesFrom(<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient> <http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Oregano>) ObjectSomeValuesFrom(<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient> <http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Tomato>)))
+EquivalentClasses(<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#MarinaraTopping> ObjectIntersectionOf(ObjectSomeValuesFrom(<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient> <http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Oregano>) ObjectSomeValuesFrom(<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient> <http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Tomato>)))
 SubClassOf(<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#MarinaraTopping> <http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Topping>)
 
 # Class: <http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Mozzarella> (<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Mozzarella>)
 
 SubClassOf(<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Mozzarella> <http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Food>)
-
-# Class: <http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Oil> (<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Oil>)
-
-SubClassOf(<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Oil> <http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Food>)
 
 # Class: <http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Oregano> (<http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Oregano>)
 
