@@ -34,7 +34,7 @@ public class SaturationThread extends Thread {
                     break;
                 }
 
-                System.out.println("Thread " + this.getId() + " processing axiom: " + axiom);
+                //System.out.println("Thread " + this.getId() + " processing axiom: " + axiom);
 
                 computingAxiom = axiom;
 

@@ -43,8 +43,8 @@ import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
  * <li>Def. In our domain, an EL++ constraint box (CBox) is a finite set of general concept inclusions (GCIs): C ⊑ D. In particular: C can be a
  * basic concept (BC) or a nominal {a}, while D can be either a basic concept (BC), a nominal {a} or a bottom (⊥). [Role inclusions excluded]</li>
  * 
- * <li>Def. Given a CBox C, BC_C (read "basic concepts of C") denotes the smallest set of concept descriptions that contains the top concept ⊤, all
- * concept names used in C, and all concept descriptions of the form {a} or p(f1,..., fk) appearing in C.<br>
+ * <li>Def. Given a CBox C, BC_C (read "basic concept descriptions for C") denotes the smallest set of concept descriptions that contains the top
+ * concept ⊤, all concept names used in C, and all concept descriptions of the form {a} or p(f1,..., fk) appearing in C.<br>
  * In our work, any given concept that belongs to such a set will be called "basic concept". In particular, a basic concept is either:<br>
  * <ul>
  *     <li>a concept name</li>
@@ -166,10 +166,9 @@ public final class NormalizationUtilities {
             return true;
         } else if (subClass instanceof OWLObjectIntersectionOf && isSuperclassABasicConcept(superClass)) { // *C1 ⊓ C2 ⊑ D*
             List<OWLClassExpression> operands = ((OWLObjectIntersectionOf) subClass).getOperandsAsList();  // the list containing C1 and C2
-            if (isSubclassABasicConcept(operands.get(0)) &&
-                isSubclassABasicConcept(operands.get(operands.size()-1))) {
-                    return true;
-                }
+            if (isSubclassABasicConcept(operands.get(0)) && isSubclassABasicConcept(operands.get(operands.size()-1))) {
+                return true;
+            }
         } else if (isSubclassABasicConcept(subClass) && superClass instanceof OWLObjectSomeValuesFrom) {  // *C1 ⊑ ∃r.C2*
             if (isSubclassABasicConcept(((OWLObjectSomeValuesFrom) superClass).getFiller())) {
                 return true;

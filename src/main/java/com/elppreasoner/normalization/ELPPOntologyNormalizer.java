@@ -92,17 +92,18 @@ public class ELPPOntologyNormalizer implements OntologyNormalizer, OWLAxiomVisit
         while(it.hasNext()) {
             OWLAxiom axiom = it.next();
             if (axiom instanceof OWLSubClassOfAxiom) {  // If the CBox has the form "C ⊑ D"
-                if (!NormalizationUtilities.isCBoxInNormalForm((OWLSubClassOfAxiom) axiom)) {
-                    this.axiomsToNormalize.add(axiom);
+                OWLSubClassOfAxiom subClassOfAxiom = (OWLSubClassOfAxiom) axiom;
+                if (!NormalizationUtilities.isCBoxInNormalForm(subClassOfAxiom)) {
+                    this.axiomsToNormalize.add(subClassOfAxiom);
                 } else {
-                    this.normalizedOntology.add(axiom);
+                    this.normalizedOntology.add(subClassOfAxiom);
                 }
             } else if (axiom instanceof OWLEquivalentClassesAxiom) {  // If the CBox has the form "C1 ≡ ... ≡ Cn"
                 for (OWLSubClassOfAxiom subClassOfAxiom : ((OWLEquivalentClassesAxiom) axiom).asOWLSubClassOfAxioms()) {
                     if (!NormalizationUtilities.isCBoxInNormalForm(subClassOfAxiom)) {
-                        this.axiomsToNormalize.add(axiom);
+                        this.axiomsToNormalize.add(subClassOfAxiom);
                     } else {
-                        this.normalizedOntology.add(axiom);
+                        this.normalizedOntology.add(subClassOfAxiom);
                     }
                 }
             }

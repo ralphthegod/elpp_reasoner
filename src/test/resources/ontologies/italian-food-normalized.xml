@@ -1,0 +1,737 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.w3.org/2002/07/owl#"
+     xml:base="http://www.w3.org/2002/07/owl"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <Ontology/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+
+    
+
+
+    <!-- http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient -->
+
+
+    <ObjectProperty rdf:about="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient"/>
+    
+
+
+    <!-- http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasTopping -->
+
+
+    <ObjectProperty rdf:about="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasTopping"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+
+    
+
+
+    <!-- file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-1034757609-1748419304 -->
+
+
+    <Class rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-1034757609-1748419304"/>
+    
+
+
+    <!-- file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-1034757609-273264445 -->
+
+
+    <Class rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-1034757609-273264445"/>
+    
+
+
+    <!-- file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-1034757609-682437471 -->
+
+
+    <Class rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-1034757609-682437471"/>
+    
+
+
+    <!-- file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-1034757609-973259816 -->
+
+
+    <Class rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-1034757609-973259816"/>
+    
+
+
+    <!-- file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-1034757609493481570 -->
+
+
+    <Class rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-1034757609493481570"/>
+    
+
+
+    <!-- file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-1779301137-273264445 -->
+
+
+    <Class rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-1779301137-273264445"/>
+    
+
+
+    <!-- file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-193436069-1547387235 -->
+
+
+    <Class rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-193436069-1547387235"/>
+    
+
+
+    <!-- file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-193436069-756582497 -->
+
+
+    <Class rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-193436069-756582497"/>
+    
+
+
+    <!-- file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-1934360692042722417 -->
+
+
+    <Class rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-1934360692042722417"/>
+    
+
+
+    <!-- file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-19343606937284218 -->
+
+
+    <Class rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-19343606937284218"/>
+    
+
+
+    <!-- file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-193436069687484581 -->
+
+
+    <Class rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-193436069687484581"/>
+    
+
+
+    <!-- file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-672641659-1748419304 -->
+
+
+    <Class rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-672641659-1748419304"/>
+    
+
+
+    <!-- file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-688265722-973259816 -->
+
+
+    <Class rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-688265722-973259816"/>
+    
+
+
+    <!-- file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-707338116-756582497 -->
+
+
+    <Class rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-707338116-756582497"/>
+    
+
+
+    <!-- file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-883234449687484581 -->
+
+
+    <Class rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-883234449687484581"/>
+    
+
+
+    <!-- file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-896615655147280504 -->
+
+
+    <Class rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-896615655147280504"/>
+    
+
+
+    <!-- file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-922286780-1042527177 -->
+
+
+    <Class rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-922286780-1042527177"/>
+    
+
+
+    <!-- file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-9222867801286996141 -->
+
+
+    <Class rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-9222867801286996141"/>
+    
+
+
+    <!-- file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-9284740091900580347 -->
+
+
+    <Class rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-9284740091900580347"/>
+    
+
+
+    <!-- file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-999062200493481570 -->
+
+
+    <Class rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-999062200493481570"/>
+    
+
+
+    <!-- file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED1187990396-682437471 -->
+
+
+    <Class rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED1187990396-682437471"/>
+    
+
+
+    <!-- file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED128332271537284218 -->
+
+
+    <Class rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED128332271537284218"/>
+    
+
+
+    <!-- file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED13979972272042722417 -->
+
+
+    <Class rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED13979972272042722417"/>
+    
+
+
+    <!-- file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED147280504-896615655 -->
+
+
+    <Class rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED147280504-896615655">
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient"/>
+                <someValuesFrom rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Mozzarella"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient"/>
+                <someValuesFrom rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Tomato"/>
+            </Restriction>
+        </rdfs:subClassOf>
+    </Class>
+    
+
+
+    <!-- file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED1900580347-928474009 -->
+
+
+    <Class rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED1900580347-928474009">
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient"/>
+                <someValuesFrom rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Oregano"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient"/>
+                <someValuesFrom rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Tomato"/>
+            </Restriction>
+        </rdfs:subClassOf>
+    </Class>
+    
+
+
+    <!-- file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED2011919308-1547387235 -->
+
+
+    <Class rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED2011919308-1547387235"/>
+    
+
+
+    <!-- file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED217676316-1042527177 -->
+
+
+    <Class rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED217676316-1042527177"/>
+    
+
+
+    <!-- file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED217676316-1513632694 -->
+
+
+    <Class rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED217676316-1513632694"/>
+    
+
+
+    <!-- file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED5891194042035512319 -->
+
+
+    <Class rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED5891194042035512319"/>
+    
+
+
+    <!-- file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED9029933322035512319 -->
+
+
+    <Class rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED9029933322035512319"/>
+    
+
+
+    <!-- http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Bread -->
+
+
+    <Class rdf:about="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Bread">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Food"/>
+    </Class>
+    
+
+
+    <!-- http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Food -->
+
+
+    <Class rdf:about="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Food">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    </Class>
+    
+
+
+    <!-- http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#MargheritaBasedFood -->
+
+
+    <Class rdf:about="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#MargheritaBasedFood">
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasTopping"/>
+                <someValuesFrom rdf:resource="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED147280504-896615655"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasTopping"/>
+                <someValuesFrom rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#MargheritaTopping"/>
+            </Restriction>
+        </rdfs:subClassOf>
+    </Class>
+    
+
+
+    <!-- http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#MargheritaTopping -->
+
+
+    <Class rdf:about="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#MargheritaTopping">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Topping"/>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient"/>
+                <someValuesFrom rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Mozzarella"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient"/>
+                <someValuesFrom rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Tomato"/>
+            </Restriction>
+        </rdfs:subClassOf>
+    </Class>
+    
+
+
+    <!-- http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#MarinaraBasedFood -->
+
+
+    <Class rdf:about="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#MarinaraBasedFood">
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasTopping"/>
+                <someValuesFrom rdf:resource="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED1900580347-928474009"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasTopping"/>
+                <someValuesFrom rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#MarinaraTopping"/>
+            </Restriction>
+        </rdfs:subClassOf>
+    </Class>
+    
+
+
+    <!-- http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#MarinaraTopping -->
+
+
+    <Class rdf:about="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#MarinaraTopping">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Topping"/>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient"/>
+                <someValuesFrom rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Oregano"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient"/>
+                <someValuesFrom rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Tomato"/>
+            </Restriction>
+        </rdfs:subClassOf>
+    </Class>
+    
+
+
+    <!-- http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Mozzarella -->
+
+
+    <Class rdf:about="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Mozzarella">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Food"/>
+    </Class>
+    
+
+
+    <!-- http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Oregano -->
+
+
+    <Class rdf:about="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Oregano">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Food"/>
+    </Class>
+    
+
+
+    <!-- http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Panuozzo -->
+
+
+    <Class rdf:about="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Panuozzo">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Bread"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#PizzaBase"/>
+    </Class>
+    
+
+
+    <!-- http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Pizza -->
+
+
+    <Class rdf:about="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Pizza">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Food"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#PizzaBase"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Topping"/>
+    </Class>
+    
+
+
+    <!-- http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#PizzaBase -->
+
+
+    <Class rdf:about="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#PizzaBase">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Food"/>
+    </Class>
+    
+
+
+    <!-- http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#PizzaMargherita -->
+
+
+    <Class rdf:about="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#PizzaMargherita">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Pizza"/>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient"/>
+                <someValuesFrom rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Mozzarella"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient"/>
+                <someValuesFrom rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Tomato"/>
+            </Restriction>
+        </rdfs:subClassOf>
+    </Class>
+    
+
+
+    <!-- http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#PizzaMarinara -->
+
+
+    <Class rdf:about="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#PizzaMarinara">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Pizza"/>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient"/>
+                <someValuesFrom rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Oregano"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient"/>
+                <someValuesFrom rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Tomato"/>
+            </Restriction>
+        </rdfs:subClassOf>
+    </Class>
+    
+
+
+    <!-- http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Tomato -->
+
+
+    <Class rdf:about="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Tomato">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Food"/>
+    </Class>
+    
+
+
+    <!-- http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Topping -->
+
+
+    <Class rdf:about="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Topping"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // General axioms
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+
+    <Class>
+        <intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-1034757609-1748419304"/>
+            <rdf:Description rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-672641659-1748419304"/>
+        </intersectionOf>
+        <rdfs:subClassOf rdf:resource="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-896615655147280504"/>
+    </Class>
+    <Class>
+        <intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-1034757609-273264445"/>
+            <rdf:Description rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-1779301137-273264445"/>
+        </intersectionOf>
+        <rdfs:subClassOf rdf:resource="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-9222867801286996141"/>
+    </Class>
+    <Class>
+        <intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-1034757609-682437471"/>
+            <rdf:Description rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED1187990396-682437471"/>
+        </intersectionOf>
+        <rdfs:subClassOf rdf:resource="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-922286780-1042527177"/>
+    </Class>
+    <Class>
+        <intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-1034757609-973259816"/>
+            <rdf:Description rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-688265722-973259816"/>
+        </intersectionOf>
+        <rdfs:subClassOf rdf:resource="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED9029933322035512319"/>
+    </Class>
+    <Class>
+        <intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-1034757609493481570"/>
+            <rdf:Description rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-999062200493481570"/>
+        </intersectionOf>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#MargheritaTopping"/>
+    </Class>
+    <Class>
+        <intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-193436069-1547387235"/>
+            <rdf:Description rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED2011919308-1547387235"/>
+        </intersectionOf>
+        <rdfs:subClassOf rdf:resource="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED5891194042035512319"/>
+    </Class>
+    <Class>
+        <intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-193436069-756582497"/>
+            <rdf:Description rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-707338116-756582497"/>
+        </intersectionOf>
+        <rdfs:subClassOf rdf:resource="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED217676316-1042527177"/>
+    </Class>
+    <Class>
+        <intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-1934360692042722417"/>
+            <rdf:Description rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED13979972272042722417"/>
+        </intersectionOf>
+        <rdfs:subClassOf rdf:resource="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED217676316-1513632694"/>
+    </Class>
+    <Class>
+        <intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-19343606937284218"/>
+            <rdf:Description rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED128332271537284218"/>
+        </intersectionOf>
+        <rdfs:subClassOf rdf:resource="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-9284740091900580347"/>
+    </Class>
+    <Class>
+        <intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-193436069687484581"/>
+            <rdf:Description rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-883234449687484581"/>
+        </intersectionOf>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#MarinaraTopping"/>
+    </Class>
+    <Class>
+        <intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-922286780-1042527177"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Pizza"/>
+        </intersectionOf>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Pizza"/>
+    </Class>
+    <Class>
+        <intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-9222867801286996141"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Pizza"/>
+        </intersectionOf>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#PizzaMargherita"/>
+    </Class>
+    <Class>
+        <intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED217676316-1042527177"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Pizza"/>
+        </intersectionOf>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Pizza"/>
+    </Class>
+    <Class>
+        <intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED217676316-1513632694"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Pizza"/>
+        </intersectionOf>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#PizzaMarinara"/>
+    </Class>
+    <Class>
+        <intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED5891194042035512319"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Bread"/>
+        </intersectionOf>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Food"/>
+    </Class>
+    <Class>
+        <intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED9029933322035512319"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Bread"/>
+        </intersectionOf>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Food"/>
+    </Class>
+    <Class>
+        <intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#PizzaBase"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Topping"/>
+        </intersectionOf>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Pizza"/>
+    </Class>
+    <Restriction>
+        <onProperty rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient"/>
+        <someValuesFrom rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Mozzarella"/>
+        <rdfs:subClassOf rdf:resource="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-1034757609-1748419304"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient"/>
+        <someValuesFrom rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Mozzarella"/>
+        <rdfs:subClassOf rdf:resource="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-1034757609-273264445"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient"/>
+        <someValuesFrom rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Mozzarella"/>
+        <rdfs:subClassOf rdf:resource="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-1034757609-682437471"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient"/>
+        <someValuesFrom rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Mozzarella"/>
+        <rdfs:subClassOf rdf:resource="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-1034757609-973259816"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient"/>
+        <someValuesFrom rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Mozzarella"/>
+        <rdfs:subClassOf rdf:resource="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-1034757609493481570"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient"/>
+        <someValuesFrom rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Oregano"/>
+        <rdfs:subClassOf rdf:resource="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-193436069-1547387235"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient"/>
+        <someValuesFrom rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Oregano"/>
+        <rdfs:subClassOf rdf:resource="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-193436069-756582497"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient"/>
+        <someValuesFrom rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Oregano"/>
+        <rdfs:subClassOf rdf:resource="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-1934360692042722417"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient"/>
+        <someValuesFrom rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Oregano"/>
+        <rdfs:subClassOf rdf:resource="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-19343606937284218"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient"/>
+        <someValuesFrom rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Oregano"/>
+        <rdfs:subClassOf rdf:resource="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-193436069687484581"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient"/>
+        <someValuesFrom rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Tomato"/>
+        <rdfs:subClassOf rdf:resource="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-1779301137-273264445"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient"/>
+        <someValuesFrom rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Tomato"/>
+        <rdfs:subClassOf rdf:resource="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-672641659-1748419304"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient"/>
+        <someValuesFrom rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Tomato"/>
+        <rdfs:subClassOf rdf:resource="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-688265722-973259816"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient"/>
+        <someValuesFrom rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Tomato"/>
+        <rdfs:subClassOf rdf:resource="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-707338116-756582497"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient"/>
+        <someValuesFrom rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Tomato"/>
+        <rdfs:subClassOf rdf:resource="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-883234449687484581"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient"/>
+        <someValuesFrom rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Tomato"/>
+        <rdfs:subClassOf rdf:resource="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-999062200493481570"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient"/>
+        <someValuesFrom rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Tomato"/>
+        <rdfs:subClassOf rdf:resource="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED1187990396-682437471"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient"/>
+        <someValuesFrom rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Tomato"/>
+        <rdfs:subClassOf rdf:resource="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED128332271537284218"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient"/>
+        <someValuesFrom rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Tomato"/>
+        <rdfs:subClassOf rdf:resource="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED13979972272042722417"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasIngredient"/>
+        <someValuesFrom rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#Tomato"/>
+        <rdfs:subClassOf rdf:resource="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED2011919308-1547387235"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasTopping"/>
+        <someValuesFrom rdf:resource="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-896615655147280504"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#MargheritaBasedFood"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#hasTopping"/>
+        <someValuesFrom rdf:resource="file:/C:/Users/danil/Desktop/elpp_reasoner/src/test/resources/ontologies/italian-food.owl#GENERATED-9284740091900580347"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/danil/ontologies/2024/8/italian-food#MarinaraBasedFood"/>
+    </Restriction>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 5.1.10.2019-03-12T22:31:15Z) https://github.com/owlcs/owlapi/ -->
+
+

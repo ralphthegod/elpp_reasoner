@@ -46,7 +46,7 @@ import com.reasoner.taxonomy.TaxonomyBuilder;
 /**
  * ELPP reasoner implementation. <p>
  */
-public class ElppReasoner extends Reasoner {
+public class ELPPReasoner extends Reasoner {
     /**
      * The {@link TaxonomyBuilder} used to build the {@code taxonomy}. Declared in the constructor.
      */
@@ -78,7 +78,7 @@ public class ElppReasoner extends Reasoner {
      * Dependency injection is used to provide the ontology accessor.
      * @param ontologyAccessor
      */
-    public ElppReasoner(OWLOntology ontology, boolean saturationConcurrentMode, boolean taxonomyConcurrentMode) {
+    public ELPPReasoner(OWLOntology ontology, boolean saturationConcurrentMode, boolean taxonomyConcurrentMode) {
         super(ontology, saturationConcurrentMode);
         taxonomyBuilder = new ELPPTaxonomyBuilder(taxonomyConcurrentMode);
         initializeInferenceRules();
