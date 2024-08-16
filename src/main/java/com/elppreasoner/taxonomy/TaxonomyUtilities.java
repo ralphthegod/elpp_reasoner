@@ -261,10 +261,10 @@ public final class TaxonomyUtilities {
 
             for (int i = this.min; i < this.max; i++) {
                 OWLClassExpression A = concepts[i];
+                // TODO: add taxonomyEquivalentConcepts.get(A).add(A); (in fact, ELK puts each class in its equivalent classes set (e.g.: equivalentClasses(A) = {A, ...}))
                 Set<OWLClassExpression> A_superConcepts = superConcepts.get(A);
                 for (OWLClassExpression C: A_superConcepts) {
                     Set<OWLClassExpression> C_superConcepts = superConcepts.get(C);
-                    
                     try{
                         if (C_superConcepts.contains(A)) {
                             taxonomyEquivalentConcepts.putIfAbsent(A, new HashSet<>());

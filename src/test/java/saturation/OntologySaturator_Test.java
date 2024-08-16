@@ -80,7 +80,7 @@ public class OntologySaturator_Test {
         }
 
         @Test
-        @DisplayName("ITALIAN FOOD ONTOLOGY SATURATION TEST 3 - saturate (normalized ontology, concurrent)")
+        @DisplayName("ITALIAN FOOD ONTOLOGY SATURATION TEST 4 - saturate (normalized ontology, concurrent)")
         void ItalianFood_saturate_nc() {
             OWLOntology ontology = TestingUtilities.loadOntology(ONTOLOGY_PATH);
             saturationTest(ontology, true, true);

@@ -269,6 +269,11 @@ public class Taxonomy {
             throw new IllegalArgumentException(NOT_AN_OWLCLASS_INSTANCE);
         }
         OWLClassNode owlClassNode = new OWLClassNode();
+
+        if (classToEquivalentClasses.get(ce) == null) {
+            return owlClassNode;
+        }
+        
         for (OWLClassExpression c : classToEquivalentClasses.get(ce)) {
             owlClassNode.add((OWLClass) c);
         }
