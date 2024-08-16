@@ -30,6 +30,8 @@ import utils.TestingUtilities;
 public class OntologySaturator_Test {
     @Nested
     class ItalianFood_SaturationTest {
+        private static final String ONTOLOGY_PATH = "src/test/resources/ontologies/italian-food.owl";
+
         private static final boolean EXPECTED_RESULT = true;
 
         void saturationTest(OWLOntology ontology, boolean normalized, boolean concurrentMode) {
@@ -59,28 +61,28 @@ public class OntologySaturator_Test {
         @Test
         @DisplayName("ITALIAN FOOD ONTOLOGY SATURATION TEST 1 - saturate (non-normalized ontology, not concurrent)")
         void ItalianFood_saturate() {
-            OWLOntology ontology = TestingUtilities.loadOntology("src/test/resources/ontologies/normalization_test/italian-food.owl");
+            OWLOntology ontology = TestingUtilities.loadOntology(ONTOLOGY_PATH);
             saturationTest(ontology, false, false);
         }
 
         @Test
         @DisplayName("ITALIAN FOOD ONTOLOGY SATURATION TEST 2 - saturate (non-normalized ontology, concurrent)")
         void ItalianFood_saturate_c() {
-            OWLOntology ontology = TestingUtilities.loadOntology("src/test/resources/ontologies/normalization_test/italian-food.owl");
+            OWLOntology ontology = TestingUtilities.loadOntology(ONTOLOGY_PATH);
             saturationTest(ontology, false, true);
         }
 
         @Test
         @DisplayName("ITALIAN FOOD ONTOLOGY SATURATION TEST 3 - saturate (normalized ontology, not concurrent)")
         void ItalianFood_saturate_n() {
-            OWLOntology ontology = TestingUtilities.loadOntology("src/test/resources/ontologies/normalization_test/italian-food.owl");
+            OWLOntology ontology = TestingUtilities.loadOntology(ONTOLOGY_PATH);
             saturationTest(ontology, true, false);
         }
 
         @Test
         @DisplayName("ITALIAN FOOD ONTOLOGY SATURATION TEST 3 - saturate (normalized ontology, concurrent)")
         void ItalianFood_saturate_nc() {
-            OWLOntology ontology = TestingUtilities.loadOntology("src/test/resources/ontologies/normalization_test/italian-food.owl");
+            OWLOntology ontology = TestingUtilities.loadOntology(ONTOLOGY_PATH);
             saturationTest(ontology, true, true);
         }
     }

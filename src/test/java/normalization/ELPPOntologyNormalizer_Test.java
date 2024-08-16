@@ -22,6 +22,8 @@ import java.util.ArrayList;
 public class ELPPOntologyNormalizer_Test {
     @Nested
     class ItalianFood_NormalizationTest {
+        private static final String ONTOLOGY_PATH = "src/test/resources/ontologies/italian-food.owl";
+
         private static final int TEST1_EXPECTED = 14; // Translations from OWLEquivalentClassesAxioms to OWLSubClassOfAxioms included
         private static final int TEST2_EXPECTED = 70; // Translations from OWLEquivalentClassesAxioms to OWLSubClassOfAxioms included
 
@@ -41,7 +43,7 @@ public class ELPPOntologyNormalizer_Test {
         @Test
         @DisplayName("ITALIAN FOOD ONTOLOGY NORMALIZATION TEST 1 - isCBoxInNormalForm")
         void isCBoxInNormalForm_test() {
-            OWLOntology ontology = TestingUtilities.loadOntology("src/test/resources/ontologies/normalization_test/italian-food.owl");
+            OWLOntology ontology = TestingUtilities.loadOntology(ONTOLOGY_PATH);
 
             ArrayList<OWLSubClassOfAxiom> axioms = new ArrayList<>();
             ontology.axioms().forEach(axiom -> {
@@ -65,7 +67,7 @@ public class ELPPOntologyNormalizer_Test {
         @DisplayName("ITALIAN FOOD ONTOLOGY NORMALIZATION TEST 2 - normalize")
         void ItalianFood_normalize() throws OWLOntologyStorageException, IOException {
             OWLOntology ontology = new ELPPOntologyNormalizer().normalize(
-                TestingUtilities.loadOntology("src/test/resources/ontologies/normalization_test/italian-food.owl")
+                TestingUtilities.loadOntology(ONTOLOGY_PATH)
             );
 
             // Count all OWLSubClassOfAxiom axioms in the normalized ontology
@@ -76,7 +78,7 @@ public class ELPPOntologyNormalizer_Test {
                 }
             });
 
-            FileOutputStream fileOutputStream = new FileOutputStream("src/test/resources/ontologies/normalization_test/italian-food-normalized.xml");
+            FileOutputStream fileOutputStream = new FileOutputStream("src/test/resources/ontologies/italian-food-normalized.xml");
             ontology.saveOntology(fileOutputStream);
             fileOutputStream.close();
 
