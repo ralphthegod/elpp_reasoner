@@ -57,7 +57,7 @@ public class ContextAccessManager{
                 try{
                     context = contextProvider.createContextByEntity(entity);
                     if(context != null){
-                        System.out.println("Context: " + context + " created for entity: " + entity);
+                        //System.out.println("Context: " + context + " created for entity: " + entity);
                         contextProvider.addContext(entity, context);
                     }
                 }

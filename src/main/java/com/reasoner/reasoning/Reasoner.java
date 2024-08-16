@@ -95,11 +95,11 @@ public abstract class Reasoner implements OWLReasoner {
             normalizeOntology();
         }
         else{
-            System.out.println("Normalizer not defined. Skipping normalization.");
+            //System.out.println("Normalizer not defined. Skipping normalization.");
         }
         for (InferenceType inferenceType : inferenceTypes) {
             if(isPrecomputed(inferenceType)){
-                System.out.println("Inference type already precomputed: " + inferenceType);
+                //System.out.println("Inference type already precomputed: " + inferenceType);
                 continue;
             }
             if (inferenceCalculators.containsKey(inferenceType)) {
@@ -107,7 +107,7 @@ public abstract class Reasoner implements OWLReasoner {
                 precomputedInferences.put(inferenceType, true);
             }
             else{
-                System.out.println("Inference type not supported: " + inferenceType);
+                //System.out.println("Inference type not supported: " + inferenceType);
             }
         }
     }

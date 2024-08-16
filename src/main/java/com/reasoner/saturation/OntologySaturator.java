@@ -24,7 +24,6 @@ import com.reasoner.reasoning.rules.InferenceRule;
  * More theorically, the saturator is based on a property implying that if it's possible to apply an {@link InferenceRule} to a set of axioms, these should be in the same context. <p>
  */
 public class OntologySaturator {
-
     private final OntologyAccessManager ontologyAccessManager;
     private final ContextAccessManager contextManager;
     private final boolean concurrentMode;
@@ -51,6 +50,10 @@ public class OntologySaturator {
      * @return Set of conclusions.
      */
     public Set<OWLSubClassOfAxiom> saturate() {
+        if (ontologyAccessManager.getRules().isEmpty()) {
+            throw new RuntimeException("No inference rule has been added to this saturator yet. You can add InferenceRules by using registerRule() on the saturator's OntologyAccessManager.");
+        }
+
         contextManager.initialize(ontologyAccessManager);
 
         final int cpuCount = concurrentMode ? 
@@ -60,7 +63,7 @@ public class OntologySaturator {
             threads.add(new SaturationThread(contextManager));
         }
 
-        System.out.println("Saturating ontology with " + cpuCount + " threads...");
+        //System.out.println("Saturating ontology with " + cpuCount + " thread(s)...");
 
         // Blocking
         threads.forEach(Thread::start);
@@ -85,4 +88,7 @@ public class OntologySaturator {
         return conclusions;
     }
 
+    public OntologyAccessManager getOntologyAccessManager() {
+        return this.ontologyAccessManager;
+    }
 }

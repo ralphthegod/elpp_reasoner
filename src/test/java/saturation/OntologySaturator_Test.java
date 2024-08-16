@@ -1,0 +1,87 @@
+package saturation;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.Set;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.semanticweb.elk.owlapi.ElkReasonerFactory;
+import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
+import org.semanticweb.owlapi.reasoner.InferenceType;
+import org.semanticweb.owlapi.reasoner.OWLReasoner;
+import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
+
+import com.elppreasoner.normalization.ELPPOntologyNormalizer;
+import com.elppreasoner.reasoning.rules.BottomSuperclassRoleExpansionInferenceRule;
+import com.elppreasoner.reasoning.rules.IntersectionSuperclassesInferenceRule;
+import com.elppreasoner.reasoning.rules.NominalChainExpansionInferenceRule;
+import com.elppreasoner.reasoning.rules.SubclassRoleExpansionInferenceRule;
+import com.elppreasoner.reasoning.rules.SuperclassRoleExpansionInferenceRule;
+import com.elppreasoner.reasoning.rules.ToldSuperclassesInferenceRule;
+import com.reasoner.querying.OntologyAccessManager;
+import com.reasoner.saturation.ContextAccessManager;
+import com.reasoner.saturation.OntologySaturator;
+
+import utils.TestingUtilities;
+
+public class OntologySaturator_Test {
+    @Nested
+    class ItalianFood_SaturationTest {
+        private static final boolean EXPECTED_RESULT = true;
+
+        void saturationTest(OWLOntology ontology, boolean normalized, boolean concurrentMode) {
+            if (normalized) {
+                ontology = new ELPPOntologyNormalizer().normalize(ontology);
+            }
+
+            OntologyAccessManager ontologyAccessManager = new OntologyAccessManager(ontology);
+            ontologyAccessManager.registerRule(new ToldSuperclassesInferenceRule());
+            ontologyAccessManager.registerRule(new IntersectionSuperclassesInferenceRule());
+            ontologyAccessManager.registerRule(new SubclassRoleExpansionInferenceRule());
+            ontologyAccessManager.registerRule(new SuperclassRoleExpansionInferenceRule());
+            ontologyAccessManager.registerRule(new BottomSuperclassRoleExpansionInferenceRule());
+            ontologyAccessManager.registerRule(new NominalChainExpansionInferenceRule());
+            OntologySaturator saturator = new OntologySaturator(ontologyAccessManager, new ContextAccessManager(), concurrentMode);
+            Set<OWLSubClassOfAxiom> conclusions = saturator.saturate();
+
+            OWLReasonerFactory reasonerFactory = new ElkReasonerFactory();
+            OWLReasoner elk = reasonerFactory.createReasoner(ontology);
+            elk.precomputeInferences(InferenceType.CLASS_HIERARCHY);
+
+            for (OWLSubClassOfAxiom axiom : conclusions) {
+                assertEquals(EXPECTED_RESULT, elk.isEntailed(axiom));
+            }
+        } 
+
+        @Test
+        @DisplayName("ITALIAN FOOD ONTOLOGY SATURATION TEST 1 - saturate (non-normalized ontology, not concurrent)")
+        void ItalianFood_saturate() {
+            OWLOntology ontology = TestingUtilities.loadOntology("src/test/resources/ontologies/normalization_test/italian-food.owl");
+            saturationTest(ontology, false, false);
+        }
+
+        @Test
+        @DisplayName("ITALIAN FOOD ONTOLOGY SATURATION TEST 2 - saturate (non-normalized ontology, concurrent)")
+        void ItalianFood_saturate_c() {
+            OWLOntology ontology = TestingUtilities.loadOntology("src/test/resources/ontologies/normalization_test/italian-food.owl");
+            saturationTest(ontology, false, true);
+        }
+
+        @Test
+        @DisplayName("ITALIAN FOOD ONTOLOGY SATURATION TEST 3 - saturate (normalized ontology, not concurrent)")
+        void ItalianFood_saturate_n() {
+            OWLOntology ontology = TestingUtilities.loadOntology("src/test/resources/ontologies/normalization_test/italian-food.owl");
+            saturationTest(ontology, true, false);
+        }
+
+        @Test
+        @DisplayName("ITALIAN FOOD ONTOLOGY SATURATION TEST 3 - saturate (normalized ontology, concurrent)")
+        void ItalianFood_saturate_nc() {
+            OWLOntology ontology = TestingUtilities.loadOntology("src/test/resources/ontologies/normalization_test/italian-food.owl");
+            saturationTest(ontology, true, true);
+        }
+    }
+}
