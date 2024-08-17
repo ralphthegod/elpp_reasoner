@@ -38,6 +38,7 @@ public class IntersectionSuperclassesInferenceRule extends InferenceRule<OWLClas
 
     @Override
     public void addAxiom(OWLClassExpression subclass, OWLClassExpression superclass) {
+        
         OWLObjectIntersectionOf intersection = (OWLObjectIntersectionOf) subclass;
         List<OWLClassExpression> operands = intersection.getOperandsAsList();
 
@@ -46,9 +47,9 @@ public class IntersectionSuperclassesInferenceRule extends InferenceRule<OWLClas
         OWLClassExpression operand2 = operands.get(1);
 
         // Commutative property of intersection, so we add both directions
-        axioms.computeIfAbsent(operand1, __ -> new HashMap()).computeIfAbsent(operand2, __ -> new HashSet<>())
+        axioms.computeIfAbsent(operand1, __ -> new HashMap<>()).computeIfAbsent(operand2, __ -> new HashSet<>())
             .add(superclass);
-        axioms.computeIfAbsent(operand2, __ -> new HashMap()).computeIfAbsent(operand1, __ -> new HashSet<>())
+        axioms.computeIfAbsent(operand2, __ -> new HashMap<>()).computeIfAbsent(operand1, __ -> new HashSet<>())
             .add(superclass);    
         
     }
