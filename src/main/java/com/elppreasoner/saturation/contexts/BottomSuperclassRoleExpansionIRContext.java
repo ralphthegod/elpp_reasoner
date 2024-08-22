@@ -39,8 +39,7 @@ public class BottomSuperclassRoleExpansionIRContext extends InferenceRuleContext
             return true;
         }
         else{
-            processedAxioms.add(axiom);
-            return true;
+            return processedAxioms.add(axiom);
         }
 
     }
