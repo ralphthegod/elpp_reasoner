@@ -99,8 +99,7 @@ public class NominalChainExpansionIRContext extends InferenceRuleContext<Object,
                 );
             }
         }
-
-        return true;
+        return processedAxioms.add(axiom);
         
     }
 
