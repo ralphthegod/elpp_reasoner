@@ -14,6 +14,7 @@ import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLIndividual;
 import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.model.OWLObjectIntersectionOf;
+import org.semanticweb.owlapi.model.OWLObjectOneOf;
 
 import static com.elppreasoner.normalization.NormalizationUtilities.isSubclassABasicConcept;
 import com.elppreasoner.saturation.contexts.IntersectionSuperclassesIRContext;
@@ -58,11 +59,22 @@ public class IntersectionSuperclassesInferenceRule extends InferenceRule<OWLClas
     public Set<InferenceRuleContext> extractContexts(Map<OWLObject, InferenceRuleContext> contexts,
             OWLClassExpression subclass, OWLClassExpression superclass) {
         if(isSubclassABasicConcept(subclass) && isSuperclassABasicConcept(superclass)){
-            InferenceRuleContext context = contexts.get(subclass);
-            if(context != null){
-                return new HashSet<InferenceRuleContext>() {{
-                    add(context);
-                }};
+            if(subclass instanceof OWLObjectOneOf){
+                OWLObjectOneOf oneOfSubClass = (OWLObjectOneOf) subclass;
+                InferenceRuleContext context = contexts.get(oneOfSubClass.individuals().findFirst().get());
+                if(context != null){
+                    return new HashSet<InferenceRuleContext>() {{
+                        add(context);
+                    }};
+                }
+            }
+            else{
+                InferenceRuleContext context = contexts.get(subclass);
+                if(context != null){
+                    return new HashSet<InferenceRuleContext>() {{
+                        add(context);
+                    }};
+                }
             }
         }
         return new HashSet<>();

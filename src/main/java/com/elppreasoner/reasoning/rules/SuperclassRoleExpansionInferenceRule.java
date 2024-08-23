@@ -10,6 +10,7 @@ import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLIndividual;
 import org.semanticweb.owlapi.model.OWLObject;
+import org.semanticweb.owlapi.model.OWLObjectOneOf;
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.semanticweb.owlapi.model.OWLObjectSomeValuesFrom;
 
@@ -59,9 +60,18 @@ public class SuperclassRoleExpansionInferenceRule
             OWLClassExpression subclass, OWLClassExpression superclass) {
         final HashSet<InferenceRuleContext> result = new HashSet<>();
         if(isSubclassABasicConcept(subclass) && isSuperclassABasicConcept(superclass)){
-            InferenceRuleContext context = contexts.get(subclass);
-            if(context != null){
-                result.add(context);
+            if(subclass instanceof OWLObjectOneOf){
+                OWLObjectOneOf oneOfSubClass = (OWLObjectOneOf) subclass;
+                InferenceRuleContext context = contexts.get(oneOfSubClass.individuals().findFirst().get());
+                if(context != null){
+                    result.add(context);
+                }
+            }
+            else{
+                InferenceRuleContext context = contexts.get(subclass);
+                if(context != null){
+                    result.add(context);
+                }
             }
         }
         if(isSubclassABasicConcept(subclass) && superclass instanceof OWLObjectSomeValuesFrom){
