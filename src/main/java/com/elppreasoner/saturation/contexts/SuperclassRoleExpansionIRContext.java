@@ -159,5 +159,10 @@ public class SuperclassRoleExpansionIRContext extends InferenceRuleContext<OWLOb
         return conclusions;
     }
 
+    @Override
+    public String id(){
+        return "4";
+    }
+
   
 }

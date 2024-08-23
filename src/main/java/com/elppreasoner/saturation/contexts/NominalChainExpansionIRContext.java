@@ -103,6 +103,10 @@ public class NominalChainExpansionIRContext extends InferenceRuleContext<Object,
         
     }
 
+    @Override
+    public String id(){
+        return "6";
+    }
 
     @Override
     protected boolean isTargetEntity(OWLSubClassOfAxiom axiom) {
