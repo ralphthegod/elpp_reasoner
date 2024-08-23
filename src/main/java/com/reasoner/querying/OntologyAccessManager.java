@@ -34,6 +34,14 @@ public class OntologyAccessManager {
     }
 
     /**
+     * Check if the ontology is indexed.
+     * @return boolean
+     */
+    public boolean isIndexed() {
+        return isIndexed;
+    }
+
+    /**
      * Get the axioms for the given key.
      * @param key
      * @return Map of axioms (subclass, superclass).
@@ -57,9 +65,6 @@ public class OntologyAccessManager {
      */
     public void setOntology(OWLOntology ontology) {
         this.ontology = ontology;
-        if(isIndexed) {
-            precomputeAxioms();
-        }
     }
 
     /**

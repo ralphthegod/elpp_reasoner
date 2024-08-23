@@ -85,8 +85,8 @@ public class ELPPTaxonomyBuilder implements TaxonomyBuilder {
 
         TaxonomyReductionPOJO reductionPOJO = TaxonomyUtilities.reduceTransitiveSubsumptions(classToAllSuperclasses, this.concurrentMode);
         Map<OWLClassExpression, Set<OWLClassExpression>> classToDirectSuperclasses = reductionPOJO.getTaxonomyDirectSuperConcepts();
-        Map<OWLClassExpression, Set<OWLClassExpression>> classToEquivalentSuperclasses = reductionPOJO.getTaxonomyEquivalentConcepts();
+        Map<OWLClassExpression, Set<OWLClassExpression>> classToEquivalentClasses = reductionPOJO.getTaxonomyEquivalentConcepts();
 
-        return TaxonomyUtilities.buildTaxonomy(classToAllSuperclasses, classToEquivalentSuperclasses, classToDirectSuperclasses);
+        return TaxonomyUtilities.buildTaxonomy(classToAllSuperclasses, classToEquivalentClasses, classToDirectSuperclasses);
     }
 }

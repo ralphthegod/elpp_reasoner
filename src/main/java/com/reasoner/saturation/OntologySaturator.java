@@ -54,6 +54,10 @@ public class OntologySaturator {
             throw new RuntimeException("No inference rule has been added to this saturator yet. You can add InferenceRules by using registerRule() on the saturator's OntologyAccessManager.");
         }
 
+        if(!ontologyAccessManager.isIndexed()){
+            ontologyAccessManager.precomputeAxioms();
+        }
+
         contextManager.initialize(ontologyAccessManager);
 
         final int cpuCount = concurrentMode ? 
@@ -84,6 +88,10 @@ public class OntologySaturator {
                 });
             }
         });
+
+        System.out.println("Discarded axioms: " + contextManager.getDiscardedAxioms().size());
+
+        conclusions.addAll(contextManager.getDiscardedAxioms());
 
         return conclusions;
     }

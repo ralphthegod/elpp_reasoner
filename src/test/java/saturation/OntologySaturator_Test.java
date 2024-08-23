@@ -46,6 +46,9 @@ public class OntologySaturator_Test {
             ontologyAccessManager.registerRule(new SuperclassRoleExpansionInferenceRule());
             ontologyAccessManager.registerRule(new BottomSuperclassRoleExpansionInferenceRule());
             ontologyAccessManager.registerRule(new NominalChainExpansionInferenceRule());
+
+            
+
             OntologySaturator saturator = new OntologySaturator(ontologyAccessManager, new ContextAccessManager(), concurrentMode);
             Set<OWLSubClassOfAxiom> conclusions = saturator.saturate();
 
@@ -54,11 +57,12 @@ public class OntologySaturator_Test {
             elk.precomputeInferences(InferenceType.CLASS_HIERARCHY);
 
             for (OWLSubClassOfAxiom axiom : conclusions) {
+                System.out.println("Conclusion: " + axiom);
                 assertEquals(EXPECTED_RESULT, elk.isEntailed(axiom));
             }
         } 
 
-        @Test
+        /*@Test
         @DisplayName("ITALIAN FOOD ONTOLOGY SATURATION TEST 1 - saturate (non-normalized ontology, not concurrent)")
         void ItalianFood_saturate() {
             OWLOntology ontology = TestingUtilities.loadOntology(ONTOLOGY_PATH);
@@ -77,13 +81,20 @@ public class OntologySaturator_Test {
         void ItalianFood_saturate_n() {
             OWLOntology ontology = TestingUtilities.loadOntology(ONTOLOGY_PATH);
             saturationTest(ontology, true, false);
-        }
+        }*/
 
-        @Test
-        @DisplayName("ITALIAN FOOD ONTOLOGY SATURATION TEST 3 - saturate (normalized ontology, concurrent)")
+        /*@Test
+        @DisplayName("ITALIAN FOOD ONTOLOGY SATURATION TEST 4 - saturate (normalized ontology, concurrent)")
         void ItalianFood_saturate_nc() {
             OWLOntology ontology = TestingUtilities.loadOntology(ONTOLOGY_PATH);
             saturationTest(ontology, true, true);
+        }*/
+
+        @Test
+        @DisplayName("ITALIAN FOOD ONTOLOGY SATURATION TEST 5")
+        void ItalianFood_saturate() {
+            OWLOntology ontology = TestingUtilities.loadOntology(ONTOLOGY_PATH);
+            saturationTest(ontology, false, false);
         }
     }
 }

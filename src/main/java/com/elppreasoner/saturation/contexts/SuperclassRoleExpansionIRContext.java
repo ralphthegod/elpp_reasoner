@@ -55,7 +55,7 @@ public class SuperclassRoleExpansionIRContext extends InferenceRuleContext<OWLOb
         OWLClassExpression subclass = axiom.getSubClass();
         OWLClassExpression superclass = axiom.getSuperClass();
 
-        if ((isSubclassABasicConcept(subclass) && isSuperclassABasicConcept(superclass) && !Objects.equals(subclass, getEntity())) || 
+        /*if ((isSubclassABasicConcept(subclass) && isSuperclassABasicConcept(superclass) && !Objects.equals(subclass, getEntity())) || 
             !isSubclassABasicConcept(subclass) || 
             (!isSuperclassABasicConcept(superclass) && !(superclass instanceof OWLObjectSomeValuesFrom))) {
             return false;
@@ -64,6 +64,19 @@ public class SuperclassRoleExpansionIRContext extends InferenceRuleContext<OWLOb
         if (superclass instanceof OWLObjectSomeValuesFrom && 
             !Objects.equals(((OWLObjectSomeValuesFrom) superclass).getProperty(), getEntity())) {
             return false;
+        }
+        return true;*/
+
+        if(!isSubclassABasicConcept(subclass) || (!isSuperclassABasicConcept(superclass) && !(superclass instanceof OWLObjectSomeValuesFrom))) {
+            throw new IllegalArgumentException("Axiom " + axiom + " is not a target entity for " + this);
+        }
+
+        if(isSubclassABasicConcept(subclass) && isSuperclassABasicConcept(superclass) && !Objects.equals(subclass, getEntity())) {
+            throw new IllegalArgumentException("Axiom " + axiom + " is not a target entity for " + this);
+        }
+
+        if(superclass instanceof OWLObjectSomeValuesFrom && !Objects.equals(((OWLObjectSomeValuesFrom) superclass).getFiller(), getEntity())) {
+            throw new IllegalArgumentException("Axiom " + axiom + " is not a target entity for " + this);
         }
 
         return true;
@@ -144,6 +157,11 @@ public class SuperclassRoleExpansionIRContext extends InferenceRuleContext<OWLOb
         }
 
         return conclusions;
+    }
+
+    @Override
+    public String id(){
+        return "4";
     }
 
   

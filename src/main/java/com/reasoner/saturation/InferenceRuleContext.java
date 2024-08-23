@@ -47,13 +47,17 @@ public abstract class InferenceRuleContext<S,T> {
     public abstract Set<OWLSubClassOfAxiom> compute(OWLSubClassOfAxiom axiom);
 
     public boolean scheduleAxiom(OWLSubClassOfAxiom axiom){
-        if(!isTargetEntity(axiom)) return false;
+        if(!isTargetEntity(axiom)){
+            throw new IllegalArgumentException("Axiom " + axiom + " is not a target entity for " + this);
+        }
         return scheduledAxioms.add(axiom);
     }
 
     public OWLSubClassOfAxiom pollScheduledAxiom(){
         return scheduledAxioms.poll();
     }
+
+    public abstract String id();
 
     public boolean hasScheduledAxioms(){
         return !scheduledAxioms.isEmpty();

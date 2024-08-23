@@ -14,6 +14,7 @@ import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLIndividual;
 import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.model.OWLObjectIntersectionOf;
+import org.semanticweb.owlapi.model.OWLObjectOneOf;
 
 import static com.elppreasoner.normalization.NormalizationUtilities.isSubclassABasicConcept;
 import com.elppreasoner.saturation.contexts.IntersectionSuperclassesIRContext;
@@ -38,6 +39,7 @@ public class IntersectionSuperclassesInferenceRule extends InferenceRule<OWLClas
 
     @Override
     public void addAxiom(OWLClassExpression subclass, OWLClassExpression superclass) {
+        
         OWLObjectIntersectionOf intersection = (OWLObjectIntersectionOf) subclass;
         List<OWLClassExpression> operands = intersection.getOperandsAsList();
 
@@ -46,9 +48,9 @@ public class IntersectionSuperclassesInferenceRule extends InferenceRule<OWLClas
         OWLClassExpression operand2 = operands.get(1);
 
         // Commutative property of intersection, so we add both directions
-        axioms.computeIfAbsent(operand1, __ -> new HashMap()).computeIfAbsent(operand2, __ -> new HashSet<>())
+        axioms.computeIfAbsent(operand1, __ -> new HashMap<>()).computeIfAbsent(operand2, __ -> new HashSet<>())
             .add(superclass);
-        axioms.computeIfAbsent(operand2, __ -> new HashMap()).computeIfAbsent(operand1, __ -> new HashSet<>())
+        axioms.computeIfAbsent(operand2, __ -> new HashMap<>()).computeIfAbsent(operand1, __ -> new HashSet<>())
             .add(superclass);    
         
     }
@@ -57,11 +59,22 @@ public class IntersectionSuperclassesInferenceRule extends InferenceRule<OWLClas
     public Set<InferenceRuleContext> extractContexts(Map<OWLObject, InferenceRuleContext> contexts,
             OWLClassExpression subclass, OWLClassExpression superclass) {
         if(isSubclassABasicConcept(subclass) && isSuperclassABasicConcept(superclass)){
-            InferenceRuleContext context = contexts.get(subclass);
-            if(context != null){
-                return new HashSet<InferenceRuleContext>() {{
-                    add(context);
-                }};
+            if(subclass instanceof OWLObjectOneOf){
+                OWLObjectOneOf oneOfSubClass = (OWLObjectOneOf) subclass;
+                InferenceRuleContext context = contexts.get(oneOfSubClass.individuals().findFirst().get());
+                if(context != null){
+                    return new HashSet<InferenceRuleContext>() {{
+                        add(context);
+                    }};
+                }
+            }
+            else{
+                InferenceRuleContext context = contexts.get(subclass);
+                if(context != null){
+                    return new HashSet<InferenceRuleContext>() {{
+                        add(context);
+                    }};
+                }
             }
         }
         return new HashSet<>();

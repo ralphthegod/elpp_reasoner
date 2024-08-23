@@ -99,11 +99,14 @@ public class NominalChainExpansionIRContext extends InferenceRuleContext<Object,
                 );
             }
         }
-
-        return true;
+        return processedAxioms.add(axiom);
         
     }
 
+    @Override
+    public String id(){
+        return "6";
+    }
 
     @Override
     protected boolean isTargetEntity(OWLSubClassOfAxiom axiom) {

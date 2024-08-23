@@ -46,6 +46,11 @@ public class IntersectionSuperclassesIRContext extends InferenceRuleContext<OWLC
     }
 
     @Override
+    public String id(){
+        return "2";
+    }
+
+    @Override
     public Set<OWLSubClassOfAxiom> compute(OWLSubClassOfAxiom axiom) {
         OWLClassExpression superclass = axiom.getSuperClass();
         OWLClassExpression subclass = axiom.getSubClass();
@@ -73,6 +78,7 @@ public class IntersectionSuperclassesIRContext extends InferenceRuleContext<OWLC
             if(!Objects.equals(sup, getEntity()) && !hasProcessedAxiom(newAxiom)){
                 continue;
             }
+            superclasses.addAll(getInferenceRule().getAxioms().get(superclass).get(sup));
         }
 
         return superclasses;

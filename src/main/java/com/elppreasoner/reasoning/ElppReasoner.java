@@ -60,12 +60,12 @@ public class ELPPReasoner extends Reasoner {
     /**
      * The time elapsed to saturate the given ontology, in seconds. 
      */
-    private long saturationTime;
+    private double saturationTime;
 
     /**
      * The time elapsed to build the taxonomy for the given saturated ontology, in seconds.
      */
-    private long taxonomyBuildingTime;
+    private double taxonomyBuildingTime;
 
     /**
      * Exception message to throw when a taxonomy has not been computed yet.
@@ -96,7 +96,7 @@ public class ELPPReasoner extends Reasoner {
      * Gets the time elapsed to saturate the given ontology, in seconds.
      * @return The saturation time
      */
-    public long getSaturationTime() {
+    public double getSaturationTime() {
         return saturationTime;
     }
 
@@ -104,7 +104,7 @@ public class ELPPReasoner extends Reasoner {
      * Gets the time elapsed to build the taxonomy for the given saturated ontology, in seconds.
      * @return The taxonomy building time
      */
-    public long getTaxonomyBuildingTime() {
+    public double getTaxonomyBuildingTime() {
         return taxonomyBuildingTime;
     }
 
@@ -126,7 +126,7 @@ public class ELPPReasoner extends Reasoner {
      * the {@code taxonomy}, the {@code saturationTime} and the {@code taxonomyBuildingTime} are stored.
      */
     private void computeClassHierarchy() {
-        long time;
+        double time;
 
         // Saturation
         time = System.nanoTime();
