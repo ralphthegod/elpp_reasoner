@@ -282,7 +282,6 @@ public final class TaxonomyUtilities {
                             }
                         }
                         if (isDirect_AtoC) {
-                            System.out.println(C + " is a direct superclass of " + A);
                             taxonomyDirectSuperConcepts.get(A).add(C);
                         }
                     }
