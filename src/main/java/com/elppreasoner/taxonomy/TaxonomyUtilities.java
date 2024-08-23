@@ -205,7 +205,7 @@ public final class TaxonomyUtilities {
          * {@code Map.keySet()} to each thread. </p>
          * <p>This should always be {@code (OWLClassExpression[]) taxonomySuperConcepts.keySet().toArray()}.</p>
          */
-        private final OWLClassExpression[] concepts; // TODO: keep this attribute or it is safe to compute it within the thread? [TEST]
+        private final OWLClassExpression[] concepts;
 
         /**
          * The superconcepts whose transitive subsumptions have to be reduced.
@@ -272,7 +272,7 @@ public final class TaxonomyUtilities {
                         Iterator<OWLClassExpression> it = taxonomyDirectSuperConcepts.get(A).iterator();
                         while (it.hasNext()) {
                             OWLClassExpression B = it.next();
-                            superConcepts.putIfAbsent(B, new HashSet<>()); // TODO: is this thread safe? [TEST]
+                            superConcepts.putIfAbsent(B, new HashSet<>());
                             if (superConcepts.get(B).contains(C)) {
                                 isDirect_AtoC = false;
                                 break;
