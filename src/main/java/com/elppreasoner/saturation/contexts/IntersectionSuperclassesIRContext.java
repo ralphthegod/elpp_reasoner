@@ -78,6 +78,7 @@ public class IntersectionSuperclassesIRContext extends InferenceRuleContext<OWLC
             if(!Objects.equals(sup, getEntity()) && !hasProcessedAxiom(newAxiom)){
                 continue;
             }
+            superclasses.addAll(getInferenceRule().getAxioms().get(superclass).get(sup));
         }
 
         return superclasses;
