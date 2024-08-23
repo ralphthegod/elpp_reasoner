@@ -280,10 +280,10 @@ public final class TaxonomyUtilities {
                             if (C_superConcepts.contains(B)) {
                                 it.remove();
                             }
-                            if (isDirect_AtoC) {
-                                taxonomyDirectSuperConcepts.putIfAbsent(A, new HashSet<>());
-                                taxonomyDirectSuperConcepts.get(A).add(C);
-                            }
+                        }
+                        if (isDirect_AtoC) {
+                            System.out.println(C + " is a direct superclass of " + A);
+                            taxonomyDirectSuperConcepts.get(A).add(C);
                         }
                     }
                 }
