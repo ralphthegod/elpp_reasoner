@@ -26,6 +26,11 @@ public class ToldSuperclassesIRContext extends InferenceRuleContext<OWLClassExpr
     }
 
     @Override
+    public String id(){
+        return "1";
+    }
+
+    @Override
     public boolean addProcessedAxiom(OWLSubClassOfAxiom axiom) {
         if(!isTargetEntity(axiom)) {
             throw new IllegalArgumentException("Axiom is not for the target entity");

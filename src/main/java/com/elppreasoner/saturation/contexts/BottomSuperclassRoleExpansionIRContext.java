@@ -26,6 +26,11 @@ public class BottomSuperclassRoleExpansionIRContext extends InferenceRuleContext
     }
 
     @Override
+    public String id(){
+        return "5";
+    }
+
+    @Override
     public boolean addProcessedAxiom(OWLSubClassOfAxiom axiom) {
         if(!isTargetEntity(axiom)){
             throw new IllegalArgumentException("Axiom is not a target entity");

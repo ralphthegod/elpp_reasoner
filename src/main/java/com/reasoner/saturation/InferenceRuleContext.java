@@ -57,6 +57,8 @@ public abstract class InferenceRuleContext<S,T> {
         return scheduledAxioms.poll();
     }
 
+    public abstract String id();
+
     public boolean hasScheduledAxioms(){
         return !scheduledAxioms.isEmpty();
     }

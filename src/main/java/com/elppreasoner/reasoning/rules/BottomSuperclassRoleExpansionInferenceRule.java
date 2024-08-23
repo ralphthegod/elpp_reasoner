@@ -13,6 +13,7 @@ import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLIndividual;
 import org.semanticweb.owlapi.model.OWLObject;
+import org.semanticweb.owlapi.model.OWLObjectOneOf;
 import org.semanticweb.owlapi.model.OWLObjectSomeValuesFrom;
 
 import com.elppreasoner.saturation.contexts.BottomSuperclassRoleExpansionIRContext;
@@ -45,8 +46,19 @@ public class BottomSuperclassRoleExpansionInferenceRule extends InferenceRule<Ob
             OWLClassExpression subclass, OWLClassExpression superclass) {
         HashSet<InferenceRuleContext> result = new HashSet<>();
         if(isSubclassABasicConcept(subclass) && isSuperclassABasicConcept(superclass) && superclass.isOWLNothing()){
-            InferenceRuleContext context = contexts.get(subclass);
-            result.add(context);
+            if(subclass instanceof OWLObjectOneOf){
+                OWLObjectOneOf oneOfSubClass = (OWLObjectOneOf) subclass;
+                InferenceRuleContext context = contexts.get(oneOfSubClass.individuals().findFirst().get());
+                if(context != null){
+                    result.add(context);
+                }
+            }
+            else{
+                InferenceRuleContext context = contexts.get(subclass);
+                if(context != null){
+                    result.add(context);
+                }
+            }
         }
         if(isSubclassABasicConcept(subclass) && superclass instanceof OWLObjectSomeValuesFrom){
             OWLClassExpression filler = ((OWLObjectSomeValuesFrom) superclass).getFiller();

@@ -42,7 +42,8 @@ public class NominalChainExpansionInferenceRule extends InferenceRule<Object, Ob
     public Set<InferenceRuleContext> extractContexts(Map<OWLObject, InferenceRuleContext> contexts,
             OWLClassExpression subclass, OWLClassExpression superclass) {
         HashSet<InferenceRuleContext> result = new HashSet<>();
-        if(isSubclassABasicConcept(subclass) && isSuperclassABasicConcept(superclass) && superclass.isOWLNothing()){
+        
+        if(isSubclassABasicConcept(subclass) && isSuperclassABasicConcept(superclass)){
             result.addAll(contexts.values());
         }
         if(isSubclassABasicConcept(subclass) && superclass instanceof OWLObjectSomeValuesFrom){

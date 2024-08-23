@@ -68,5 +68,10 @@ public class SubclassRoleExpansionIRContext extends InferenceRuleContext<OWLClas
         });
         return conclusions;
     }
+
+    @Override
+    public String id(){
+        return "3";
+    }
     
 }
