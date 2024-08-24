@@ -89,7 +89,7 @@ public class OntologySaturator {
             }
         });
 
-        System.out.println("Discarded axioms: " + contextManager.getDiscardedAxioms().size());
+        //System.out.println("Discarded axioms: " + contextManager.getDiscardedAxioms().size());
 
         conclusions.addAll(contextManager.getDiscardedAxioms());
 

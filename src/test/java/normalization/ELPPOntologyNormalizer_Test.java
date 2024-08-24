@@ -85,4 +85,70 @@ public class ELPPOntologyNormalizer_Test {
             assertEquals(TEST2_EXPECTED, countNormalizedAxioms(axioms));
         }
     }
+
+    @Nested
+    class SCTO_NormalizationTest {
+        private static final String ONTOLOGY_PATH = "src/test/resources/ontologies/scto-modified.owl";
+
+        @Test
+        @DisplayName("MODIFIED SNOMED CT ONTOLOGY NORMALIZATION TEST 1 - isCBoxInNormalForm")
+        void isCBoxInNormalForm_test() {
+            OWLOntology ontology = TestingUtilities.loadOntology(ONTOLOGY_PATH);
+
+            ontology.axioms().forEach(axiom -> {
+                if (axiom instanceof OWLEquivalentClassesAxiom) {
+                    for (OWLSubClassOfAxiom owlSubClassOfAxiom : ((OWLEquivalentClassesAxiom) axiom).asOWLSubClassOfAxioms()) {
+                        assertEquals(true, NormalizationUtilities.isCBoxInNormalForm(owlSubClassOfAxiom));
+                    }
+                }
+                if (axiom instanceof OWLSubClassOfAxiom) {
+                    assertEquals(true, NormalizationUtilities.isCBoxInNormalForm((OWLSubClassOfAxiom) axiom));
+                }
+            });
+        }
+    }
+
+    @Nested
+    class GALEN_NormalizationTest {
+        private static final String ONTOLOGY_PATH = "src/test/resources/ontologies/full-galen-modified.owl";
+
+        @Test
+        @DisplayName("MODIFIED GALEN ONTOLOGY NORMALIZATION TEST 1 - isCBoxInNormalForm")
+        void isCBoxInNormalForm_test() {
+            OWLOntology ontology = TestingUtilities.loadOntology(ONTOLOGY_PATH);
+
+            ontology.axioms().forEach(axiom -> {
+                if (axiom instanceof OWLEquivalentClassesAxiom) {
+                    for (OWLSubClassOfAxiom owlSubClassOfAxiom : ((OWLEquivalentClassesAxiom) axiom).asOWLSubClassOfAxioms()) {
+                        assertEquals(true, NormalizationUtilities.isCBoxInNormalForm(owlSubClassOfAxiom));
+                    }
+                }
+                if (axiom instanceof OWLSubClassOfAxiom) {
+                    assertEquals(true, NormalizationUtilities.isCBoxInNormalForm((OWLSubClassOfAxiom) axiom));
+                }
+            });
+        }
+    }
+
+    @Nested
+    class GO_NormalizationTest {
+        private static final String ONTOLOGY_PATH = "src/test/resources/ontologies/go-modified.owl";
+
+        @Test
+        @DisplayName("MODIFIED GENE ONTOLOGY NORMALIZATION TEST 1 - isCBoxInNormalForm")
+        void isCBoxInNormalForm_test() {
+            OWLOntology ontology = TestingUtilities.loadOntology(ONTOLOGY_PATH);
+
+            ontology.axioms().forEach(axiom -> {
+                if (axiom instanceof OWLEquivalentClassesAxiom) {
+                    for (OWLSubClassOfAxiom owlSubClassOfAxiom : ((OWLEquivalentClassesAxiom) axiom).asOWLSubClassOfAxioms()) {
+                        assertEquals(true, NormalizationUtilities.isCBoxInNormalForm(owlSubClassOfAxiom));
+                    }
+                }
+                if (axiom instanceof OWLSubClassOfAxiom) {
+                    assertEquals(true, NormalizationUtilities.isCBoxInNormalForm((OWLSubClassOfAxiom) axiom));
+                }
+            });
+        }
+    }
 }

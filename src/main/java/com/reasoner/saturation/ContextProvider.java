@@ -44,7 +44,7 @@ public class ContextProvider{
                     .getContextType()
                     .getDeclaredConstructor(InferenceRule.class, OWLEntity.class)
                     .newInstance(inferenceRule, entity);
-                System.out.println("Created context: " + context);
+                //System.out.println("Created context: " + context);
             } catch (Exception e) {
                 e.printStackTrace();
             }
