@@ -74,22 +74,22 @@ public class ContextAccessManager{
     }
 
     private void initializeAxiom(OWLSubClassOfAxiom axiom){
-        System.out.println("Initializing axiom: " + axiom);
+        //System.out.println("Initializing axiom: " + axiom);
         Collection<InferenceRuleContext> contexts = getContextsByAxiom(axiom);
         if(contexts == null || contexts.isEmpty()){
             discardedAxioms.add(axiom);
-            System.out.println("Discarded axiom: " + axiom);
-            System.out.println(" ");
+            //System.out.println("Discarded axiom: " + axiom);
+            //System.out.println(" ");
             return;
         }
         for(InferenceRuleContext context : contexts){
             if(context == null){
                 continue;
             }
-            System.out.println("Context: " + context.id());
+            //System.out.println("Context: " + context.id());
             if(!context.hasBeenInitialized()){
                 Set<OWLSubClassOfAxiom> baseAxioms = context.initializeContext();
-                System.out.println("Initial axioms: " + baseAxioms);
+                //System.out.println("Initial axioms: " + baseAxioms);
                 for(OWLSubClassOfAxiom axiomToAdd : baseAxioms){
                     try {
                         Collection<InferenceRuleContext> baseContexts = getContextsByAxiom(axiomToAdd);
@@ -103,9 +103,9 @@ public class ContextAccessManager{
             }
             context.scheduleAxiom(axiom);
             activeContexts.activateContext(context);
-            System.out.println("Scheduled axiom: " + axiom + " for context: " + context.id());
+            //System.out.println("Scheduled axiom: " + axiom + " for context: " + context.id());
         }
-        System.out.println(" ");
+        //System.out.println(" ");
     }
 
     private void initializeContextProviders(Collection<InferenceRule> rules) {
