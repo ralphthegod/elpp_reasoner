@@ -1,0 +1,24 @@
+GALEN
+             [ELPP] Time: 1.7501453200000003s
+  [Concurrent ELPP] Time: 1.5579442899999996s
+              [ELK] Time: 0.06315802000000001s
+           [HermiT] Time: 0.08165478s
+
+GO
+             [ELPP] Time: 4.310927460000001s
+  [Concurrent ELPP] Time: 3.912115040000002s
+              [ELK] Time: 0.06346286s
+           [HermiT] Time: 0.10489225000000002s
+
+Italian Food
+             [ELPP] Time: 0.0018220700000000007s
+  [Concurrent ELPP] Time: 6.280799999999998E-4s
+              [ELK] Time: 0.00270426s
+           [HermiT] Time: 7.753000000000001E-4s
+
+Snomed CT
+             [ELPP] Time: 0.005256480000000001s
+  [Concurrent ELPP] Time: 0.00552076s
+              [ELK] Time: 8.659000000000002E-4s
+           [HermiT] Time: 7.437599999999999E-4s
+
