@@ -24,7 +24,10 @@ public class Performance_Test {
     private static final int ITERATIONS = 10;
 
     private static final String OUTPUT_FILE = "src/test/resources/performance-results.txt";
+    private static final String SCRIPT_PROGRAM = "py";
+    private static final String SCRIPT_PATH = "src/test/java/performance/performance-analysis.py";
     private static BufferedWriter writer;
+    private static ProcessBuilder processBuilder;
     
 
     @BeforeAll
@@ -35,11 +38,27 @@ public class Performance_Test {
     @AfterAll
     static void closeOutputFile() throws IOException {
         writer.close();
+        producePlots();
+    }
+
+    static void producePlots(){
+        processBuilder = new ProcessBuilder(SCRIPT_PROGRAM, SCRIPT_PATH);
+        processBuilder.redirectErrorStream(true);
+        Process p;
+        try {
+            p = processBuilder.start();
+            System.out.println("Running plotting script... ");
+            int exitCode;
+            exitCode = p.waitFor();
+            System.out.println("Exit Code : "+exitCode);
+        } catch (InterruptedException | IOException e) {
+            e.printStackTrace();
+        }
     }
 
     void performanceTest(OWLOntology ontology) throws IOException {
         ontology = new ELPPOntologyNormalizer().normalize(ontology);
-
+            
         double time;
         double t0;
 
