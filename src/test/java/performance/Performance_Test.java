@@ -13,7 +13,6 @@ import org.semanticweb.HermiT.ReasonerFactory;
 import org.semanticweb.elk.owlapi.ElkReasonerFactory;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.reasoner.InferenceType;
-import org.semanticweb.owlapi.reasoner.OWLReasoner;
 
 import com.elppreasoner.normalization.ELPPOntologyNormalizer;
 import com.elppreasoner.reasoning.ELPPReasoner;
@@ -24,7 +23,10 @@ public class Performance_Test {
     private static final int ITERATIONS = 10;
 
     private static final String OUTPUT_FILE = "src/test/resources/performance-results.txt";
+    private static final String SCRIPT_PROGRAM = "py";
+    private static final String SCRIPT_PATH = "src/test/java/performance/performance-analysis.py";
     private static BufferedWriter writer;
+    private static ProcessBuilder processBuilder;
     
 
     @BeforeAll
@@ -35,6 +37,22 @@ public class Performance_Test {
     @AfterAll
     static void closeOutputFile() throws IOException {
         writer.close();
+        producePlots();
+    }
+
+    static void producePlots(){
+        processBuilder = new ProcessBuilder(SCRIPT_PROGRAM, SCRIPT_PATH);
+        processBuilder.redirectErrorStream(true);
+        Process p;
+        try {
+            p = processBuilder.start();
+            System.out.println("Running plotting script... ");
+            int exitCode;
+            exitCode = p.waitFor();
+            System.out.println("Exit Code : "+exitCode);
+        } catch (InterruptedException | IOException e) {
+            e.printStackTrace();
+        }
     }
 
     void performanceTest(OWLOntology ontology) throws IOException {
@@ -43,39 +61,43 @@ public class Performance_Test {
         double time;
         double t0;
 
-        ELPPReasoner elppReasoner = new ELPPReasoner(ontology, false, false);
+        // ELPPReasoner performance
         time = 0;
         for (int i = 0; i < ITERATIONS; i++) {
             t0 = System.nanoTime();
-            elppReasoner.precomputeInferences(InferenceType.CLASS_HIERARCHY);
+            new ELPPReasoner(ontology, false, false).precomputeInferences(InferenceType.CLASS_HIERARCHY);
             time += ((System.nanoTime() - t0) / 1_000_000_000);
+            System.out.println("ELPPReasoner#"+i+" total elapsed time: " + time);
         }
         writer.append("             [ELPP] Time: " + (time / ITERATIONS) + "s\n");
         
-        ELPPReasoner concurrent_elppReasoner = new ELPPReasoner(ontology, true, true);
+        // Concurrent ELPPReasoner performance
         time = 0;
         for (int i = 0; i < ITERATIONS; i++) {
             t0 = System.nanoTime();
-            concurrent_elppReasoner.precomputeInferences(InferenceType.CLASS_HIERARCHY);
+            new ELPPReasoner(ontology, true, true).precomputeInferences(InferenceType.CLASS_HIERARCHY);
             time += ((System.nanoTime() - t0) / 1_000_000_000);
+            System.out.println("CCELPPReasoner#"+i+" total elapsed time: " + time);
         }
         writer.append("  [Concurrent ELPP] Time: " + (time / ITERATIONS) + "s\n");
 
-        OWLReasoner elk = new ElkReasonerFactory().createReasoner(ontology);
+        // ELK performance
         time = 0;
         for (int i = 0; i < ITERATIONS; i++) {
             t0 = System.nanoTime();
-            elk.precomputeInferences(InferenceType.CLASS_HIERARCHY);
+            new ElkReasonerFactory().createReasoner(ontology).precomputeInferences(InferenceType.CLASS_HIERARCHY);
             time += ((System.nanoTime() - t0) / 1_000_000_000);
+            System.out.println("ELK#"+i+" total elapsed time: " + time);
         }
         writer.append("              [ELK] Time: " + (time / ITERATIONS) + "s\n");
 
-        OWLReasoner hermiT = new ReasonerFactory().createReasoner(ontology);
+        // HermiT performance
         time = 0;
         for (int i = 0; i < ITERATIONS; i++) {
             t0 = System.nanoTime();
-            hermiT.precomputeInferences(InferenceType.CLASS_HIERARCHY);
+            new ReasonerFactory().createReasoner(ontology).precomputeInferences(InferenceType.CLASS_HIERARCHY);
             time += ((System.nanoTime() - t0) / 1_000_000_000);
+            System.out.println("HermiT#"+i+" total elapsed time: " + time);
         }
         writer.append("           [HermiT] Time: " + (time / ITERATIONS) + "s\n");
     }
