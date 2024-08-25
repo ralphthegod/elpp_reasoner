@@ -43,7 +43,7 @@ def prepare_data_for_plotting(performance_data, reasoners):
     return plot_data
 
 
-file_path = r'INSERT PATH'
+file_path = 'src/test/resources/performance-results.txt'
 
 
 performance_data, reasoners = read_performance_data(file_path)

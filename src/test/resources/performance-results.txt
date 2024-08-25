@@ -1,24 +1,24 @@
 GALEN
-             [ELPP] Time: 1.7501453200000003s
-  [Concurrent ELPP] Time: 1.5579442899999996s
-              [ELK] Time: 0.06315802000000001s
-           [HermiT] Time: 0.08165478s
+             [ELPP] Time: 16.23797286s
+  [Concurrent ELPP] Time: 13.234614240000003s
+              [ELK] Time: 0.23739642s
+           [HermiT] Time: 0.9325536700000001s
 
 GO
-             [ELPP] Time: 4.310927460000001s
-  [Concurrent ELPP] Time: 3.912115040000002s
-              [ELK] Time: 0.06346286s
-           [HermiT] Time: 0.10489225000000002s
+             [ELPP] Time: 35.21090805s
+  [Concurrent ELPP] Time: 32.180556040000006s
+              [ELK] Time: 0.27735172999999996s
+           [HermiT] Time: 1.32766734s
 
 Italian Food
-             [ELPP] Time: 0.0018220700000000007s
-  [Concurrent ELPP] Time: 6.280799999999998E-4s
-              [ELK] Time: 0.00270426s
-           [HermiT] Time: 7.753000000000001E-4s
+             [ELPP] Time: 0.007060789999999999s
+  [Concurrent ELPP] Time: 0.00474361s
+              [ELK] Time: 0.00796305s
+           [HermiT] Time: 0.0078528s
 
 Snomed CT
-             [ELPP] Time: 0.005256480000000001s
-  [Concurrent ELPP] Time: 0.00552076s
-              [ELK] Time: 8.659000000000002E-4s
-           [HermiT] Time: 7.437599999999999E-4s
+             [ELPP] Time: 0.03731390999999999s
+  [Concurrent ELPP] Time: 0.021549969999999998s
+              [ELK] Time: 0.00377768s
+           [HermiT] Time: 0.0084475s
 
