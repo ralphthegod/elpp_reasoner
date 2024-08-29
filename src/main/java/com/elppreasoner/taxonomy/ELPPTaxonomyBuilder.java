@@ -16,7 +16,7 @@ import com.reasoner.taxonomy.TaxonomyBuilder;
  * <p>The saturation phase computes the full transitively closed subsumption relation. However, the expected output of classification is a taxonomy
  * which only contains direct subsumptions between nodes representing equivalence classes of atomic concepts: this means that, if the taxonomy
  * contains A ⊑ B and B ⊑ C, then it should not contain A ⊑ C, unless some of these concepts are equivalent. Therefore, the computed subsumptions
- * between atomic concepts bust be transitively reduced.</p>
+ * between atomic concepts must be transitively reduced.</p>
  * 
  * <p>And that's what this class does: it takes a set of axioms in input and builds a taxonomy that contains information about both direct subsumptions
  * between concepts and equivalent concepts. The returned taxonomy also contains information about non-direct subsumption about concepts: this makes
