@@ -66,9 +66,6 @@ public abstract class Reasoner implements OWLReasoner {
      * The normalized ontology is set back to the OntologyAccessor object.
      */
     protected void normalizeOntology(){
-        if(ontologyNormalizer == null){
-            throw new IllegalStateException("Ontology normalizer not set.");
-        }
         OWLOntology normalizedOntology = ontologyNormalizer.normalize(ontologyAccessManager.getOntology());
         ontologyAccessManager.setOntology(normalizedOntology);
     }
