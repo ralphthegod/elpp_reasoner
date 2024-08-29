@@ -30,7 +30,7 @@ public class ELPPOntologyNormalizer_Test {
         int countNormalizedAxioms(ArrayList<OWLSubClassOfAxiom> axioms) {
             int normalizedAxioms = 0;
             for (OWLSubClassOfAxiom axiom : axioms) {
-                if (NormalizationUtilities.isCBoxInNormalForm(axiom)) {
+                if (NormalizationUtilities.isGCIInNormalForm(axiom)) {
                     normalizedAxioms++;
                 }
             }
@@ -41,8 +41,8 @@ public class ELPPOntologyNormalizer_Test {
          * Checks if the Italian Food ontology contains the expected amount of normalized axioms (14).
          */
         @Test
-        @DisplayName("ITALIAN FOOD ONTOLOGY NORMALIZATION TEST 1 - isCBoxInNormalForm")
-        void isCBoxInNormalForm_test() {
+        @DisplayName("ITALIAN FOOD ONTOLOGY NORMALIZATION TEST 1 - isGCIInNormalForm")
+        void isGCIInNormalForm_test() {
             OWLOntology ontology = TestingUtilities.loadOntology(ONTOLOGY_PATH);
 
             ArrayList<OWLSubClassOfAxiom> axioms = new ArrayList<>();
@@ -91,18 +91,18 @@ public class ELPPOntologyNormalizer_Test {
         private static final String ONTOLOGY_PATH = "src/test/resources/ontologies/scto-modified.owl";
 
         @Test
-        @DisplayName("MODIFIED SNOMED CT ONTOLOGY NORMALIZATION TEST 1 - isCBoxInNormalForm")
-        void isCBoxInNormalForm_test() {
+        @DisplayName("MODIFIED SNOMED CT ONTOLOGY NORMALIZATION TEST 1 - isGCIInNormalForm")
+        void isGCIInNormalForm_test() {
             OWLOntology ontology = TestingUtilities.loadOntology(ONTOLOGY_PATH);
 
             ontology.axioms().forEach(axiom -> {
                 if (axiom instanceof OWLEquivalentClassesAxiom) {
                     for (OWLSubClassOfAxiom owlSubClassOfAxiom : ((OWLEquivalentClassesAxiom) axiom).asOWLSubClassOfAxioms()) {
-                        assertEquals(true, NormalizationUtilities.isCBoxInNormalForm(owlSubClassOfAxiom));
+                        assertEquals(true, NormalizationUtilities.isGCIInNormalForm(owlSubClassOfAxiom));
                     }
                 }
                 if (axiom instanceof OWLSubClassOfAxiom) {
-                    assertEquals(true, NormalizationUtilities.isCBoxInNormalForm((OWLSubClassOfAxiom) axiom));
+                    assertEquals(true, NormalizationUtilities.isGCIInNormalForm((OWLSubClassOfAxiom) axiom));
                 }
             });
         }
@@ -113,18 +113,18 @@ public class ELPPOntologyNormalizer_Test {
         private static final String ONTOLOGY_PATH = "src/test/resources/ontologies/full-galen-modified.owl";
 
         @Test
-        @DisplayName("MODIFIED GALEN ONTOLOGY NORMALIZATION TEST 1 - isCBoxInNormalForm")
-        void isCBoxInNormalForm_test() {
+        @DisplayName("MODIFIED GALEN ONTOLOGY NORMALIZATION TEST 1 - isGCIInNormalForm")
+        void isGCIInNormalForm_test() {
             OWLOntology ontology = TestingUtilities.loadOntology(ONTOLOGY_PATH);
 
             ontology.axioms().forEach(axiom -> {
                 if (axiom instanceof OWLEquivalentClassesAxiom) {
                     for (OWLSubClassOfAxiom owlSubClassOfAxiom : ((OWLEquivalentClassesAxiom) axiom).asOWLSubClassOfAxioms()) {
-                        assertEquals(true, NormalizationUtilities.isCBoxInNormalForm(owlSubClassOfAxiom));
+                        assertEquals(true, NormalizationUtilities.isGCIInNormalForm(owlSubClassOfAxiom));
                     }
                 }
                 if (axiom instanceof OWLSubClassOfAxiom) {
-                    assertEquals(true, NormalizationUtilities.isCBoxInNormalForm((OWLSubClassOfAxiom) axiom));
+                    assertEquals(true, NormalizationUtilities.isGCIInNormalForm((OWLSubClassOfAxiom) axiom));
                 }
             });
         }
@@ -135,18 +135,18 @@ public class ELPPOntologyNormalizer_Test {
         private static final String ONTOLOGY_PATH = "src/test/resources/ontologies/go-modified.owl";
 
         @Test
-        @DisplayName("MODIFIED GENE ONTOLOGY NORMALIZATION TEST 1 - isCBoxInNormalForm")
-        void isCBoxInNormalForm_test() {
+        @DisplayName("MODIFIED GENE ONTOLOGY NORMALIZATION TEST 1 - isGCIInNormalForm")
+        void isGCIInNormalForm_test() {
             OWLOntology ontology = TestingUtilities.loadOntology(ONTOLOGY_PATH);
 
             ontology.axioms().forEach(axiom -> {
                 if (axiom instanceof OWLEquivalentClassesAxiom) {
                     for (OWLSubClassOfAxiom owlSubClassOfAxiom : ((OWLEquivalentClassesAxiom) axiom).asOWLSubClassOfAxioms()) {
-                        assertEquals(true, NormalizationUtilities.isCBoxInNormalForm(owlSubClassOfAxiom));
+                        assertEquals(true, NormalizationUtilities.isGCIInNormalForm(owlSubClassOfAxiom));
                     }
                 }
                 if (axiom instanceof OWLSubClassOfAxiom) {
-                    assertEquals(true, NormalizationUtilities.isCBoxInNormalForm((OWLSubClassOfAxiom) axiom));
+                    assertEquals(true, NormalizationUtilities.isGCIInNormalForm((OWLSubClassOfAxiom) axiom));
                 }
             });
         }

@@ -25,8 +25,8 @@ import com.reasoner.normalization.OntologyNormalizer;
  * <p>{@code ELPPOntologyNormalizer} is a helper class that makes easier to "normalize" an ontology (knowledge base). This is also called
  * 'normalization phase'. In the following document, this object is also called "normalizer".</p>
  * 
- * <p>In our work, given an ontology KB, the equivalent normalized ontology KB' only contains concepts (CBoxes, i.e. sets of GCIs) that are in
- * normal form (NF). A concept C is in normal form ("normalized") if and only if all of its GCIs have either one of the four following forms:
+ * <p>In our work, given an ontology KB, the equivalent normalized ontology KB' only contains concepts (its TBox, i.e. sets of GCIs) that are in
+ * normal form (NF). A GCI is in normal form ("normalized") if and only if it has either one of the four following forms:
  * <ul>
  *     <li>C1 ⊑ D</li>
  *     <li>C1 ⊓ C2 ⊑ D</li>
@@ -64,8 +64,8 @@ public class ELPPOntologyNormalizer implements OntologyNormalizer, OWLAxiomVisit
     /**
      * <p>A method from the {@code OntologyNormalizer} interface.</p>
      * 
-     * <p>Given an {@code ontology}, returns the equivalent ontology in normal form. Each one of its CBoxes is checked and normalized if it's not in
-     * normal form. This also means that any of the GCIs in a given CBox is checked and possibly queued up for normalization.</p>
+     * <p>Given an {@code ontology}, returns the equivalent ontology in normal form. Each one of its GCI is checked and normalized if it's not in
+     * normal form. This also means that each "normalized" GCIs is checked and possibly queued up for further normalization.</p>
      * {@code ontology} The ontology to normalize
      * @return The equivalent {@code ontology} normalized
      */
@@ -91,16 +91,16 @@ public class ELPPOntologyNormalizer implements OntologyNormalizer, OWLAxiomVisit
         Iterator<OWLAxiom> it = this.ontology.axioms().iterator();
         while(it.hasNext()) {
             OWLAxiom axiom = it.next();
-            if (axiom instanceof OWLSubClassOfAxiom) {  // If the CBox has the form "C ⊑ D"
+            if (axiom instanceof OWLSubClassOfAxiom) {  // If the GCI has the form "C ⊑ D"
                 OWLSubClassOfAxiom subClassOfAxiom = (OWLSubClassOfAxiom) axiom;
-                if (!NormalizationUtilities.isCBoxInNormalForm(subClassOfAxiom)) {
+                if (!NormalizationUtilities.isGCIInNormalForm(subClassOfAxiom)) {
                     this.axiomsToNormalize.add(subClassOfAxiom);
                 } else {
                     this.normalizedOntology.add(subClassOfAxiom);
                 }
-            } else if (axiom instanceof OWLEquivalentClassesAxiom) {  // If the CBox has the form "C1 ≡ ... ≡ Cn"
+            } else if (axiom instanceof OWLEquivalentClassesAxiom) {  // If the GCI has the form "C1 ≡ ... ≡ Cn"
                 for (OWLSubClassOfAxiom subClassOfAxiom : ((OWLEquivalentClassesAxiom) axiom).asOWLSubClassOfAxioms()) {
-                    if (!NormalizationUtilities.isCBoxInNormalForm(subClassOfAxiom)) {
+                    if (!NormalizationUtilities.isGCIInNormalForm(subClassOfAxiom)) {
                         this.axiomsToNormalize.add(subClassOfAxiom);
                     } else {
                         this.normalizedOntology.add(subClassOfAxiom);
@@ -136,8 +136,8 @@ public class ELPPOntologyNormalizer implements OntologyNormalizer, OWLAxiomVisit
     /**
      * <p>A method from the {@code OntologyNormalizer} interface.</p>
      * 
-     * <p>Given a set of {@code axioms}, returns the equivalent set of axioms in normal form. Each one of its CBoxes is checked and normalized if it's not in
-     * normal form. This also means that any of the GCIs in a given CBox is checked and possibly queued up for normalization.</p>
+     * <p>Given a set of {@code axioms}, returns the equivalent set of axioms in normal form. Each axiom is checked and normalized if it's not in
+     * normal form. This also means that each "normalized" axioms is checked and possibly queued up for further normalization.</p>
      * {@code axioms} The axioms to normalize
      * @return The equivalent {@code axioms} normalized
      */
@@ -160,15 +160,15 @@ public class ELPPOntologyNormalizer implements OntologyNormalizer, OWLAxiomVisit
         Iterator<OWLAxiom> it = axioms.iterator();
         while(it.hasNext()) {
             OWLAxiom axiom = it.next();
-            if (axiom instanceof OWLSubClassOfAxiom) {  // If the CBox has the form "C ⊑ D"
-                if (!NormalizationUtilities.isCBoxInNormalForm((OWLSubClassOfAxiom) axiom)) {
+            if (axiom instanceof OWLSubClassOfAxiom) {  // If the GCI has the form "C ⊑ D"
+                if (!NormalizationUtilities.isGCIInNormalForm((OWLSubClassOfAxiom) axiom)) {
                     this.axiomsToNormalize.add(axiom);
                 } else {
                     this.normalizedOntology.add(axiom);
                 }
-            } else if (axiom instanceof OWLEquivalentClassesAxiom) {  // If the CBox has the form "C1 ≡ ... ≡ Cn"
+            } else if (axiom instanceof OWLEquivalentClassesAxiom) {  // If the GCI has the form "C1 ≡ ... ≡ Cn"
                 for (OWLSubClassOfAxiom subClassOfAxiom : ((OWLEquivalentClassesAxiom) axiom).asOWLSubClassOfAxioms()) {
-                    if (!NormalizationUtilities.isCBoxInNormalForm(subClassOfAxiom)) {
+                    if (!NormalizationUtilities.isGCIInNormalForm(subClassOfAxiom)) {
                         this.axiomsToNormalize.add(axiom);
                     } else {
                         this.normalizedOntology.add(axiom);
@@ -240,7 +240,7 @@ public class ELPPOntologyNormalizer implements OntologyNormalizer, OWLAxiomVisit
         }
 
         for (OWLSubClassOfAxiom a : normalizedSetOfAxioms) {
-            if (NormalizationUtilities.isCBoxInNormalForm(a)) {
+            if (NormalizationUtilities.isGCIInNormalForm(a)) {
                 this.normalizedOntology.addAxiom(a);
             } else {
                 this.temporaryToAddAxioms.add(a);
@@ -262,7 +262,7 @@ public class ELPPOntologyNormalizer implements OntologyNormalizer, OWLAxiomVisit
         Collection<OWLSubClassOfAxiom> subClassOfAxioms = axiom.asOWLSubClassOfAxioms();
 
         for (OWLSubClassOfAxiom a : subClassOfAxioms) {
-            if (NormalizationUtilities.isCBoxInNormalForm(a)) {
+            if (NormalizationUtilities.isGCIInNormalForm(a)) {
                 this.normalizedOntology.addAxiom(a);
             } else {
                 this.temporaryToAddAxioms.add(a);

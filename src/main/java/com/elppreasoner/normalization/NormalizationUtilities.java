@@ -19,7 +19,7 @@ import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
 /**
  * <p>{@link NormalizationUtilities} is an utility class that implements all the methods that are useful to axioms normalization.
  * Other than methods to identify some class expression as a concept name, an individual, a basic concept, etc., or
- * to check if a given CBox is in normal form, it also contains an inner class, {@link NormalizationRulesManager}, that provides
+ * to check if a given GCI is in normal form, it also contains an inner class, {@link NormalizationRulesManager}, that provides
  * a set of methods to identify and apply the "normalization rules" (NF2,NF3,...,NF7).</p>
  * <p><em>Note</em>. NF1 is excluded because it concerns the "role inclusion", not considered in our work.</p>
  * 
@@ -40,11 +40,11 @@ import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
  * <p>Here are a couple of useful definitions.</p>
  * 
  * <ul>
- * <li>Def. In our domain, an EL++ constraint box (CBox) is a finite set of general concept inclusions (GCIs): C ⊑ D. In particular: C can be a
+ * <li>Def. In our domain, an EL++ constraint box (TBox) is a finite set of general concept inclusions (GCIs): C ⊑ D. In particular: C can be a
  * basic concept (BC) or a nominal {a}, while D can be either a basic concept (BC), a nominal {a} or a bottom (⊥). [Role inclusions excluded]</li>
  * 
- * <li>Def. Given a CBox C, BC_C (read "basic concept descriptions for C") denotes the smallest set of concept descriptions that contains the top
- * concept ⊤, all concept names used in C, and all concept descriptions of the form {a} or p(f1,..., fk) appearing in C.<br>
+ * <li>Def. Given a TBox T, BC_T (read "basic concept descriptions for T") denotes the smallest set of concept descriptions that contains the top
+ * concept ⊤, all concept names used in C, and all concept descriptions of the form {a} or p(f1,..., fk) appearing in T.<br>
  * In our work, any given concept that belongs to such a set will be called "basic concept". In particular, a basic concept is either:<br>
  * <ul>
  *     <li>a concept name</li>
@@ -54,7 +54,7 @@ import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
  * </ul>
  * </li>
  * 
- * <li>Def. In our domain, a CBox C is in normal form ("normalized") if and only if all of its GCIs have one of the four following forms:
+ * <li>Def. In our domain, a TBox T is in normal form ("normalized") if and only if all of its GCIs have one of the four following forms:
  * <ul>
  *     <li>C1 ⊑ D</li>
  *     <li>C1 ⊓ C2 ⊑ D</li>
@@ -144,7 +144,7 @@ public final class NormalizationUtilities {
     }
 
     /**
-     * <p>Checks if the given CBox is in normal form (NF). A CBox is in normal form if and only if it has one of the following forms:
+     * <p>Checks if the given GCI is in normal form (NF). A GCI is in normal form if and only if it has one of the following forms:
      * <ul>
      *     <li>C1 ⊑ D</li>
      *     <li>C1 ⊓ C2 ⊑ D</li>
@@ -155,10 +155,10 @@ public final class NormalizationUtilities {
      * </p>
      * 
      * <p>*</p>
-     * @param subClassOfAxiom The CBox to check
+     * @param subClassOfAxiom The GCI to check
      * @return {@code true} if {@code subClassOfAxiom} is in normal form; {@code false} otherwise
      */
-    public static boolean isCBoxInNormalForm(OWLSubClassOfAxiom subClassOfAxiom) {
+    public static boolean isGCIInNormalForm(OWLSubClassOfAxiom subClassOfAxiom) {
         OWLClassExpression subClass = subClassOfAxiom.getSubClass();
         OWLClassExpression superClass = subClassOfAxiom.getSuperClass();
 
@@ -177,14 +177,14 @@ public final class NormalizationUtilities {
             return isSubclassABasicConcept(((OWLObjectSomeValuesFrom) subClass).getFiller());
         }
 
-        return false;  // CBox is not in normal form
+        return false;  // GCI is not in normal form
     }
 
 
     /**
      * <p>{@code NormalizationRulesManager} is an inner class that provides a set of methods to identify and apply the "normalization rules"
-     * (NF2,NF3,...,NF7). It is easy to prove that any CBox can be converted into an equivalent CBox in Normal Form (NF) using the translation
-     * rules (applying one of the rules) NF1 to NF7, based on the form of the CBox.
+     * (NF2,NF3,...,NF7). It is easy to prove that any GCI can be converted into an equivalent GCI in Normal Form (NF) using the translation
+     * rules (applying one of the rules) NF1 to NF7, based on the form of the GCI.
      * <ul>
      *     <li>NF1: role inclusion, not considered in our work</li>
      *     <li>NF2: C ⊓ D' ⊑ E   -->   { D' ⊑ A, C ⊓ A ⊑ E }   * Please note that it can also be in the equivalent form D' ⊓ C</li>

@@ -246,7 +246,7 @@ public class ELPPReasoner extends Reasoner {
 
         if (Objects.equals(axiomType, AxiomType.SUBCLASS_OF)) {
             OWLSubClassOfAxiom subClassOfAxiom = (OWLSubClassOfAxiom) axiom;
-            if (NormalizationUtilities.isCBoxInNormalForm(subClassOfAxiom)) {
+            if (NormalizationUtilities.isGCIInNormalForm(subClassOfAxiom)) {
                 return classToNode.containsKey(subClassOfAxiom.getSubClass()) && classToNode.containsKey(subClassOfAxiom.getSuperClass());
             }
 
