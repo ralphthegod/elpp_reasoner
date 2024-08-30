@@ -50,7 +50,7 @@ public class ELPPTaxonomyBuilder_Test {
         }
 
         @Test
-        @DisplayName("ITALIAN FOOD ONTOLOGY TAXONOMY BUILDING TEST 1 - buildTaxonomy (normalized ontology, concurrent)")
+        @DisplayName("ITALIAN FOOD ONTOLOGY TAXONOMY BUILDING TEST 2 - buildTaxonomy (normalized ontology, concurrent)")
         void ItalianFood_buildTaxonomy_nc() {
             OWLOntology ontology = TestingUtilities.loadOntology(ONTOLOGY_PATH);
             taxonomyTest(ontology, true, true);
@@ -69,7 +69,7 @@ public class ELPPTaxonomyBuilder_Test {
         }
 
         @Test
-        @DisplayName("MODIFIED SNOMED CT ONTOLOGY TAXONOMY BUILDING TEST 1 - buildTaxonomy (normalized ontology, concurrent)")
+        @DisplayName("MODIFIED SNOMED CT ONTOLOGY TAXONOMY BUILDING TEST 2 - buildTaxonomy (normalized ontology, concurrent)")
         void SCTO_buildTaxonomy_nc() {
             OWLOntology ontology = TestingUtilities.loadOntology(ONTOLOGY_PATH);
             taxonomyTest(ontology, true, true);
@@ -88,7 +88,7 @@ public class ELPPTaxonomyBuilder_Test {
         }
 
         @Test
-        @DisplayName("MODIFIED SNOMED CT ONTOLOGY TAXONOMY BUILDING TEST 1 - buildTaxonomy (normalized ontology, concurrent)")
+        @DisplayName("MODIFIED SNOMED CT ONTOLOGY TAXONOMY BUILDING TEST 2 - buildTaxonomy (normalized ontology, concurrent)")
         void GALEN_buildTaxonomy_nc() {
             OWLOntology ontology = TestingUtilities.loadOntology(ONTOLOGY_PATH);
             taxonomyTest(ontology, true, true);
@@ -101,14 +101,14 @@ public class ELPPTaxonomyBuilder_Test {
 
         @Test
         @DisplayName("MODIFIED GENE ONTOLOGY TAXONOMY BUILDING TEST 1 - buildTaxonomy (normalized ontology, not concurrent)")
-        void SCTO_buildTaxonomy_n() {
+        void GO_buildTaxonomy_n() {
             OWLOntology ontology = TestingUtilities.loadOntology(ONTOLOGY_PATH);
             taxonomyTest(ontology, true, false);
         }
 
         @Test
-        @DisplayName("MODIFIED GENE ONTOLOGY TAXONOMY BUILDING TEST 1 - buildTaxonomy (normalized ontology, concurrent)")
-        void SCTO_buildTaxonomy_nc() {
+        @DisplayName("MODIFIED GENE ONTOLOGY TAXONOMY BUILDING TEST 2 - buildTaxonomy (normalized ontology, concurrent)")
+        void GO_buildTaxonomy_nc() {
             OWLOntology ontology = TestingUtilities.loadOntology(ONTOLOGY_PATH);
             taxonomyTest(ontology, true, true);
         }
